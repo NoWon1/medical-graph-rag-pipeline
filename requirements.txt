@@ -1,0 +1,69 @@
+# =============================================================================
+# requirements.txt — Medchat Graph RAG Pipeline
+# Install: pip install -r requirements.txt
+# =============================================================================
+
+# ── Core LangChain stack ──────────────────────────────────
+langchain>=0.3.0
+langchain-core>=0.3.0
+langchain-community>=0.3.0
+langchain-text-splitters>=0.3.0
+langchain-experimental>=0.3.0      # LLMGraphTransformer lives here
+
+# ── LangChain integrations ────────────────────────────────
+langchain-neo4j>=0.3.0             # Neo4jVector + Neo4jGraph
+langchain-huggingface>=0.1.0       # HuggingFaceEmbeddings
+langchain-groq>=0.2.0              # ChatGroq for LLMGraphTransformer
+
+# ── Neo4j driver ──────────────────────────────────────────
+neo4j>=5.19.0                      # Python driver for Neo4j Aura
+
+# ── Groq (direct API for answer generation) ───────────────
+groq>=0.9.0
+
+# ── Embeddings (local, no API cost) ──────────────────────
+sentence-transformers>=2.7.0
+torch>=2.0.0                       # CPU-only is fine
+
+# ── PDF processing ────────────────────────────────────────
+pymupdf>=1.24.0                    # fitz — fast PDF text + image extraction
+Pillow>=10.0.0                     # PIL for image processing
+
+# ── Medical NER (local, zero-cost query entity extraction) ─
+spacy>=3.7.0
+# After install, run: python -m spacy download en_core_web_sm
+# For better medical NER:
+# pip install scispacy
+# pip install https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.3/en_core_sci_sm-0.5.3.tar.gz
+
+# ── BM25 sparse retrieval ─────────────────────────────────
+rank-bm25>=0.2.2
+
+# ── Web fallback ──────────────────────────────────────────
+duckduckgo-search>=6.0.0
+
+# ── Streamlit UI ─────────────────────────────────────────
+streamlit>=1.35.0
+
+# ── Environment ───────────────────────────────────────────
+python-dotenv>=1.0.0
+
+# ── Utilities ─────────────────────────────────────────────
+tqdm>=4.66.0
+numpy>=1.26.0
+
+# ── Optional: Docling (better PDF extraction) ────────────
+docling
+# Only install if you want higher-quality PDF → markdown conversion.
+# Pipeline works without it using PyMuPDF fallback.
+
+# ── Optional: EasyOCR (scanned PDF pages) ────────────────
+ easyocr
+# Only needed if your PDFs contain scanned (image-based) pages.
+
+# Ragas for metric evaluation
+ragas==0.2.6
+datasets
+
+# For evaluation of generated answers using RAGAs.
+langchain-google-genai

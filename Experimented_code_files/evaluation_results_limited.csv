@@ -1,0 +1,6 @@
+question,final_score,failure_type,semantic_similarity,faithfulness,answer_relevance,context_recall,graph_score
+What is acute lymphoblastic leukemia and how common is it in adults in the United States?,0.8474776307468319,graph_reasoning_failure,0.9492651366626347,1.0,1.0,0.55923858693926,0.0
+What are the four classic subtypes of melanoma and what percentage of cases does each represent?,0.4508862345033651,retrieval_failure,0.37721558625841284,1.0,1.0,0.0,0.0
+What is the Breslow staging system and why is it preferred over Clark levels for melanoma prognosis?,0.4712544466063525,retrieval_failure,0.4281361165158813,1.0,1.0,0.0,0.0
+What is the Philadelphia chromosome and how does it affect prognosis and treatment of ALL?,0.35345465400159093,retrieval_failure,0.43363663500397737,0.6,0.2,0.0,0.0
+What are the ABCDE criteria used for clinical diagnosis of melanoma?,0.48419030744371244,retrieval_failure,0.46047576860928113,1.0,1.0,0.0,0.0

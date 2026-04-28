@@ -1,0 +1,9 @@
+{
+  "total_chunks": 472,
+  "text_chunks": 441,
+  "caption_chunks": 31,
+  "image_tag_chunks": 11,
+  "neo4j_index": "chunk_vector_index",
+  "embedding_model": "BAAI/bge-base-en-v1.5",
+  "embedding_dim": 768
+}

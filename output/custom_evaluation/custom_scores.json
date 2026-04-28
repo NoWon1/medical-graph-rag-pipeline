@@ -1,0 +1,218 @@
+{
+  "label": "baseline",
+  "timestamp": "2026-04-10T03:33:54.745618",
+  "pipeline_model": "llama-3.3-70b-versatile",
+  "scoring_method": "LLM-free custom metrics (v4.0)",
+  "question_count": 5,
+  "aggregates": {
+    "image_recall": null,
+    "web_fallback": null,
+    "keyword_coverage": 0.64,
+    "context_utilisation": 0.8667,
+    "answer_completeness": 1.0,
+    "graph_grounding": 1.0,
+    "latency_score": 0.6677
+  },
+  "composite": 0.8052,
+  "metric_weights": {
+    "image_recall": 0.15,
+    "web_fallback": 0.2,
+    "keyword_coverage": 0.25,
+    "context_utilisation": 0.15,
+    "answer_completeness": 0.1,
+    "graph_grounding": 0.1,
+    "latency_score": 0.05
+  },
+  "category_stats": {
+    "graph": {
+      "count": 5,
+      "success": 5,
+      "avg_composite": 0.8052,
+      "avg_keyword_cov": 0.64,
+      "avg_latency_s": 19.87,
+      "avg_latency_score": 0.6677,
+      "image_tag_rate": null,
+      "web_rate": null
+    }
+  },
+  "per_question": [
+    {
+      "question": "What foods should a patient on cisplatin avoid?",
+      "answer": "According to the structured medical facts from the cancer treatment knowledge graph, specifically [G1] and [G4], a patient on cisplatin should avoid certain foods to manage the side effects of the medication. The foods to avoid include:\n\n* Spicy Foods\n* Fried / Fatty Foods\n\nThese foods can exacerbate the nausea and vomiting associated with cisplatin treatment. Instead, patients are advised to eat small, frequent meals and opt for bland foods like bananas, toast, or white bread, as well as ginger tea or ginger ale, as mentioned in [G1].\n\nIt is essential to follow the guidelines outlined in [G1], [G2], [G3], and [G4] to manage the eating effects of cisplatin, including nausea, taste and smell changes, vomiting, and weight loss.\n\nPlease consult a qualified oncologist for personalized dietary advice and to discuss any concerns about your treatment.",
+      "ground_truth": "Patients should avoid alcohol, fatty fried foods, spicy foods, and large meals. Small frequent bland meals are recommended. Adequate hydration prevents nephrotoxicity.",
+      "keywords": [
+        "cisplatin",
+        "nausea",
+        "avoid",
+        "hydration",
+        "food"
+      ],
+      "query_mode": "graph",
+      "category": "graph",
+      "description": "Food avoidance — core graph traversal test",
+      "elapsed_s": 35.2,
+      "context_count": 3,
+      "has_image_tag": false,
+      "web_fired": false,
+      "scores": {
+        "image_recall": null,
+        "web_fallback": null,
+        "keyword_coverage": 0.8,
+        "context_utilisation": 1.0,
+        "answer_completeness": 1.0,
+        "graph_grounding": 1.0,
+        "latency_score": 0.1599
+      },
+      "composite": 0.8585,
+      "sources": [
+        "Cancer Treatment Knowledge Graph",
+        "breast-cancer-review",
+        "lung-cancer-review"
+      ],
+      "answer_preview": "According to the structured medical facts from the cancer treatment knowledge graph, specifically [G1] and [G4], a patient on cisplatin should avoid certain foods to manage the side effects of the medication. The foods to avoid include:\n\n* Spicy Foods\n* Fried / Fatty Foods\n\nThese foods can exacerbat"
+    },
+    {
+      "question": "What are the mandatory nutritional guidelines for pemetrexed?",
+      "answer": "The mandatory nutritional guidelines for pemetrexed, as stated in [G1] and [G2], include taking folic acid 400-1000mcg daily starting 7 days before the first dose and B12 1000mcg IM every 9 weeks. Additionally, patients are advised to eat 5-6 small meals per day instead of 3 large meals to manage nausea, dysphagia, and appetite loss. It is also recommended to avoid spicy foods, fried/fatty foods, citrus fruits, and acidic foods, and to include foods like bananas, toast/white bread, ginger tea/ginger ale, cold foods, and soft proteins in their diet.\n\nDisclaimer: The information provided is based on the structured medical facts from the cancer treatment knowledge graph. However, it is essential to consult with a qualified oncologist for personalized dietary advice and to discuss any specific concerns or questions regarding pemetrexed treatment.",
+      "ground_truth": "Pemetrexed requires folic acid 400-1000 mcg daily from 7 days before and vitamin B12 1000 mcg IM every 3 cycles to reduce haematological and GI toxicity.",
+      "keywords": [
+        "pemetrexed",
+        "folic acid",
+        "vitamin B12",
+        "mandatory",
+        "supplement"
+      ],
+      "query_mode": "graph",
+      "category": "graph",
+      "description": "Mandatory supplementation — NutritionGuideline node test",
+      "elapsed_s": 16.37,
+      "context_count": 3,
+      "has_image_tag": false,
+      "web_fired": false,
+      "scores": {
+        "image_recall": null,
+        "web_fallback": null,
+        "keyword_coverage": 0.6,
+        "context_utilisation": 0.6667,
+        "answer_completeness": 1.0,
+        "graph_grounding": 1.0,
+        "latency_score": 0.7876
+      },
+      "composite": 0.7529,
+      "sources": [
+        "Cancer Treatment Knowledge Graph",
+        "acute-leukemia-review",
+        "melanoma-skin-cancer-review",
+        "breast-cancer-review"
+      ],
+      "answer_preview": "The mandatory nutritional guidelines for pemetrexed, as stated in [G1] and [G2], include taking folic acid 400-1000mcg daily starting 7 days before the first dose and B12 1000mcg IM every 9 weeks. Additionally, patients are advised to eat 5-6 small meals per day instead of 3 large meals to manage na"
+    },
+    {
+      "question": "A breast cancer patient on AC-T is taking warfarin. What are the dietary risks?",
+      "answer": "A breast cancer patient on AC-T (a protocol that includes Doxorubicin and Cyclophosphamide) who is also taking warfarin should be aware of potential dietary risks. According to the clinical context provided, particularly in [G1] and [G2], there is no direct mention of warfarin interactions with the drugs in the AC-T protocol. However, it is known that warfarin, a blood thinner, can interact with various foods and drugs, potentially altering its efficacy or increasing the risk of bleeding.\n\nGiven the information available, it's crucial to consider the general dietary advice for patients on warfarin. Foods high in vitamin K, such as leafy green vegetables, can affect warfarin's efficacy. However, the specific interaction between warfarin and the components of the AC-T protocol (Doxorubicin and Cyclophosphamide) is not detailed in the provided context.\n\nFor comprehensive guidance on managing warfarin therapy alongside chemotherapy, including dietary considerations, it's essential to consult clinical literature that specifically addresses drug interactions and nutrition counseling for cancer patients on warfarin.\n\nAs shown in the context, there are no direct visual references to dietary risks or warfarin interactions. However, the importance of understanding treatment protocols and potential interactions is highlighted.\n\nIn conclusion, while the provided context does not offer specific dietary risks for a breast cancer patient on AC-T taking warfarin, it's critical for such patients to be aware of potential interactions between their medications and foods, especially those that can affect blood clotting or the efficacy of their chemotherapy.\n\nDisclaimer: This information is based on the provided clinical context and should not be considered as medical advice. Patients should consult with a qualified oncologist or a healthcare professional for personalized guidance on managing their treatment, including dietary advice and potential drug interactions.",
+      "ground_truth": "Warfarin interacts with capecitabine raising INR and bleeding risk. Diarrhoea reduces vitamin K absorption. Consistent vitamin K intake and INR monitoring are essential.",
+      "keywords": [
+        "warfarin",
+        "INR",
+        "capecitabine",
+        "vitamin K",
+        "bleeding"
+      ],
+      "query_mode": "graph",
+      "category": "graph",
+      "description": "Drug-food-drug interaction chain",
+      "elapsed_s": 20.95,
+      "context_count": 5,
+      "has_image_tag": false,
+      "web_fired": false,
+      "scores": {
+        "image_recall": null,
+        "web_fallback": null,
+        "keyword_coverage": 0.6,
+        "context_utilisation": 1.0,
+        "answer_completeness": 1.0,
+        "graph_grounding": 1.0,
+        "latency_score": 0.635
+      },
+      "composite": 0.8181,
+      "sources": [
+        "Cancer Treatment Knowledge Graph",
+        "breast-cancer-review",
+        "lung-cancer-review",
+        "skin-cancer-types-review"
+      ],
+      "answer_preview": "A breast cancer patient on AC-T (a protocol that includes Doxorubicin and Cyclophosphamide) who is also taking warfarin should be aware of potential dietary risks. According to the clinical context provided, particularly in [G1] and [G2], there is no direct mention of warfarin interactions with the "
+    },
+    {
+      "question": "What eating side effects does vincristine cause and how are they managed?",
+      "answer": "The eating side effects of vincristine include constipation, as stated in [G1]. To manage this side effect, it is recommended to increase fluid and fibre intake, use stool softeners, gentle laxatives, and engage in physical activity. Additionally, patients are advised to eat high-fibre foods such as whole grains and legumes, and to drink plenty of water and clear liquids.\n\nAs noted in [G1], the severity of vincristine's side effects is high, and proper management is crucial to minimize its impact on the patient's quality of life.\n\nThere are no relevant images to reference in this answer.\n\nDisclaimer: This information is based on the provided clinical context and should not be considered as medical advice. It is essential to consult with a qualified oncologist for personalized guidance on managing vincristine's side effects and developing an appropriate treatment plan.",
+      "ground_truth": "Vincristine causes constipation from autonomic neuropathy. Increase dietary fibre, fluids, use stool softeners. Paralytic ileus risk increases with concurrent morphine or amitriptyline.",
+      "keywords": [
+        "vincristine",
+        "constipation",
+        "neuropathy",
+        "fibre",
+        "stool"
+      ],
+      "query_mode": "graph",
+      "category": "graph",
+      "description": "EatingAdverseEffect node traversal test",
+      "elapsed_s": 17.32,
+      "context_count": 3,
+      "has_image_tag": false,
+      "web_fired": false,
+      "scores": {
+        "image_recall": null,
+        "web_fallback": null,
+        "keyword_coverage": 0.8,
+        "context_utilisation": 1.0,
+        "answer_completeness": 1.0,
+        "graph_grounding": 1.0,
+        "latency_score": 0.7558
+      },
+      "composite": 0.9043,
+      "sources": [
+        "Cancer Treatment Knowledge Graph",
+        "acute-leukemia-review",
+        "breast-cancer-review",
+        "lung-cancer-review"
+      ],
+      "answer_preview": "The eating side effects of vincristine include constipation, as stated in [G1]. To manage this side effect, it is recommended to increase fluid and fibre intake, use stool softeners, gentle laxatives, and engage in physical activity. Additionally, patients are advised to eat high-fibre foods such as"
+    },
+    {
+      "question": "What foods help manage nausea during chemotherapy?",
+      "answer": "To manage nausea during chemotherapy, it's essential to consider the specific foods that can help alleviate this symptom. According to the structured medical facts from the cancer treatment knowledge graph:\n\n- For patients taking Cyclophosphamide [G1], suggested foods to eat include Bananas, Toast/White Bread, and Ginger Tea / Ginger Ale, as these can help mitigate nausea.\n- Similarly, for those on Ipilimumab [G2], recommended foods are Bananas, White Rice, and Yogurt / Probiotics, which can help manage diarrhea and potentially nausea.\n- Dacarbazine [G3] also suggests eating Bananas, Toast/White Bread, and Ginger Tea / Ginger Ale to help with nausea.\n\nThese foods are generally easy on the stomach and can help alleviate nausea. However, it's crucial to note that individual responses to foods can vary, and what works for one person may not work for another.\n\nThere are no specific visual references provided in the clinical context to support this answer.\n\nIn conclusion, while these foods may help manage nausea during chemotherapy, it's essential to consult with a qualified oncologist or a registered dietitian for personalized nutrition advice, as they can provide guidance tailored to the individual's specific needs and treatment regimen.",
+      "ground_truth": "Dry crackers, plain toast, ginger tea, cold foods, and small frequent meals help manage nausea. Avoid fatty, fried, spicy, or strong-smelling foods during chemotherapy.",
+      "keywords": [
+        "nausea",
+        "ginger",
+        "crackers",
+        "bland",
+        "small meals"
+      ],
+      "query_mode": "graph",
+      "category": "graph",
+      "description": "RELIEVED_BY edge traversal test",
+      "elapsed_s": 9.53,
+      "context_count": 3,
+      "has_image_tag": false,
+      "web_fired": false,
+      "scores": {
+        "image_recall": null,
+        "web_fallback": null,
+        "keyword_coverage": 0.4,
+        "context_utilisation": 0.6667,
+        "answer_completeness": 1.0,
+        "graph_grounding": 1.0,
+        "latency_score": 1.0
+      },
+      "composite": 0.6923,
+      "sources": [
+        "breast-cancer-review",
+        "osteosarcoma-review",
+        "acute-leukemia-review"
+      ],
+      "answer_preview": "To manage nausea during chemotherapy, it's essential to consider the specific foods that can help alleviate this symptom. According to the structured medical facts from the cancer treatment knowledge graph:\n\n- For patients taking Cyclophosphamide [G1], suggested foods to eat include Bananas, Toast/W"
+    }
+  ]
+}

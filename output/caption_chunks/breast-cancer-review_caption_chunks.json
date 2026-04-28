@@ -1,0 +1,15 @@
+[
+  {
+    "chunk_id": "breast-cancer-review_cap_0001",
+    "source_file": "breast-cancer-review",
+    "source_url": "https://pubmed.ncbi.nlm.nih.gov/31735550/",
+    "cancer_type": "breast",
+    "content_type": "figure_caption",
+    "asset_type": "Picture",
+    "image_filename": "breast-cancer-review_picture_1.png",
+    "image_path": "output\\images\\breast-cancer-review_picture_1.png",
+    "extraction_tier": "sliding_window_next",
+    "char_length": 78,
+    "content": "Figure 1. Different topical drug delivery system used in breast cancer studies"
+  }
+]

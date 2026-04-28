@@ -1,0 +1,67 @@
+[
+  {
+    "chunk_id": "lung-cancer-review_cap_0001",
+    "source_file": "lung-cancer-review",
+    "source_url": "https://pubmed.ncbi.nlm.nih.gov/33207404/",
+    "cancer_type": "lung",
+    "content_type": "figure_caption",
+    "asset_type": "Picture",
+    "image_filename": "lung-cancer-review_picture_1.png",
+    "image_path": "output\\images\\lung-cancer-review_picture_1.png",
+    "extraction_tier": "sliding_window_next",
+    "char_length": 147,
+    "content": "FIGURE 1. Description of the literature identification process (A Preferred Reporting Items for Systematic Review and Metaanalysis flowchart) [15]."
+  },
+  {
+    "chunk_id": "lung-cancer-review_cap_0002",
+    "source_file": "lung-cancer-review",
+    "source_url": "https://pubmed.ncbi.nlm.nih.gov/33207404/",
+    "cancer_type": "lung",
+    "content_type": "figure_caption",
+    "asset_type": "Picture",
+    "image_filename": "lung-cancer-review_picture_2.png",
+    "image_path": "output\\images\\lung-cancer-review_picture_2.png",
+    "extraction_tier": "sliding_window_next",
+    "char_length": 167,
+    "content": "FIGURE 2. Describing the most common mechanisms of resistance to anaplastic lymphoma kinase tyrosine kinase inhibitors divided into dominant and non-dominant category."
+  },
+  {
+    "chunk_id": "lung-cancer-review_cap_0003",
+    "source_file": "lung-cancer-review",
+    "source_url": "https://pubmed.ncbi.nlm.nih.gov/33207404/",
+    "cancer_type": "lung",
+    "content_type": "table_caption",
+    "asset_type": "Table",
+    "image_filename": "lung-cancer-review_table_1.png",
+    "image_path": "output\\images\\lung-cancer-review_table_1.png",
+    "extraction_tier": "sliding_window_next",
+    "char_length": 118,
+    "content": "TABLE 1. A summary description of the main studies and results of the ALK TKI in patients with ALK-positive NSCLC [70]"
+  },
+  {
+    "chunk_id": "lung-cancer-review_cap_0004",
+    "source_file": "lung-cancer-review",
+    "source_url": "https://pubmed.ncbi.nlm.nih.gov/33207404/",
+    "cancer_type": "lung",
+    "content_type": "figure_caption",
+    "asset_type": "Picture",
+    "image_filename": "lung-cancer-review_picture_3.png",
+    "image_path": "output\\images\\lung-cancer-review_picture_3.png",
+    "extraction_tier": "sliding_window_next",
+    "char_length": 370,
+    "content": "FIGURE 3. The most common anaplastic lymphoma kinase (ALK)- dependent resistance mutations associated with therapeutic resistance to ALK tyrosine kinase inhibitors (TKI). Each generation of ALK TKI is presented in the scheme with the approved drug and the main point mutations associated with resistance and different colors were used to highlight these point mutations."
+  },
+  {
+    "chunk_id": "lung-cancer-review_cap_0005",
+    "source_file": "lung-cancer-review",
+    "source_url": "https://pubmed.ncbi.nlm.nih.gov/33207404/",
+    "cancer_type": "lung",
+    "content_type": "table_caption",
+    "asset_type": "Table",
+    "image_filename": "lung-cancer-review_table_2.png",
+    "image_path": "output\\images\\lung-cancer-review_table_2.png",
+    "extraction_tier": "sliding_window_next",
+    "char_length": 153,
+    "content": "TABLE 2. The  main  methods used to identify ALK mutation and  mechanism  of  resistance  described  according  to  their main advantages and limitations"
+  }
+]

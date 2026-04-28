@@ -1,0 +1,1678 @@
+[
+  {
+    "question": "What is acute lymphoblastic leukemia and how common is it in adults in the United States?",
+    "ground_truth": "Acute lymphoblastic leukemia (ALL) is a malignant transformation and proliferation of lymphoid progenitor cells in the bone marrow, blood, and extramedullary sites. It is the second most common acute leukemia in adults, with an incidence of over 6,500 cases per year in the United States. In 2016 alone, an estimated 6,590 new cases were diagnosed with over 1,400 deaths. The incidence follows a bimodal distribution, with the first peak in childhood and a second peak around age 50. Despite a high rate of response to induction chemotherapy, only 30–40% of adult patients with ALL will achieve long-term remission.",
+    "contexts": [
+      "Acute lymphoblastic leukemia (ALL) is the second most common acute leukemia in adults, with an incidence of over 6500 cases per year in the United States alone.",
+      "In 2016 alone, an estimated 6590 new cases were diagnosed, with over 1400 deaths due to ALL (American Cancer Society).",
+      "The incidence of ALL follows a bimodal distribution, with the first peak occurring in childhood and a second peak occurring around the age of 50.",
+      "Despite a high rate of response to induction chemotherapy, only 30–40% of adult patients with ALL will achieve long-term remission."
+    ],
+    "metadata": {
+      "type": "vector",
+      "difficulty": "easy",
+      "source": "review",
+      "reasoning_type": "retrieval",
+      "requires_graph": false,
+      "requires_vector": true,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "What are the four classic subtypes of melanoma and what percentage of cases does each represent?",
+    "ground_truth": "The four classic subtypes of melanoma are: (1) Superficial spreading melanoma (SSM), representing approximately 70% of all melanomas; (2) Nodular melanoma, approximately 15%; (3) Lentigo maligna melanoma, approximately 10%; and (4) Acral lentiginous melanoma, approximately 2% of all melanomas. SSM is the most common subtype and occurs primarily in fair-skinned populations, while acral lentiginous melanoma is predominant among patients with non-white skin tones.",
+    "contexts": [
+      "Clark divided melanoma into four main subtypes: superficial spreading melanoma (70% of all melanomas), nodular melanoma (approximately 15%), lentigo maligna melanoma (approximately 10%), and acral lentiginous melanoma (approximately 2% of all melanomas).",
+      "Superficial spreading melanoma (SSM) is the most common subtype of melanoma.",
+      "Nodular melanoma is defined as melanocyte proliferation with vertical growth.",
+      "Acral lentiginous melanoma originates on the extremities of the body (palms, soles, and nail units). It is predominant among patients with non-white skin tones."
+    ],
+    "metadata": {
+      "type": "vector",
+      "difficulty": "easy",
+      "source": "review",
+      "reasoning_type": "retrieval",
+      "requires_graph": false,
+      "requires_vector": true,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "What is the Breslow staging system and why is it preferred over Clark levels for melanoma prognosis?",
+    "ground_truth": "The Breslow staging system measures the depth of tumor invasion in millimeters from the top of the granular cell layer of the epidermis to the deepest invasive cell. It is highly reproducible and better correlates with patient prognosis compared to the Clark level of invasion. Breslow staging is used to determine the tumor (T) stage in the AJCC staging system. Clark levels, by contrast, are based on anatomical landmarks (I–V) and are less reproducible. In the AJCC 8th edition, tumor thickness is recorded to the nearest 0.1 mm.",
+    "contexts": [
+      "Breslow staging is a measure, in millimeters, of the depth of invasion of the nodule beneath the top of the granular cell layer of the epidermis. It is highly reproducible and better correlates with patient prognosis compared to the Clark level of invasion.",
+      "Breslow staging is used to determine the tumor (T) stage in the American Joint Committee on Cancer (AJCC) staging system.",
+      "Clark levels are briefly defined as Level I (tumor above the basement membrane—melanoma in situ); Level II (tumor extends into the papillary dermis); Level III (melanoma extends to the papillary-reticular dermis interface); Level IV (distinct invasion into the reticular dermis); and Level V (invasion of the subcutaneous tissue)."
+    ],
+    "metadata": {
+      "type": "vector",
+      "difficulty": "medium",
+      "source": "review",
+      "reasoning_type": "explanation",
+      "requires_graph": false,
+      "requires_vector": true,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "What is the Philadelphia chromosome and how does it affect prognosis and treatment of ALL?",
+    "ground_truth": "The Philadelphia chromosome, t(9;22), results in the BCR-ABL1 fusion gene and is found in 15–50% of adult ALL cases, increasing in prevalence with age. Historically, Ph-positive ALL had a 1-year survival of around 10%. The advent of tyrosine kinase inhibitors (TKIs) transformed outcomes: adding imatinib to Hyper-CVAD improved 3-year OS from 15% to 54%, and dasatinib combined with Hyper-CVAD achieved a 3-year OS of 71% in adults under 60. Ponatinib, a third-generation TKI, is approved for resistant Ph-positive ALL after dasatinib failure.",
+    "contexts": [
+      "The cytogenetic aberration with the greatest impact on prognosis and treatment is the presence of the Philadelphia chromosome, t(9;22). The prevalence of t(9;22) in adult ALL can range from 15–50% and increases with age.",
+      "Historically, Ph-positive ALL has a 1-year survival of around 10%. However, with the development of TKIs, survival has improved.",
+      "Thomas et al. showed that when added to traditional HCVAD, imatinib resulted in improvement in 3-year OS (54 vs 15%).",
+      "In a subsequent, multi-center trial HCVAD plus dasatinib achieved a 3-year OS of 71% in adult patients younger than 60."
+    ],
+    "metadata": {
+      "type": "vector",
+      "difficulty": "medium",
+      "source": "review",
+      "reasoning_type": "explanation",
+      "requires_graph": false,
+      "requires_vector": true,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "What are the ABCDE criteria used for clinical diagnosis of melanoma?",
+    "ground_truth": "The ABCDE criteria are: A – Asymmetry (the two halves of the mole are not identical), B – Border (irregular, ragged, notched, or blurred), C – Color variations (black, brown, red, pink, or white), D – Diameter greater than 6 mm, and E – Evolution (changing size, shape, color, or new symptoms such as itchiness and bleeding). Individual sensitivity values are 57%, 57%, 65%, 90%, and 84% respectively, with specificities of 72%, 71%, 59%, 63%, and 90%. Limitations include difficulty recognizing lesions less than 6 mm and subtypes such as nodular, amelanotic, and desmoplastic melanoma.",
+    "contexts": [
+      "The ABCDE criteria, based on the evolution of the radial growth phase, have been a fundamental resource in aiding melanoma earlier detection.",
+      "Sensitivity of the individual ABCDE criteria is described as 57, 57, 65, 90, and 84% and specificity as 72, 71, 59, 63, and 90%, respectively.",
+      "Challenges of the ABCDE criteria include the recognition of small lesions (<6 mm), as well as the recognition of specific melanoma subtypes that commonly lack ABCD features, such as nodular, amelanotic, and desmoplastic melanoma."
+    ],
+    "metadata": {
+      "type": "vector",
+      "difficulty": "easy",
+      "source": "review",
+      "reasoning_type": "retrieval",
+      "requires_graph": false,
+      "requires_vector": true,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "What is the standard chemotherapy protocol for osteosarcoma and what survival rates does it achieve?",
+    "ground_truth": "The standard treatment for high-grade osteosarcoma is the MAP protocol: high-dose Methotrexate with leucovorin rescue, Doxorubicin (Adriamycin), and Cisplatin, used in both neoadjuvant and adjuvant settings. Before chemotherapy was introduced, five-year survival was below 20%. With adjuvant chemotherapy introduced in the 1970s, survival rose to 50%, and current survival exceeds 65%. Tumor necrosis response is the key prognostic indicator: greater than 90% tumor necrosis correlates with 82% five-year survival versus 68% for less than 90% necrosis. Ifosfamide and etoposide are used in salvage settings.",
+    "contexts": [
+      "The four chemotherapy agents that are in nearly all treatment regimens include methotrexate with leucovorin rescue, doxorubicin, cisplatin, and ifosfamide.",
+      "Prior to the use of chemotherapy, there was less than a 20% survival rate in high-grade conventional osteosarcoma.",
+      "In the 1970s, the introduction of adjuvant chemotherapy in the treatment of OS increased survival rates to 50%.",
+      "Those who had greater than 90% tumor necrosis had an 82% five-year survival rate, while those who had less than 90% tumor necrosis had a 68% five-year survival rate."
+    ],
+    "metadata": {
+      "type": "vector",
+      "difficulty": "medium",
+      "source": "review",
+      "reasoning_type": "explanation",
+      "requires_graph": false,
+      "requires_vector": true,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "What mechanisms of resistance to ALK tyrosine kinase inhibitors are seen in NSCLC?",
+    "ground_truth": "Resistance to ALK TKIs is classified as de novo or acquired, and ALK-dependent (on-target) or ALK-independent (off-target). On-target dominant mechanisms include secondary ALK kinase domain mutations (e.g., L1196M gatekeeper mutation, G1202R solvent front mutation) and ALK gene copy number gain. Non-dominant off-target mechanisms include bypass signaling via EGFR, KRAS, KIT, MET, and IGF-1R pathways, epithelial-to-mesenchymal transition (EMT), small cell transformation, and drug efflux. Approximately half of all resistance mechanisms remain unknown. The G1202R mutation, the most common post-second-generation TKI, is best addressed by lorlatinib.",
+    "contexts": [
+      "The mechanisms of resistance can be divided into 'de novo' or acquired depending on the timeline of occurrence and according to the involvement of ALK are classified into ALK-dependent or ALK-independent mechanisms.",
+      "Secondary resistance can be divided into dominant (ALK intra-kinase domain mutation, increased copy number gain of ALK gene) and non-dominant such as tumor heterogeneity, bypass signaling pathways activation such as the EGFR, KRAS, KIT, MET, and IGF-1R.",
+      "From the available data, we have discovered that almost half of the mechanisms of resistance remain unknown at this moment.",
+      "After developing resistance to second-generation ALK TKI, literature data have proven that half of the mutations are acquired, out of which GR is the most frequent."
+    ],
+    "metadata": {
+      "type": "vector",
+      "difficulty": "hard",
+      "source": "review",
+      "reasoning_type": "explanation",
+      "requires_graph": false,
+      "requires_vector": true,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "What is the five-year survival rate for melanoma by stage?",
+    "ground_truth": "Melanoma five-year survival rates by stage are: Stage 1 – 99%, Stage 2 – 90%, Stage 3 – 77%. Ten-year survival rates are 95% (Stage 1), 84% (Stage 2), and 69% (Stage 3). For Stage IV disease, the 1-year survival rate exceeded 70% with modern targeted and immunotherapies, compared to approximately 50% at the start of the 2000s. These improvements are attributed to widespread sentinel lymph node biopsy, immune checkpoint inhibitors, and BRAF-targeted therapies.",
+    "contexts": [
+      "Melanoma's 5- and 10-year survival rates range from 99% and 95% in stage 1 to 90% and 84% in stage 2 and 77% and 69% in stage 3, respectively.",
+      "At the beginning of the year 2000, patients with stage IV melanoma had around a 50% 1-year survival rate. Twenty years later, the 1-year survival rate is more than 70% for stage IV patients treated with targeted and immunotherapies."
+    ],
+    "metadata": {
+      "type": "vector",
+      "difficulty": "easy",
+      "source": "review",
+      "reasoning_type": "retrieval",
+      "requires_graph": false,
+      "requires_vector": true,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "What are the topical drug delivery systems investigated for breast cancer treatment?",
+    "ground_truth": "Topical drug delivery systems investigated for breast cancer include transfersomes, nanoemulgels, iontophoresis (transpapillary delivery through the nipple), microneedle arrays, and microemulsions. Key findings: emu oil-enhanced 4-OHT transfersomal formulations matched oral tamoxifen efficacy with significantly lower plasma levels; raloxifene deformable liposome gel showed 2.77× greater bioavailability than oral forms; tamoxifen citrate nanoemulgel enhanced transdermal delivery; and resveratrol-loaded nanostructured lipid carriers via microneedle arrays improved local bioavailability. Advantages include reduced systemic toxicity, avoidance of first-pass metabolism, and direct breast tissue targeting.",
+    "contexts": [
+      "Various drug delivery systems, including transfersomes, microemulsions, nanogels, microneedles, and iontophoresis can efficiently transport drugs to breast cancer cells.",
+      "The ideal gel formulation demonstrated 2.77 times greater bioavailability than oral RXF and exerted a substantial antitumor effect.",
+      "Emu oil-enhanced transdermal formulations could treat breast cancer effectively while minimizing the adverse effects of oral tamoxifen.",
+      "Transdermal drug delivery (TDD) is an effective alternative to oral treatment, avoiding gastrointestinal absorption, hepatic first-pass metabolism, and minimizing deleterious effects from peak plasma drug concentrations."
+    ],
+    "metadata": {
+      "type": "vector",
+      "difficulty": "medium",
+      "source": "review",
+      "reasoning_type": "explanation",
+      "requires_graph": false,
+      "requires_vector": true,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "What eating side effects does cisplatin cause and how frequently do they occur?",
+    "ground_truth": "Cisplatin causes the following eating-related adverse effects: Nausea (high severity, 70–90% frequency, acute and delayed onset); Vomiting (high severity, 60–80%, acute onset within 1–4 hours); Taste and smell changes (moderate severity, 50%); and Weight loss (moderate severity, 40%, cumulative). Cisplatin is one of the most emetogenic chemotherapy agents. Pre- and post-hydration with 2–4 L IV normal saline is mandatory per NutritionGuideline NG006 to prevent nephrotoxicity.",
+    "contexts": [
+      "Graph node: ChemoDrug Cisplatin CAUSES_EATING_EFFECT Nausea {severity:'High', frequency:'70-90%', onset:'Acute and delayed'}",
+      "Graph node: ChemoDrug Cisplatin CAUSES_EATING_EFFECT Vomiting {severity:'High', frequency:'60-80%', onset:'Acute 1-4h'}",
+      "Graph node: ChemoDrug Cisplatin CAUSES_EATING_EFFECT Taste and Smell Changes {severity:'Moderate', frequency:'50%'}",
+      "Graph node: ChemoDrug Cisplatin CAUSES_EATING_EFFECT Weight Loss {severity:'Moderate', frequency:'40%', onset:'Cumulative'}",
+      "NutritionGuideline NG006: Cisplatin requires pre-hydration with 2-4L IV normal saline and post-hydration to prevent nephrotoxicity; encourage oral fluid intake."
+    ],
+    "metadata": {
+      "type": "graph",
+      "difficulty": "easy",
+      "source": "graph",
+      "reasoning_type": "retrieval",
+      "requires_graph": true,
+      "requires_vector": false,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "What foods help relieve chemotherapy-induced nausea?",
+    "ground_truth": "Foods that help relieve chemotherapy-induced nausea include ginger tea or ginger ale (moderate evidence; 1–2 g ginger daily reduces chemo nausea), bananas (BRAT diet component; bland and gentle), and toast or white bread (crackers before rising help morning nausea). The NCI Eating Hints recommends eating 5–6 small meals per day instead of 3 large meals, eating at room temperature, and avoiding an empty stomach. Foods that worsen nausea include fried or fatty foods (delays gastric emptying) and spicy foods (irritates gastric mucosa).",
+    "contexts": [
+      "Graph: EatingAdverseEffect Nausea RELIEVED_BY FoodItem Ginger Tea/Ginger Ale {evidence:'Moderate', notes:'1-2g ginger daily shown to reduce chemo nausea'}",
+      "Graph: EatingAdverseEffect Nausea RELIEVED_BY FoodItem Bananas {evidence:'Low-moderate', notes:'BRAT diet component; bland and gentle'}",
+      "Graph: EatingAdverseEffect Nausea RELIEVED_BY FoodItem Toast/White Bread {evidence:'Low-moderate', notes:'Crackers before rising helps morning nausea'}",
+      "Graph: EatingAdverseEffect Nausea WORSENED_BY FoodItem Fried/Fatty Foods {evidence:'High', notes:'Delays gastric emptying; increases nausea severity'}",
+      "NCI Eating Hints: Eat 5 or 6 small meals each day instead of 3 large meals. Eat foods that are easy on your stomach, such as bananas, rice, applesauce and toast."
+    ],
+    "metadata": {
+      "type": "graph",
+      "difficulty": "easy",
+      "source": "graph",
+      "reasoning_type": "retrieval",
+      "requires_graph": true,
+      "requires_vector": false,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "What foods should cancer patients avoid during chemotherapy-induced diarrhea?",
+    "ground_truth": "During chemotherapy-induced diarrhea, patients should avoid: high-fiber foods such as whole grains and legumes (insoluble fiber increases gut motility); spicy foods (irritate intestinal mucosa); dairy and lactose-containing foods (secondary lactose intolerance compounds diarrhea); fried or fatty foods; caffeine; alcohol; and foods high in sugar. Low-fiber foods such as white rice, bananas, plain yogurt, and white toast are recommended. Patients should drink 8–12 cups of liquids daily with electrolyte replacement.",
+    "contexts": [
+      "Graph: EatingAdverseEffect Diarrhoea WORSENED_BY FoodItem High-Fibre Foods (Whole Grains, Legumes) {evidence:'High', notes:'Insoluble fibre increases gut motility during active diarrhoea'}",
+      "Graph: EatingAdverseEffect Diarrhoea WORSENED_BY FoodItem Spicy Foods {evidence:'High', notes:'Irritates intestinal mucosa'}",
+      "Graph: EatingAdverseEffect Diarrhoea WORSENED_BY FoodItem Dairy/Lactose-containing Foods {evidence:'High', notes:'Secondary lactose intolerance compounds diarrhoea'}",
+      "NCI Eating Hints: Eat low-fiber foods. Avoid foods high in fiber, such as whole wheat breads and pasta; very hot or very cold drinks; greasy, fatty, or fried foods; spicy foods; foods and drinks that can cause gas; milk products."
+    ],
+    "metadata": {
+      "type": "graph",
+      "difficulty": "easy",
+      "source": "graph",
+      "reasoning_type": "retrieval",
+      "requires_graph": true,
+      "requires_vector": false,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "What is the drug interaction between warfarin and capecitabine and how should it be managed?",
+    "ground_truth": "The interaction between warfarin and capecitabine is classified as SEVERE. Capecitabine's 5-FU metabolites inhibit CYP2C9, increasing S-warfarin AUC by up to 50%, causing INR values that can exceed 10 and presenting a major bleeding risk. Management: avoid the combination entirely and substitute with LMWH. If unavoidable, reduce warfarin dose by 30–50% and check INR twice weekly. Additionally, capecitabine-induced diarrhea reduces vitamin K absorption, further destabilizing INR, so consistent vitamin K dietary intake is critical.",
+    "contexts": [
+      "DrugInteraction DI_WAR_CAP: Warfarin + Capecitabine: Capecitabine inhibits CYP2C9, dramatically elevating warfarin exposure and bleeding risk (INR can exceed 10). Severity: Severe.",
+      "Mechanism: CYP2C9 inhibition by 5-FU metabolites increases S-warfarin AUC by up to 50%.",
+      "Clinical action: Avoid; substitute LMWH. If unavoidable, reduce warfarin 30-50%; check INR twice weekly.",
+      "Eating relevance: Consistent vitamin K diet critical; diarrhoea from capecitabine reduces vitamin K absorption causing INR fluctuation."
+    ],
+    "metadata": {
+      "type": "graph",
+      "difficulty": "medium",
+      "source": "graph",
+      "reasoning_type": "explanation",
+      "requires_graph": true,
+      "requires_vector": false,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "Why is voriconazole contraindicated with vincristine in leukemia patients?",
+    "ground_truth": "Voriconazole is contraindicated with vincristine due to a SEVERE pharmacokinetic interaction. Voriconazole strongly inhibits CYP3A4 and P-glycoprotein, increasing vincristine AUC by 3–4 fold, leading to severe neurotoxicity including peripheral neuropathy, autonomic neuropathy, paralytic ileus, and severe constipation. The combination is absolutely contraindicated. If antifungal coverage is needed in patients on vincristine, caspofungin or micafungin should be substituted, as these echinocandins do not inhibit CYP3A4.",
+    "contexts": [
+      "DrugInteraction DI_VORI_VIN: Voriconazole + Vincristine: Voriconazole inhibits CYP3A4, dramatically increasing vincristine exposure; risk of severe neurotoxicity. Severity: Severe.",
+      "Mechanism: CYP3A4 + P-gp inhibition by azoles increases vincristine AUC 3-4 fold.",
+      "Clinical action: Contraindicated: do not use voriconazole while patient is on vincristine. Use caspofungin or micafungin instead.",
+      "Eating relevance: Severe neurotoxicity including ileus/constipation from vincristine toxicity profoundly impacts eating."
+    ],
+    "metadata": {
+      "type": "graph",
+      "difficulty": "medium",
+      "source": "graph",
+      "reasoning_type": "explanation",
+      "requires_graph": true,
+      "requires_vector": false,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "What nutritional supplementation is mandatory for patients receiving pemetrexed chemotherapy?",
+    "ground_truth": "Pemetrexed requires mandatory nutritional supplementation per NutritionGuideline NG003 (Level 1A evidence): folic acid 400–1000 mcg daily starting 7 days before the first dose throughout treatment, and vitamin B12 1000 mcg intramuscularly every 9 weeks. These supplements reduce pemetrexed toxicity, specifically mucositis and neutropenia, by protecting normal folate-dependent processes while preserving anti-tumor activity. Pemetrexed is a multi-targeted folate pathway inhibitor preferred for non-squamous NSCLC.",
+    "contexts": [
+      "NutritionGuideline NG003: Pemetrexed requires folic acid 400-1000mcg daily starting 7 days before first dose and B12 1000mcg IM every 9 weeks. Applicable to: Pemetrexed toxicity prevention (mucositis, neutropenia). Evidence level: Level 1A – mandatory.",
+      "ChemoDrug Pemetrexed notes: Multi-targeted folate pathway inhibitor; requires B12 and folic acid supplementation. Preferred for non-squamous NSCLC; nutritional supplementation mandatory to reduce toxicity.",
+      "Graph: NutritionGuideline NG003 REQUIRED_FOR ChemoDrug Pemetrexed."
+    ],
+    "metadata": {
+      "type": "graph",
+      "difficulty": "medium",
+      "source": "graph",
+      "reasoning_type": "retrieval",
+      "requires_graph": true,
+      "requires_vector": false,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "What is the severe drug interaction between ibuprofen and methotrexate and why is it clinically dangerous?",
+    "ground_truth": "The interaction between ibuprofen and methotrexate is classified as SEVERE. NSAIDs like ibuprofen competitively inhibit the OAT3 renal transporter responsible for methotrexate secretion, dramatically reducing MTX clearance and causing toxic MTX accumulation leading to severe mucositis and myelosuppression. This is an absolute contraindication with high-dose methotrexate; even low-dose NSAIDs should be avoided. MTX levels must be monitored. MTX toxicity from this interaction causes severe mucositis that may necessitate IV nutritional support.",
+    "contexts": [
+      "DrugInteraction DI_IBU_MTX: Ibuprofen + Methotrexate: NSAIDs reduce renal tubular secretion of MTX, causing severe MTX toxicity (mucositis, myelosuppression). Severity: Severe.",
+      "Mechanism: Competitive inhibition of renal OAT3 transporter reduces MTX clearance.",
+      "Clinical action: Absolute contraindication with high-dose MTX; avoid even low-dose NSAIDs; monitor MTX levels.",
+      "Eating relevance: MTX toxicity causes severe mucositis worsening nutritional status; IV nutrition may be required."
+    ],
+    "metadata": {
+      "type": "graph",
+      "difficulty": "medium",
+      "source": "graph",
+      "reasoning_type": "explanation",
+      "requires_graph": true,
+      "requires_vector": false,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "Why must patients on mercaptopurine (6-MP) maintenance therapy for ALL avoid taking it with milk?",
+    "ground_truth": "Per NutritionGuideline NG007, 6-mercaptopurine absorption is reduced by milk. Patients should take 6-MP on an empty stomach and avoid milk for 1 hour before and after dosing. This drug-food interaction reduces the oral bioavailability of 6-MP, potentially compromising its therapeutic efficacy in ALL maintenance therapy. The drug is an antimetabolite thiopurine used daily in ALL maintenance; inconsistent absorption due to milk co-ingestion could allow leukemic cell proliferation.",
+    "contexts": [
+      "NutritionGuideline NG007: 6-Mercaptopurine absorption is reduced by milk; take on an empty stomach; avoid milk for 1 hour before and after dosing. Applicable to: ALL maintenance – 6-MP drug-food interaction.",
+      "ChemoDrug Mercaptopurine notes: TPMT genotyping guides dosing; hepatotoxicity and myelosuppression; avoid milk (reduces absorption).",
+      "Graph: NutritionGuideline NG007 WARNS_ABOUT FoodItem Milk."
+    ],
+    "metadata": {
+      "type": "graph",
+      "difficulty": "medium",
+      "source": "graph",
+      "reasoning_type": "explanation",
+      "requires_graph": true,
+      "requires_vector": false,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "Why should patients on oral targeted cancer therapies such as vemurafenib or lorlatinib avoid grapefruit?",
+    "ground_truth": "Per NutritionGuideline NG005, patients must avoid grapefruit, grapefruit juice, and Seville oranges during therapy with CYP3A4-metabolized oral targeted agents including Vemurafenib, Lorlatinib, Crizotinib, and Trametinib. Grapefruit contains furanocoumarins that irreversibly inhibit intestinal CYP3A4, increasing plasma levels of these drugs substantially and risking toxicity. The recommendation is based on FDA drug interaction guidance.",
+    "contexts": [
+      "NutritionGuideline NG005: Avoid grapefruit, grapefruit juice, and Seville oranges during therapy with CYP3A4-metabolised oral targeted agents. Applicable to: Vemurafenib, Lorlatinib, Crizotinib, Trametinib. Source: FDA drug interaction guidance.",
+      "FoodItem Grapefruit notes: CYP3A4 inhibitor – interacts with multiple oral targeted agents including vemurafenib, lorlatinib, trametinib; avoid during treatment.",
+      "Graph: NutritionGuideline NG005 WARNS_ABOUT FoodItem Grapefruit."
+    ],
+    "metadata": {
+      "type": "graph",
+      "difficulty": "easy",
+      "source": "graph",
+      "reasoning_type": "explanation",
+      "requires_graph": true,
+      "requires_vector": false,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "What foods help relieve sore mouth (mucositis) during chemotherapy?",
+    "ground_truth": "Foods that help relieve chemotherapy-induced mucositis include cold foods such as popsicles and ice chips (high evidence; cold numbs pain, reduces inflammation, improves intake) and scrambled eggs or other soft proteins (high evidence; soft, moist, easy to chew and swallow). Foods that worsen mucositis include citrus fruits and acidic foods (acid burns ulcerated mucosa), spicy foods (capsaicin causes severe mucosal irritation), and alcohol (desiccates and irritates mucosal surfaces). The NCI Eating Hints also recommends a saltwater/sodium bicarbonate oral rinse 3–4 times daily.",
+    "contexts": [
+      "Graph: EatingAdverseEffect Sore Mouth (Mucositis) RELIEVED_BY FoodItem Cold Foods (Popsicles, Ice Chips) {evidence:'High', notes:'Cold numbs pain; reduces inflammation; improves intake'}",
+      "Graph: EatingAdverseEffect Sore Mouth (Mucositis) RELIEVED_BY FoodItem Scrambled Eggs/Soft Protein {evidence:'High', notes:'Soft, moist protein source; easy to chew and swallow'}",
+      "Graph: EatingAdverseEffect Sore Mouth (Mucositis) WORSENED_BY FoodItem Citrus Fruits/Acidic Foods {evidence:'High', notes:'Acid burns ulcerated mucosa; increases pain'}",
+      "NCI Eating Hints: Choose foods that are easy to chew. Certain foods can hurt a sore mouth. To help, choose soft foods such as milkshakes, scrambled eggs, and custards."
+    ],
+    "metadata": {
+      "type": "graph",
+      "difficulty": "easy",
+      "source": "graph",
+      "reasoning_type": "retrieval",
+      "requires_graph": true,
+      "requires_vector": false,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "What foods help with chemotherapy-induced constipation?",
+    "ground_truth": "To relieve chemotherapy-induced constipation, patients should consume high-fiber foods such as whole grains, legumes, bran muffins, and dried fruits (high evidence; insoluble and soluble fiber promotes bowel movement), as well as adequate water and clear liquids (high evidence; essential for fiber effectiveness). Hot liquids such as coffee or tea can also help. Gentle laxatives may be needed if diet is insufficient. Constipation is particularly common with vincristine (35% frequency, high severity) and opioid pain medications.",
+    "contexts": [
+      "Graph: EatingAdverseEffect Constipation RELIEVED_BY FoodItem High-Fibre Foods (Whole Grains, Legumes) {evidence:'High', notes:'Insoluble and soluble fibre promote bowel movement'}",
+      "Graph: EatingAdverseEffect Constipation RELIEVED_BY FoodItem Water/Clear Liquids {evidence:'High', notes:'Adequate hydration essential for fibre to work effectively'}",
+      "NCI Eating Hints: Eat high-fiber foods. These include whole grain breads and cereals, dried fruits, and cooked dried beans or peas. Drink plenty of liquids. Drink hot liquids. Many people find that drinking warm or hot liquids can help relieve constipation.",
+      "Graph: ChemoDrug Vincristine CAUSES_EATING_EFFECT Constipation {severity:'High', frequency:'35%', onset:'Week 1-2'}"
+    ],
+    "metadata": {
+      "type": "graph",
+      "difficulty": "easy",
+      "source": "graph",
+      "reasoning_type": "retrieval",
+      "requires_graph": true,
+      "requires_vector": false,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "What is the interaction between allopurinol and mercaptopurine (6-MP) and how dangerous is it?",
+    "ground_truth": "The allopurinol–mercaptopurine interaction is SEVERE and potentially life-threatening. Allopurinol inhibits xanthine oxidase, the primary enzyme that inactivates 6-MP, leading to a 4-fold increase in active thiopurine metabolites, causing severe bone marrow suppression, mucositis, and profound nutritional compromise. This combination is CONTRAINDICATED. If allopurinol is required (e.g., for tumor lysis syndrome prevention), the 6-MP dose must be reduced by 75%. Rasburicase is an alternative for TLS prevention that avoids this interaction.",
+    "contexts": [
+      "DrugInteraction DI_ALLOPUR_AZATH: Allopurinol + Azathioprine/Mercaptopurine: Allopurinol inhibits xanthine oxidase, the main enzyme metabolising 6-MP – SEVERE toxicity. Severity: Severe.",
+      "Mechanism: Xanthine oxidase inhibition blocks 6-MP inactivation, increasing active thiopurine metabolites 4-fold.",
+      "Clinical action: CONTRAINDICATED: If allopurinol required (tumour lysis prevention), reduce 6-MP dose by 75%. Consider rasburicase instead.",
+      "Eating relevance: Severe bone marrow suppression causes infection, mucositis, and profound nutritional compromise."
+    ],
+    "metadata": {
+      "type": "graph",
+      "difficulty": "medium",
+      "source": "graph",
+      "reasoning_type": "explanation",
+      "requires_graph": true,
+      "requires_vector": false,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "What happens when a patient on furosemide for hypertension receives cisplatin chemotherapy?",
+    "ground_truth": "Concurrent furosemide and cisplatin presents a SEVERE interaction. Furosemide reduces renal blood flow and increases cisplatin residence time in proximal renal tubules, exacerbating both nephrotoxicity and ototoxicity. Management: avoid furosemide during cisplatin; use thiazide diuretics if diuresis is needed; mannitol-based diuresis is preferred. Electrolyte depletion from combined diuresis and nephrotoxicity worsens nausea and muscle weakness, which compounds the eating difficulties already caused by cisplatin's high emetogenicity (70–90% nausea).",
+    "contexts": [
+      "DrugInteraction DI_FURO_CISP: Furosemide + Cisplatin: Loop diuretics increase cisplatin renal tubular concentration and ototoxicity + nephrotoxicity risk. Severity: Severe.",
+      "Mechanism: Furosemide reduces renal blood flow and increases cisplatin residence in proximal tubules.",
+      "Clinical action: Avoid furosemide during cisplatin; use thiazides if diuresis needed; mannitol-based diuresis preferred.",
+      "Eating relevance: Diuretic overuse causes electrolyte depletion (Na, K, Mg) worsening nausea and muscle weakness."
+    ],
+    "metadata": {
+      "type": "graph",
+      "difficulty": "medium",
+      "source": "graph",
+      "reasoning_type": "multi-hop",
+      "requires_graph": true,
+      "requires_vector": false,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "A breast cancer patient is on tamoxifen and needs an antidepressant for depression. She is currently on sertraline. Is this a concern?",
+    "ground_truth": "Yes, this is a clinically significant concern. Sertraline inhibits CYP2D6 and reduces the conversion of tamoxifen to its active metabolite endoxifen by approximately 60%, substantially reducing tamoxifen's efficacy in breast cancer treatment. This interaction is classified as moderate-to-severe. The preferred alternative antidepressants in tamoxifen patients are venlafaxine or escitalopram, which are weak CYP2D6 inhibitors and do not significantly reduce endoxifen levels. Maintaining tamoxifen efficacy is critical for ER-positive breast cancer outcomes.",
+    "contexts": [
+      "DrugInteraction DI_SERT_TAMOX: Sertraline + Tamoxifen: Sertraline inhibits CYP2D6, reducing conversion of tamoxifen to active metabolite endoxifen. Severity: Moderate-Severe.",
+      "Mechanism: CYP2D6 inhibition reduces endoxifen levels by ~60%; reduces tamoxifen efficacy.",
+      "Clinical action: Prefer venlafaxine or escitalopram (weak CYP2D6 inhibitors) for depression in tamoxifen patients.",
+      "Eating relevance: SSRIs improve mood and thus eating behaviour; drug selection critical to maintain tamoxifen efficacy."
+    ],
+    "metadata": {
+      "type": "hybrid",
+      "difficulty": "hard",
+      "source": "mixed",
+      "reasoning_type": "multi-hop",
+      "requires_graph": true,
+      "requires_vector": true,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "What should I eat during chemotherapy if I have developed a sore mouth and also have diarrhea?",
+    "ground_truth": "For concurrent mucositis and diarrhea during chemotherapy, patients need a diet that is both soft and low-fiber. Recommended foods include: scrambled eggs (soft, easy to chew; does not worsen diarrhea), white rice (low fiber, binding properties reduce stool frequency), bananas (BRAT diet; potassium replacement; gentle), plain low-lactose yogurt (soft protein with potential probiotic benefit; choose lactose-free to avoid worsening diarrhea), and cold foods like popsicles (numb oral pain). Avoid: acidic and spicy foods (worsen mucositis), high-fiber foods and dairy/lactose (worsen diarrhea), and alcohol (worsens both conditions). Drink 8–12 cups of liquid daily to prevent dehydration from diarrhea.",
+    "contexts": [
+      "Graph: EatingAdverseEffect Sore Mouth (Mucositis) RELIEVED_BY FoodItem Scrambled Eggs/Soft Protein {evidence:'High'}",
+      "Graph: EatingAdverseEffect Sore Mouth (Mucositis) WORSENED_BY FoodItem Citrus Fruits/Acidic Foods, Spicy Foods, Alcohol {evidence:'High'}",
+      "Graph: EatingAdverseEffect Diarrhoea RELIEVED_BY FoodItem White Rice {evidence:'High', notes:'Low fibre; binding properties'}",
+      "Graph: EatingAdverseEffect Diarrhoea RELIEVED_BY FoodItem Bananas {evidence:'High', notes:'Pectin and potassium replacement'}",
+      "Graph: EatingAdverseEffect Diarrhoea WORSENED_BY FoodItem Dairy/Lactose-containing Foods, High-Fibre Foods {evidence:'High'}",
+      "NCI Eating Hints: Eat 5 or 6 small meals each day. Drink 8 to 12 cups of liquid a day."
+    ],
+    "metadata": {
+      "type": "hybrid",
+      "difficulty": "hard",
+      "source": "mixed",
+      "reasoning_type": "multi-hop",
+      "requires_graph": true,
+      "requires_vector": true,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "A lung cancer patient on carboplatin-paclitaxel also takes carbamazepine for epilepsy. What is the concern and what should be done?",
+    "ground_truth": "This is a SEVERE drug interaction. Carbamazepine is a strong CYP3A4 inducer that increases paclitaxel metabolism 2–3 fold, significantly reducing paclitaxel plasma levels and therapeutic efficacy in the carboplatin-paclitaxel first-line NSCLC regimen. The recommendation is to switch to a non-enzyme-inducing antiepileptic drug such as levetiracetam, lamotrigine, or lacosamide before starting chemotherapy. This combination risks undertreating the lung cancer. Reduced paclitaxel efficacy may require dose escalation, which increases gastrointestinal side effects.",
+    "contexts": [
+      "DrugInteraction DI_CBZ_PAC: Carbamazepine + Paclitaxel: Carbamazepine induces CYP3A4, significantly reducing paclitaxel plasma levels and therapeutic efficacy. Severity: Severe.",
+      "Mechanism: Strong CYP3A4 induction increases paclitaxel metabolism 2-3 fold.",
+      "Clinical action: Avoid; switch to non-enzyme-inducing antiepileptic (levetiracetam, lamotrigine, lacosamide).",
+      "Graph: Cancer Lung Cancer TREATED_WITH ChemoDrug Carboplatin {line:'first', regimen:'Carboplatin/Paclitaxel'}",
+      "Graph: Cancer Lung Cancer TREATED_WITH ChemoDrug Paclitaxel {line:'first', regimen:'Carboplatin/Paclitaxel'}"
+    ],
+    "metadata": {
+      "type": "hybrid",
+      "difficulty": "hard",
+      "source": "mixed",
+      "reasoning_type": "multi-hop",
+      "requires_graph": true,
+      "requires_vector": true,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "What should a leukemia patient on maintenance mercaptopurine do when their doctor prescribes allopurinol for a gout flare?",
+    "ground_truth": "This is a CONTRAINDICATED drug combination. Allopurinol inhibits xanthine oxidase (the enzyme that inactivates 6-MP), leading to a 4-fold accumulation of active thiopurine metabolites and risk of life-threatening bone marrow suppression and mucositis. If allopurinol is unavoidable, the 6-MP dose must be reduced by 75% with close monitoring. The clinical action per DI_ALLOPUR_AZATH is: CONTRAINDICATED; if allopurinol is required for tumour lysis prevention, reduce 6-MP dose by 75% and consider rasburicase instead. The patient's oncologist must be urgently informed before any dose change.",
+    "contexts": [
+      "DrugInteraction DI_ALLOPUR_AZATH: Allopurinol + Azathioprine/Mercaptopurine: Allopurinol inhibits xanthine oxidase, the main enzyme metabolising 6-MP – SEVERE toxicity. Severity: Severe.",
+      "Mechanism: Xanthine oxidase inhibition blocks 6-MP inactivation, increasing active thiopurine metabolites 4-fold.",
+      "Clinical action: CONTRAINDICATED: If allopurinol required (tumour lysis prevention), reduce 6-MP dose by 75%. Consider rasburicase instead.",
+      "Eating relevance: Severe bone marrow suppression causes infection, mucositis, and profound nutritional compromise.",
+      "Graph: Cancer Acute Leukemia TREATED_WITH ChemoDrug Mercaptopurine {line:'maintenance'}.",
+      "Graph: NonChemoDrug Allopurinol HAS_INTERACTION_WITH ChemoDrug Mercaptopurine."
+    ],
+    "metadata": {
+      "type": "hybrid",
+      "difficulty": "hard",
+      "source": "mixed",
+      "reasoning_type": "multi-hop",
+      "requires_graph": true,
+      "requires_vector": true,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "What dietary and hydration measures should be taken before and after cisplatin administration to protect the kidneys?",
+    "ground_truth": "Per NutritionGuideline NG006, cisplatin requires pre-hydration with 2–4 L IV normal saline before administration, and post-hydration after the dose, to prevent nephrotoxicity. Patients should be encouraged to maintain adequate oral fluid intake between cycles. Additionally, NSAIDs (ibuprofen, aspirin) must be avoided as they reduce renal prostaglandins and potentiate cisplatin nephrotoxicity (interaction DI_IBU_CISP, severity Severe). Furosemide should also be avoided during cisplatin infusion (DI_FURO_CISP, severity Severe). Magnesium supplementation may be needed due to renal magnesium wasting.",
+    "contexts": [
+      "NutritionGuideline NG006: Cisplatin requires pre-hydration with 2-4L IV normal saline and post-hydration to prevent nephrotoxicity; encourage oral fluid intake. Source: ASCO/MASCC guidelines.",
+      "DrugInteraction DI_IBU_CISP: Ibuprofen + Cisplatin: NSAIDs reduce renal prostaglandins, potentiating cisplatin nephrotoxicity; risk of AKI. Severity: Severe.",
+      "DrugInteraction DI_FURO_CISP: Furosemide + Cisplatin: Loop diuretics increase cisplatin renal tubular concentration and nephrotoxicity risk. Severity: Severe.",
+      "SideEffect Nephrotoxicity: Electrolyte wasting (Mg, K, Na) worsens nausea; protein restriction if CKD develops."
+    ],
+    "metadata": {
+      "type": "hybrid",
+      "difficulty": "hard",
+      "source": "mixed",
+      "reasoning_type": "multi-hop",
+      "requires_graph": true,
+      "requires_vector": false,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "What does the dermoscopy image of superficial spreading melanoma show?",
+    "ground_truth": "The dermoscopy image of superficial spreading melanoma (Figure 1b from the melanoma skin cancer review) demonstrates an atypical reticular pattern with radial streaks and a central area of regression. This reflects the characteristic irregular pigment network and peripheral spread of SSM, which histologically shows asymmetric, poorly demarcated melanocytes with pagetoid spread. The regression area appears as a white or gray zone corresponding to melanocyte destruction.",
+    "contexts": [
+      "Image caption [melanoma-skin-cancer-review_picture_2.png]: Figure 1. (a) Superficial spreading melanoma, gross morphology. (b) Dermoscopy of superficial spreading melanoma demonstrating an atypical reticular pattern with radial streaks and a central area of regression.",
+      "Histologically, SSM is characterized by asymmetric, poorly demarcated melanocytes that lack cellular maturation. Melanocytes are distributed unevenly, often with solitary melanocytes being more predominant over nests, and commonly with evidence of intraepithelial spread in a pagetoid manner."
+    ],
+    "metadata": {
+      "type": "image",
+      "difficulty": "medium",
+      "source": "image",
+      "reasoning_type": "retrieval",
+      "requires_graph": false,
+      "requires_vector": false,
+      "requires_image": true,
+      "should_trigger_fallback": false,
+      "image_filename": "melanoma-skin-cancer-review_picture_2.png"
+    }
+  },
+  {
+    "question": "What does the histology image of nodular melanoma in Figure 6 of the melanoma review show?",
+    "ground_truth": "Figure 6 (melanoma-skin-cancer-review_picture_10.png) shows nodular melanoma on hematoxylin-eosin stain at 10×. The image demonstrates densely packed dermal proliferation of atypical melanocytes extending to the reticular dermis, with Clark's level IV and Breslow thickness of 2.9 mm. Several dermal mitoses (10 mitoses per 1 mm²) are visible, indicating high proliferative activity and poor prognosis.",
+    "contexts": [
+      "Image caption [melanoma-skin-cancer-review_picture_10.png]: Figure 6. Nodular melanoma, histology (hematoxylin-eosin stain), 10×. Nodular melanoma with densely packed dermal proliferation of atypical melanocytes extending to the reticular dermis (Clark's level: IV, Breslow thickness 2.9 mm). Several dermal mitoses (10 mitosis × 1 mm²) are shown.",
+      "Nodular melanoma is defined as melanocyte proliferation with vertical growth. These lesions frequently show dermal mitosis and epidermal ulceration."
+    ],
+    "metadata": {
+      "type": "image",
+      "difficulty": "medium",
+      "source": "image",
+      "reasoning_type": "retrieval",
+      "requires_graph": false,
+      "requires_vector": false,
+      "requires_image": true,
+      "should_trigger_fallback": false,
+      "image_filename": "melanoma-skin-cancer-review_picture_10.png"
+    }
+  },
+  {
+    "question": "What does Table 1 in the ALK lung cancer review summarize?",
+    "ground_truth": "Table 1 (lung-cancer-review_table_1.png) summarizes the main clinical studies and results of ALK TKI drugs in ALK-positive NSCLC patients, organized by generation. First-generation: Crizotinib showed ORR of 61% (PROFILE 1001) and 59.8% (PROFILE 1005). Second-generation: Ceritinib achieved mPFS of 5.7 months; Alectinib reached mPFS of 34.1 months (J-ALEX) and 34.8 months (ALEX); Brigatinib achieved mPFS of 24 months (ALTA-1L, ORR 71%). Third-generation: Lorlatinib showed BOR of 76% (CROWN trial).",
+    "contexts": [
+      "Image caption [lung-cancer-review_table_1.png]: TABLE 1. A summary description of the main studies and results of the ALK TKI in patients with ALK-positive NSCLC.",
+      "Alectinib J-ALEX Open-label randomized phase III trial; 207 patients (2013-2015): mPFS=34.1 months. ALEX Open-label multicenter randomized phase III trial; 303 patients (2014-2017): mPFS=34.8 months, ORR=82.9%.",
+      "Crizotinib PROFILE 1001 Phase I single-arm trial: ORR=61%. PROFILE 1005 Phase II single-arm trial: ORR=59.8%."
+    ],
+    "metadata": {
+      "type": "image",
+      "difficulty": "medium",
+      "source": "image",
+      "reasoning_type": "retrieval",
+      "requires_graph": false,
+      "requires_vector": false,
+      "requires_image": true,
+      "should_trigger_fallback": false,
+      "image_filename": "lung-cancer-review_table_1.png"
+    }
+  },
+  {
+    "question": "What does Figure 2 of the lung cancer review depict regarding ALK TKI resistance?",
+    "ground_truth": "Figure 2 (lung-cancer-review_picture_2.png) describes the most common mechanisms of resistance to ALK TKIs, divided into dominant and non-dominant categories. Dominant mechanisms include ALK intra-kinase domain mutations and ALK gene copy number gain. Non-dominant mechanisms include tumor heterogeneity and bypass signaling pathway activations such as EGFR, KRAS, KIT, MET, and IGF-1R. The figure visually organizes these as an on-target vs off-target resistance framework for ALK-rearranged NSCLC.",
+    "contexts": [
+      "Image caption [lung-cancer-review_picture_2.png]: FIGURE 2. Describing the most common mechanisms of resistance to anaplastic lymphoma kinase tyrosine kinase inhibitors divided into dominant and non-dominant category.",
+      "Secondary resistance can be divided into dominant (ALK intra-kinase domain mutation, increased copy number gain of ALK gene) and non-dominant such as tumor heterogeneity, bypass signaling pathways activation such as the EGFR, KRAS, KIT, MET, and IGF-1R."
+    ],
+    "metadata": {
+      "type": "image",
+      "difficulty": "medium",
+      "source": "image",
+      "reasoning_type": "retrieval",
+      "requires_graph": false,
+      "requires_vector": false,
+      "requires_image": true,
+      "should_trigger_fallback": false,
+      "image_filename": "lung-cancer-review_picture_2.png"
+    }
+  },
+  {
+    "question": "What does Figure 1 of the breast cancer review illustrate?",
+    "ground_truth": "Figure 1 (breast-cancer-review_picture_1.png) illustrates the different topical drug delivery systems used in breast cancer studies. These include transfersomes, microemulsions, nanogels, microneedles, and iontophoresis devices. The figure visually summarizes how each system is applied to the breast skin surface or through the nipple-areola complex to achieve localized drug delivery to breast tissue while minimizing systemic exposure.",
+    "contexts": [
+      "Image caption [breast-cancer-review_picture_1.png]: Figure 1. Different topical drug delivery system used in breast cancer studies.",
+      "Various drug delivery systems, including transfersomes, microemulsions, nanogels, microneedles, and iontophoresis can efficiently transport drugs to breast cancer cells. These systems are capable of traversing biological barriers, such as the stratum corneum in the skin."
+    ],
+    "metadata": {
+      "type": "image",
+      "difficulty": "easy",
+      "source": "image",
+      "reasoning_type": "retrieval",
+      "requires_graph": false,
+      "requires_vector": false,
+      "requires_image": true,
+      "should_trigger_fallback": false,
+      "image_filename": "breast-cancer-review_picture_1.png"
+    }
+  },
+  {
+    "question": "What is the worldwide incidence of melanoma and which regions have the highest rates?",
+    "ground_truth": "According to GLOBOCAN, melanoma is the 17th most common cancer globally with 324,635 new cases and the 23rd leading cause of cancer death with 57,043 deaths in 2020. Europe has the highest incidence (46.4%) and mortality (46.2%) in absolute numbers. However, Australia and New Zealand have the highest incidence and mortality rates per 100,000 population, with Australia recording an ASR of 37 per 100,000 in 2022. The worldwide ASR is 3.4 per 100,000 incidence and 0.56 per 100,000 mortality. Asia has a low incidence but higher mortality rate, partly due to late-stage diagnosis.",
+    "contexts": [
+      "According to the Global Cancer Observatory (GLOBOCAN) report, MSC is the 17th most common cancer, with 324,635 new cases, and the 23rd leading cause of death among all cancers, resulting in 57,043 deaths in 2020. MSC has the highest incidence in Europe (46.4%) and North America (32.4%).",
+      "New Zealand and Australia have the highest incidence and mortality rates of MSC worldwide.",
+      "The worldwide ASR of incidence and mortality is 3.4 and 0.56 per 100,000 individuals, respectively.",
+      "Table 1: Skin cancer incidence rate: Australia: 37 per 100,000."
+    ],
+    "metadata": {
+      "type": "vector",
+      "difficulty": "easy",
+      "source": "review",
+      "reasoning_type": "retrieval",
+      "requires_graph": false,
+      "requires_vector": true,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "What biomarkers guide treatment selection in advanced melanoma?",
+    "ground_truth": "In advanced melanoma, two key biomarkers guide treatment: (1) BRAF V600E mutation (present in most melanomas) – guides targeted therapy with BRAF inhibitors (vemurafenib, dabrafenib) combined with MEK inhibitors (trametinib, cobimetinib). BRAF-mutant tumors can be treated with BRAF+MEK inhibitors or PD-1 checkpoint inhibitors. (2) PD-L1 expression – guides use of checkpoint inhibitors (pembrolizumab, nivolumab, atezolizumab). HER2 overexpression is relevant for breast cancer, while ALK gene rearrangement and EGFR mutations are biomarkers for lung cancer.",
+    "contexts": [
+      "Graph: Cancer Skin Cancer HAS_BIOMARKER Biomarker BRAF V600E mutation {therapeutic_relevance:'Vemurafenib, Dabrafenib, Trametinib'}",
+      "Graph: Cancer Skin Cancer HAS_BIOMARKER Biomarker PD-L1 expression {therapeutic_relevance:'Pembrolizumab, Nivolumab, Atezolizumab'}",
+      "Mutations in the BRAF gene are the most frequent somatic mutations in melanoma, activating specifically the MAPK pathway. The second most common mutations are NRAS mutations, which activate both the MAPK and PI3K pathways.",
+      "For BRAF-mutant tumors: dabrafenib plus trametinib or PD-1 inhibitor."
+    ],
+    "metadata": {
+      "type": "hybrid",
+      "difficulty": "medium",
+      "source": "mixed",
+      "reasoning_type": "multi-hop",
+      "requires_graph": true,
+      "requires_vector": true,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "What treatment protocol is used for AML induction and what drugs does it include?",
+    "ground_truth": "The standard AML induction protocol is the '7+3' regimen: Cytarabine 100 mg/m² as continuous IV infusion for 7 days (days 1–7) combined with Daunorubicin or Idarubicin for 3 days (days 1–3). An alternative is '3+7 with idarubicin'. The graph records this as TreatmentProtocol '7+3 AML Induction' under Cancer Acute Leukemia, including drugs Cytarabine and Daunorubicin. High-dose cytarabine (HiDAC) is used for consolidation. Eligible patients with high-risk disease proceed to allogeneic stem cell transplantation in first complete remission.",
+    "contexts": [
+      "Graph: TreatmentProtocol 7+3 AML Induction: description='Cytarabine 100mg/m² CI days 1-7 + Daunorubicin/Idarubicin days 1-3; standard AML induction', cancer='Acute Leukemia (AML)', setting='Induction'.",
+      "Graph: TreatmentProtocol 7+3 AML Induction INCLUDES_DRUG ChemoDrug Cytarabine.",
+      "Graph: TreatmentProtocol 7+3 AML Induction INCLUDES_DRUG ChemoDrug Daunorubicin.",
+      "Graph: Cancer Acute Leukemia TREATED_BY_PROTOCOL TreatmentProtocol 7+3 AML Induction."
+    ],
+    "metadata": {
+      "type": "graph",
+      "difficulty": "easy",
+      "source": "graph",
+      "reasoning_type": "retrieval",
+      "requires_graph": true,
+      "requires_vector": false,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "What is CAR-T cell therapy and what results has it achieved in relapsed ALL?",
+    "ground_truth": "CAR-T (chimeric antigen receptor T-cell) therapy involves genetically engineering a patient's own T cells to express an antibody antigen-binding domain linked to intracellular T-cell receptor signalling domains, enabling MHC-independent cancer cell recognition. In a pilot study, Grupp et al. treated 53 children with relapsed/refractory ALL with CD19-directed CAR-Ts and observed a CR rate of 94% (50/53 patients), a 12-month EFS of 45%, and OS of 78%. In adults, Davila et al. reported 88% CR in 16 patients. Key toxicities include cytokine release syndrome (CRS), treated with the anti-IL-6-receptor antibody tocilizumab (sourced from acute-leukemia-review.md), and loss of CAR-T persistence. CD22-directed CAR-Ts are also in early phase 1 trials.",
+    "contexts": [
+      "In a pilot study, Grupp et al. treated 53 children with relapsed/refractory ALL with lymphocyte depleting chemotherapy followed by CD19-directed CAR-Ts. A CR was observed in 50 patients (94%), with a 12-month EFS rate of 45% and OS rate of 78%.",
+      "Davila et al. treated 16 adults at Memorial Sloan Kettering Cancer Center with conditioning chemotherapy followed by CD19-directed CAR T-cell infusion. CR was observed in 88% of patients.",
+      "Nearly all of the patients developed cytokine release syndrome (CRS). The 15 patients in which CRS was severe were effectively treated with the anti-IL-6-receptor antibody, tocilizumab.",
+      "Important causes of treatment failure included the loss of circulating CAR-Ts and the expansion of a CD19-negative clone.",
+      "Source: acute-leukemia-review.md – section on Future Therapies, Chimeric antigen receptor (CAR) T cells."
+    ],
+    "metadata": {
+      "type": "vector",
+      "difficulty": "hard",
+      "source": "review",
+      "reasoning_type": "explanation",
+      "requires_graph": false,
+      "requires_vector": true,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "What nutritional measures should be taken when a diabetic patient receives dexamethasone as chemotherapy premedication?",
+    "ground_truth": "Dexamethasone used as premedication (e.g., with paclitaxel or docetaxel) causes hyperglycemia in diabetic patients through glucocorticoid receptor activation that increases hepatic gluconeogenesis and reduces peripheral insulin sensitivity. This interaction (DI_DEXA_INSULIN) is rated Moderate severity. Management includes: blood glucose monitoring before and after dexamethasone; sliding-scale insulin adjustment; dietitian-guided carbohydrate management. Dexamethasone also increases appetite and causes food cravings, complicating diabetic dietary control, and contributes to weight gain during treatment.",
+    "contexts": [
+      "DrugInteraction DI_DEXA_INSULIN: Dexamethasone (chemo premedication) causes hyperglycaemia in diabetic patients, requiring insulin dose adjustment. Severity: Moderate.",
+      "Mechanism: Glucocorticoid receptor activation increases hepatic gluconeogenesis and reduces peripheral insulin sensitivity.",
+      "Clinical action: Monitor glucose pre- and post-dexamethasone; sliding scale insulin; dietitian-guided carb management.",
+      "Eating relevance: Dexamethasone increases appetite and causes cravings; diabetes dietary management becomes complex during chemo."
+    ],
+    "metadata": {
+      "type": "hybrid",
+      "difficulty": "hard",
+      "source": "mixed",
+      "reasoning_type": "multi-hop",
+      "requires_graph": true,
+      "requires_vector": true,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "What are the eating problems that cancer patients on chemotherapy commonly experience?",
+    "ground_truth": "Common eating problems during cancer treatment include: appetite loss, changes in taste or smell, constipation, diarrhea, dry mouth, lactose intolerance, nausea, sore mouth (mucositis), sore throat and trouble swallowing (esophagitis), vomiting, weight gain, and weight loss. These arise because chemotherapy damages healthy cells, including those lining the mouth and intestines. Not every patient experiences every problem, and severity depends on treatment type, dose, and individual health status.",
+    "contexts": [
+      "Common eating problems during cancer treatment include appetite loss, changes in sense of taste or smell, constipation, diarrhea, dry mouth, lactose intolerance, nausea, sore mouth, sore throat and trouble swallowing, vomiting, weight gain, weight loss.",
+      "Cancer treatments are designed to kill cancer cells. But these treatments can also damage healthy cells. Damage to healthy cells can cause side effects that lead to eating problems.",
+      "NCI Eating Hints: List of eating problems: Appetite loss, Constipation, Diarrhea, Dry mouth, Lactose intolerance, Nausea, Sore mouth (mucositis), Sore throat and trouble swallowing, Taste or smell changes, Vomiting, Weight gain, Weight loss."
+    ],
+    "metadata": {
+      "type": "vector",
+      "difficulty": "easy",
+      "source": "review",
+      "reasoning_type": "retrieval",
+      "requires_graph": false,
+      "requires_vector": true,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "What are the key differences between basal cell carcinoma (BCC) and squamous cell carcinoma (SCC) in terms of origin and aggressiveness?",
+    "ground_truth": "BCC arises from nonkeratinizing basal cells of the epidermis and is the most common skin cancer globally (80–90% of NMSCs), but it rarely metastasizes. SCC arises from epidermal keratinocytes (squamous and non-squamous), is less common than BCC (~25% of NMSCs), but is significantly more aggressive and accounts for approximately 75% of NMSC mortality. BCC is associated with intermittent UV exposure, while SCC correlates with cumulative long-term UV exposure. SCC has a 13.3% rate of developing a second SCC following a primary diagnosis.",
+    "contexts": [
+      "BCC develops from the basal cells of the epidermis layer, has follicular structures, and is locally destructive but rarely metastasizes.",
+      "SCC arises from keratinocytes of the epidermis but is not as destructive as BCC.",
+      "Although BCC is more prevalent, accounting for 80%–90% of skin cancers, it has a lower mortality rate than SCC. SCC accounts for 75% of the mortality rate owing to NMSCs.",
+      "Unlike BCC, which is associated with intermittent exposure, SCC is associated with long-term exposure to UV radiation."
+    ],
+    "metadata": {
+      "type": "vector",
+      "difficulty": "medium",
+      "source": "review",
+      "reasoning_type": "comparison",
+      "requires_graph": false,
+      "requires_vector": true,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "What does Figure 10 in the melanoma review show, and what clinical tool does it represent?",
+    "ground_truth": "Figure 10 (melanoma-skin-cancer-review_picture_15.png) illustrates the ABCDE criteria for melanoma clinical diagnosis. The figure visually depicts the five criteria: A (Asymmetry), B (Border irregularity), C (Color variation), D (Diameter >6 mm), and E (Evolution), with visual examples of each characteristic. This is the primary clinical screening tool used by clinicians and patients to identify suspicious pigmented lesions that require further evaluation.",
+    "contexts": [
+      "Image caption [melanoma-skin-cancer-review_picture_15.png]: Figure 10. ABCDE criteria for melanoma clinical diagnosis.",
+      "The ABCDE criteria, based on the evolution of the radial growth phase, have been a fundamental resource in aiding melanoma earlier detection.",
+      "The main sign of MSC is often a mole, with changing characteristics including asymmetry, irregular borders, color variations, diameter (>6 mm), elevated surface, and other signs such as itchiness and bleeding."
+    ],
+    "metadata": {
+      "type": "image",
+      "difficulty": "easy",
+      "source": "image",
+      "reasoning_type": "retrieval",
+      "requires_graph": false,
+      "requires_vector": false,
+      "requires_image": true,
+      "should_trigger_fallback": false,
+      "image_filename": "melanoma-skin-cancer-review_picture_15.png"
+    }
+  },
+  {
+    "question": "Can taking herbal supplements or vitamin megadoses help fight cancer during chemotherapy?",
+    "ground_truth": "The available evidence does not support the use of herbal supplements or vitamin megadoses to fight cancer. The NCI Eating Hints explicitly states: there are no studies that prove any special diet, food, vitamin, mineral, dietary supplement, herb, or combination of these can slow cancer, cure it, or keep it from coming back. Furthermore, some products can interfere with how cancer treatment works. Patients should inform their doctor, nurse, or dietitian about any vitamins, minerals, dietary supplements, or herbs they are taking or plan to take before starting them.",
+    "contexts": [
+      "NCI Eating Hints: Many people want to know how they can fight cancer by eating certain foods or taking vitamins or supplements. But there are no studies that prove that any special diet, food, vitamin, mineral, dietary supplement, herb, or combination of these can slow cancer, cure it, or keep it from coming back.",
+      "In fact, some of these products can cause other problems by changing how your cancer treatment works.",
+      "Tell your doctor, nurse, or dietitian about any vitamin, mineral, dietary supplements, or herbs you are already taking or plan to take."
+    ],
+    "metadata": {
+      "type": "fallback",
+      "difficulty": "easy",
+      "source": "review",
+      "reasoning_type": "retrieval",
+      "requires_graph": false,
+      "requires_vector": true,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "What is the cure rate for stage IV osteosarcoma treated with the latest immunotherapy protocols?",
+    "ground_truth": "The provided review documents do not contain specific cure rate data for stage IV osteosarcoma treated with current immunotherapy protocols. The osteosarcoma review (2018) notes that current five-year survival for osteosarcoma overall exceeds 65%, and that novel immunotherapy approaches including listeria-based vaccines and tyrosine kinase inhibitors showed promising preclinical results in canine models. However, no specific stage IV immunotherapy cure rate data is available in the provided sources. A treating oncologist or current oncology database should be consulted for up-to-date data.",
+    "contexts": [
+      "The current survival rate has increased to >65%. However, this is overall survival, not specific to Stage IV.",
+      "Mason et al. made promising strides in a canine model of OS, using an attenuated listeria vaccine to deliver and induce innate HER2/neu immunity, leading to a significant reduction in metastatic disease and increases in survival.",
+      "There have been no significant advances in the treatment of the disease over the last 10 plus years, however advancements are slowly being made."
+    ],
+    "metadata": {
+      "type": "fallback",
+      "difficulty": "medium",
+      "source": "review",
+      "reasoning_type": "retrieval",
+      "requires_graph": false,
+      "requires_vector": true,
+      "requires_image": false,
+      "should_trigger_fallback": true
+    }
+  },
+  {
+    "question": "What is the recommended dietary approach for cancer patients who have developed lactose intolerance during treatment?",
+    "ground_truth": "For secondary lactose intolerance during cancer treatment, patients should: prepare low-lactose or lactose-free foods; choose commercially labeled lactose-free or low-lactose milk products; use milk substitutes such as soy, almond, oat, coconut, or rice-based products; and choose naturally low-lactose dairy products such as hard cheeses (e.g., cheddar) and yogurt. Lactase enzyme supplements may help. The condition can persist for weeks or months after treatment ends and occasionally becomes permanent. Lactose intolerance is commonly caused by radiation therapy to the abdomen or pelvis.",
+    "contexts": [
+      "NCI Eating Hints: Choose lactose-free or low-lactose milk products. Try milk substitutes, such as milk, yogurt, or ice cream made from soy, almond, oat, coconut, or rice. These products do not have any lactose. Choose milk products that are naturally low in lactose. Hard cheeses, such as cheddar, and yogurt are less likely to cause problems.",
+      "EatingAdverseEffect Lactose Intolerance (Secondary): management_tip='Lactase supplements; lactose-free dairy; plant milks (soy, oat, almond); hard cheeses tolerated'. onset='During or after abdominal/pelvic radiation'.",
+      "Graph: EatingAdverseEffect Lactose Intolerance (Secondary) WORSENED_BY FoodItem Dairy/Lactose-containing Foods {evidence:'High'}."
+    ],
+    "metadata": {
+      "type": "hybrid",
+      "difficulty": "medium",
+      "source": "mixed",
+      "reasoning_type": "multi-hop",
+      "requires_graph": true,
+      "requires_vector": true,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "What is the interaction between morphine and vincristine and how does it affect eating?",
+    "ground_truth": "The interaction between morphine and vincristine is classified as Moderate severity. Both drugs independently cause constipation, and their combination creates an additive risk of severe constipation and paralytic ileus. Morphine activates opioid receptors reducing intestinal peristalsis, while vincristine causes autonomic neuropathy leading to GI dysmotility. Management requires a mandatory prophylactic bowel regimen: macrogol plus stimulant laxative; methylnaltrexone may be considered. Pain management without opioids is preferred in vincristine patients when clinically possible. Paralytic ileus may require bowel rest and IV nutrition.",
+    "contexts": [
+      "DrugInteraction DI_MORPH_VINCR: Morphine + Vincristine: Both cause constipation; additive risk of severe constipation, paralytic ileus. Severity: Moderate.",
+      "Mechanism: Opioid receptor activation + autonomic neuropathy from vincristine create severe GI dysmotility.",
+      "Clinical action: Prophylactic bowel regimen is mandatory; macrogol + stimulant laxative; consider methylnaltrexone.",
+      "Eating relevance: Paralytic ileus requires bowel rest and IV nutrition; pain management without opioids preferred in vincristine patients."
+    ],
+    "metadata": {
+      "type": "graph",
+      "difficulty": "medium",
+      "source": "graph",
+      "reasoning_type": "explanation",
+      "requires_graph": true,
+      "requires_vector": false,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "What are the key features of the Hyper-CVAD protocol used in ALL?",
+    "ground_truth": "The Hyper-CVAD (HCVAD) protocol consists of four cycles of hyperfractionated cyclophosphamide, vincristine, doxorubicin, and dexamethasone, alternated with four cycles of high-dose cytarabine and methotrexate. CNS prophylaxis is provided with 4–16 doses of intrathecal chemotherapy depending on predetermined CNS disease risk. HCVAD has demonstrated a 92% complete response rate and 32% five-year disease-free survival in adults with ALL. It is one of the primary induction regimens used in both B-cell and T-cell ALL.",
+    "contexts": [
+      "The Hyper-CVAD (HCVAD)/Methotrexate-cytarabine regimen consists of four cycles of hyperfractionated cyclophosphamide, vincristine, doxorubicin and dexamethasone alternated with four cycles of high dose cytarabine and methotrexate.",
+      "HCVAD has demonstrated similar efficacy to the ECOG trial with a 92% complete response rate and 32% 5-year disease-free survival.",
+      "Graph: TreatmentProtocol Hyper-CVAD (ALL): INCLUDES_DRUG Cyclophosphamide, Vincristine, Doxorubicin, Methotrexate, Cytarabine."
+    ],
+    "metadata": {
+      "type": "vector",
+      "difficulty": "medium",
+      "source": "review",
+      "reasoning_type": "retrieval",
+      "requires_graph": false,
+      "requires_vector": true,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "What is the EML4-ALK fusion gene and what are its clinical characteristics in NSCLC?",
+    "ground_truth": "The EML4-ALK fusion gene results from a paracentric inversion of chromosome 2, with at least 7 variants identified; variant 1 (involving exon 13) is the most common, followed by variant 2a/b (exon 20) and variant 3 (exon 6). ALK rearrangement occurs in approximately 3–5% of NSCLC patients. Clinical characteristics of ALK-rearranged NSCLC include: younger age at diagnosis (median ~52 years), female gender, non-smoker or light smoker status, adenocarcinoma histology with cribriform and signet ring morphology, thyroid transcription factor-1 expression, tendency to metastasize to pleura or pericardium, and predominant CNS metastases.",
+    "contexts": [
+      "ALK gene has an incidence of 3-5% in patients with NSCLC and although more than 20 variants of ALK fusion proteins have been discovered, the most common partner is EML4.",
+      "The EML4-ALK fusion gene results from the paracentric inversion of chromosome 2 with at least 7 variants identified, variant 1 (v1) involving exon 13 being the most common.",
+      "This category of patients with ALK rearrangement has the following clinicopathological characteristics: Young age at diagnosis (a median of 52 years old), women gender, non-smokers/light smokers, histology of adenocarcinoma with particular morphologic patterns such as cribriform and solid signet ring."
+    ],
+    "metadata": {
+      "type": "vector",
+      "difficulty": "hard",
+      "source": "review",
+      "reasoning_type": "explanation",
+      "requires_graph": false,
+      "requires_vector": true,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "Can I eat normally after my cancer treatment ends?",
+    "ground_truth": "After cancer treatment ends, many eating problems improve, though some may persist, especially after head and neck cancer treatment or surgery to the stomach or intestines. The NCI Eating Hints recommends returning to a healthy diet by: eating many different kinds of foods; consuming lots of fruits, vegetables, and whole grains; limiting fat, salt, sugar, alcohol, and processed meats; choosing lean proteins and low-fat dairy; and using low-fat cooking methods. Consulting a dietitian even after treatment ends is helpful for managing any lingering eating problems or returning to a healthy dietary pattern.",
+    "contexts": [
+      "NCI Eating Hints: Once you finish cancer treatment, many of your eating problems should get better. Some eating problems, such as weight loss and changes in taste or smell, may last longer than your course of treatment.",
+      "While healthy eating by itself cannot keep cancer from coming back, it can help you regain strength, rebuild tissue, and improve how you feel after treatment ends.",
+      "NCI Eating Hints: Eat lots of fruits and vegetables, including raw and cooked vegetables, fruits, and fruit juices. Eat whole wheat bread, oats, brown rice, or other whole grains and cereals. Go easy on fat, salt, sugar, alcohol, smoked or pickled foods, and processed meats."
+    ],
+    "metadata": {
+      "type": "vector",
+      "difficulty": "easy",
+      "source": "review",
+      "reasoning_type": "retrieval",
+      "requires_graph": false,
+      "requires_vector": true,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "A melanoma patient on nivolumab also takes levothyroxine for hypothyroidism. What monitoring is required?",
+    "ground_truth": "Nivolumab (anti-PD-1 checkpoint inhibitor) can induce immune-related thyroiditis causing thyroid dysfunction, which may require levothyroxine dose adjustment. Per DrugInteraction DI_LEVOTHYR_NIVOLUMAB (Moderate severity), TSH should be monitored every 4–6 weeks during immunotherapy. The initial phase may be hyperthyroid (thyrotoxicosis), causing diarrhea and weight loss, followed by a hypothyroid phase causing fatigue, constipation, and weight gain. Endocrinology referral is warranted. This interaction also applies to pembrolizumab.",
+    "contexts": [
+      "DrugInteraction DI_LEVOTHYR_NIVOLUMAB: Levothyroxine dose requirements may change in cancer patients receiving checkpoint inhibitors (pembrolizumab, nivolumab) causing immune thyroiditis. Severity: Moderate.",
+      "Clinical action: Monitor TSH every 4-6 weeks during immunotherapy; adjust levothyroxine dose; endocrinology referral.",
+      "Eating relevance: Hypothyroidism from irAE causes fatigue, constipation, weight gain; hyperthyroid causes diarrhoea, weight loss.",
+      "Graph: NonChemoDrug Levothyroxine HAS_INTERACTION_WITH ChemoDrug Nivolumab."
+    ],
+    "metadata": {
+      "type": "hybrid",
+      "difficulty": "hard",
+      "source": "mixed",
+      "reasoning_type": "multi-hop",
+      "requires_graph": true,
+      "requires_vector": true,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "What are the high-risk cytogenetic features that worsen prognosis in Ph-negative ALL?",
+    "ground_truth": "In Ph-negative ALL, the following cytogenetic abnormalities are associated with inferior outcomes: t(4;11)/KMT2A translocation, t(8;14), complex karyotype (≥5 chromosomal abnormalities), low hypodiploidy (30–39 chromosomes), and near-triploidy (60–78 chromosomes). Additionally, Ph-like ALL (which lacks t(9;22) but has a similar gene expression profile) is associated with poor induction chemotherapy response, elevated minimal residual disease (MRD), and poor survival. In contrast, hyperdiploidy and del(9p) carry a better prognosis. MRD positivity after induction or early consolidation is also an independent adverse prognostic factor.",
+    "contexts": [
+      "Subsequent analysis of MRC UKALL XII/ECOG E2993 identified cytogenetic subgroups of Ph-negative disease with inferior outcomes. These included t(4;11), KMT2A translocation, t(8;14), complex karyotype (≥5 chromosomal abnormalities) and low hypodiploidy (30–39 chromosomes)/near triploidy (60–78 chromosomes).",
+      "In contrast, patients with hyperdiploidy and del(9p) had a significantly better outcome.",
+      "Ph-like ALL has been associated with poor response to induction chemotherapy, elevated minimal residual disease and poor survival."
+    ],
+    "metadata": {
+      "type": "vector",
+      "difficulty": "hard",
+      "source": "review",
+      "reasoning_type": "explanation",
+      "requires_graph": false,
+      "requires_vector": true,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "What are the nutritional guidelines for managing immune colitis caused by ipilimumab or pembrolizumab?",
+    "ground_truth": "Per NutritionGuideline NG008, patients with immune colitis from checkpoint inhibitors (ipilimumab, pembrolizumab, nivolumab) should follow a low-residue diet. They should avoid high-fiber foods, lactose-containing foods, and fatty foods. Corticosteroids are required for Grade 2+ immune colitis. In severe cases, bowel rest and parenteral nutrition may be needed. Ipilimumab causes diarrhea in 30–40% of patients (high severity, onset Week 3–8) via immune colitis mechanisms. Pembrolizumab causes diarrhea in approximately 15% of patients.",
+    "contexts": [
+      "NutritionGuideline NG008: For patients with immune colitis from checkpoint inhibitors: low-residue diet, avoid high-fibre foods, lactose, and fatty foods; corticosteroids for grade 2+. Applicable to: Ipilimumab/Pembrolizumab/Nivolumab immune colitis. Source: SITC immunotherapy toxicity management.",
+      "Graph: ChemoDrug Ipilimumab CAUSES_EATING_EFFECT Diarrhoea {severity:'High', frequency:'30-40%', onset:'Week 3-8', mechanism:'Immune colitis'}",
+      "Graph: ChemoDrug Pembrolizumab CAUSES_EATING_EFFECT Diarrhoea {severity:'Moderate', frequency:'15%', onset:'Variable', mechanism:'Immune colitis'}"
+    ],
+    "metadata": {
+      "type": "hybrid",
+      "difficulty": "medium",
+      "source": "mixed",
+      "reasoning_type": "multi-hop",
+      "requires_graph": true,
+      "requires_vector": true,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "What are the main detection methods for ALK rearrangement in NSCLC and their key advantages and limitations?",
+    "ground_truth": "The main methods are: (1) FISH (gold standard) – high specificity, can use small biopsies, automated; but expensive, requires specific expertise, cannot identify fusion partners. (2) IHC – high sensitivity, cheaper, faster, good screening tool; poor specificity, cannot identify fusion partner. (3) RT-PCR – identifies rearrangements and fusion partners, high sensitivity, applicable to biofluids; cannot detect unknown fusion partners, requires high-quality RNA. (4) NGS – detects mutations, copy number gain, and multiple oncogenic mutations simultaneously; complex analysis, expensive, long turnaround. (5) Liquid biopsy – minimally invasive, repeatable, real-time; high cost, needs standardization, technical requirements.",
+    "contexts": [
+      "FISH testing with the ALK break-apart probe kit was the mandatory diagnosis test. Although it has been considered the gold standard because it provides very good specificity, can be performed in small biopsy sample... FISH can only determine if there is a break in the ALK locus but does not have the ability to distinguish between the ALK fusion partners.",
+      "IHC has excellent sensitivity, with the advantage of being less expensive, following a simplified and rapid method... but it has poor sensitivity and it cannot identify the ALK fusion partner.",
+      "RT-PCR uses specific primers for identified ALK fusion partners, but a disadvantage is that unknown molecules could not be detected.",
+      "NGS has the ability of identifying ALK mutations, copy number gain and provide identification of numerous oncogenic mutations at the same time.",
+      "Image caption [lung-cancer-review_table_2.png]: TABLE 2. The main methods used to identify ALK mutation and mechanism of resistance described according to their main advantages and limitations."
+    ],
+    "metadata": {
+      "type": "vector",
+      "difficulty": "hard",
+      "source": "review",
+      "reasoning_type": "comparison",
+      "requires_graph": false,
+      "requires_vector": true,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "What is blinatumomab and how effective is it for relapsed/refractory ALL?",
+    "ground_truth": "Blinatumomab is a bispecific anti-T-cell receptor/anti-CD19 antibody (BiTE) that engages T cells to activate B-cell-specific cytolysis. In a landmark phase 2 trial of 189 patients with relapsed/refractory Ph-negative ALL, blinatumomab achieved CR after 2 cycles in 43% with 82% MRD negativity; median response duration and OS were 9 and 6 months respectively. In the randomized TOWER phase 3 trial, blinatumomab showed median survival of 7.7 months versus 4.0 months for standard chemotherapy (p=0.012, HR 0.71). FDA approved in 2016 for relapsed/refractory ALL. Common adverse events include fever, chills, neutropenia; serious events include cytokine release syndrome and seizures.",
+    "contexts": [
+      "The landmark study was a multi-center, single-arm, open-label phase 2 trial in which 189 patients with primary refractory and relapsed ALL received single-agent therapy with blinatumomab. CR was achieved after 2 cycles in 43% with 82% achieving MRD negativity. The median response duration and the overall survival were 9 and 6 months, respectively.",
+      "The blinatumomab study group (n=271) had a median survival of 7.7 months versus 4.0 months for standard of care (n=134) (P=0.012, hazards ratio 0.71).",
+      "Based on these results, blinatumomab was approved by the FDA for relapsed and refractory ALL in 2016.",
+      "The most frequent adverse events include fever, chills, neutropenia, anemia and hypogammaglobulinemia. More significant adverse events are rare, but include cytokine release syndrome, altered mental status and seizures."
+    ],
+    "metadata": {
+      "type": "vector",
+      "difficulty": "hard",
+      "source": "review",
+      "reasoning_type": "explanation",
+      "requires_graph": false,
+      "requires_vector": true,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "What are the recommended eating strategies for cancer patients experiencing weight gain during steroid-containing chemotherapy?",
+    "ground_truth": "For chemotherapy-related weight gain (common with dexamethasone-containing regimens), the NCI Eating Hints recommends: eating lots of fruits and vegetables (high fiber, low calorie, promotes satiety); choosing high-fiber foods such as whole grains, cooked beans, and peas; selecting lean proteins (lean beef, fish, skinless poultry, plant-based proteins); choosing low-fat dairy products; using low-fat cooking methods (broiling, steaming, grilling, roasting); eating smaller portion sizes; and reducing salt intake if weight gain is from fluid retention. The graph identifies that dexamethasone interaction (DI_DEXA_INSULIN) compounds weight gain through hyperglycemia and appetite stimulation.",
+    "contexts": [
+      "NCI Eating Hints - Weight Gain: Eat lots of fruits and vegetables. These are high in fiber and low in calories. Eat foods that are high in fiber. Choose lean meats. Choose plant-based proteins. Choose low-fat milk products. Eat less fat. Cook with low-fat methods, such as broiling, steaming, grilling, or roasting. Eat small portion sizes.",
+      "Graph: DrugInteraction DI_DEXA_INSULIN COMPOUNDS_EATING_EFFECT Weight Gain {note:'Dexamethasone-induced hyperglycaemia and appetite increase promotes weight gain'}",
+      "EatingAdverseEffect Weight Gain: management_tip='High-fibre, low-fat diet; reduce refined carbs; light physical activity; monitor fluid retention'."
+    ],
+    "metadata": {
+      "type": "hybrid",
+      "difficulty": "medium",
+      "source": "mixed",
+      "reasoning_type": "multi-hop",
+      "requires_graph": true,
+      "requires_vector": true,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "What is the treatment protocol for first-line advanced melanoma with combined ipilimumab and nivolumab?",
+    "ground_truth": "The Ipi+Nivo protocol for first-line advanced melanoma consists of Ipilimumab 3 mg/kg + Nivolumab 1 mg/kg every 3 weeks for 4 cycles, followed by Nivolumab 240 mg every 2 weeks as maintenance. It is recorded as TreatmentProtocol 'Ipi+Nivo (Melanoma)' for Cancer Skin Cancer (Melanoma), setting: First-line. Ipilimumab blocks CTLA-4 enhancing T-cell activation, while Nivolumab blocks PD-1 restoring tumor-specific T-cell function. The combination increases immune-related adverse event incidence, particularly immune colitis, requiring low-residue dietary management per NG008.",
+    "contexts": [
+      "Graph: TreatmentProtocol Ipi+Nivo (Melanoma): description='Ipilimumab 3mg/kg + Nivolumab 1mg/kg q3w × 4 then Nivo 240mg q2w; first-line advanced melanoma', cancer='Skin Cancer (Melanoma)', setting='First-line'.",
+      "Graph: TreatmentProtocol Ipi+Nivo (Melanoma) INCLUDES_DRUG ChemoDrug Ipilimumab.",
+      "Graph: TreatmentProtocol Ipi+Nivo (Melanoma) INCLUDES_DRUG ChemoDrug Nivolumab.",
+      "ChemoDrug Nivolumab notes: combination with ipilimumab increases irAE incidence."
+    ],
+    "metadata": {
+      "type": "graph",
+      "difficulty": "medium",
+      "source": "graph",
+      "reasoning_type": "retrieval",
+      "requires_graph": true,
+      "requires_vector": false,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "What is the interaction between warfarin and methotrexate and how should it be managed?",
+    "ground_truth": "The interaction between warfarin and methotrexate is classified as SEVERE (DI_WAR_MTX). Methotrexate displaces warfarin from albumin and inhibits folate metabolism, which synergistically increases the warfarin anticoagulant effect and significantly raises bleeding risk. Management: avoid the combination where possible; if unavoidable, reduce warfarin dose and monitor INR 2–3 times per week; switch to LMWH as the preferred alternative. From a dietary perspective, patients on warfarin must maintain consistent vitamin K intake and avoid large fluctuations in leafy green consumption, which can independently destabilise INR.",
+    "contexts": [
+      "DrugInteraction DI_WAR_MTX: Warfarin + Methotrexate: MTX displaces warfarin from albumin and inhibits folate metabolism; significantly increases bleeding risk. Severity: Severe.",
+      "Mechanism: Protein binding displacement + antifolate synergism increases warfarin effect.",
+      "Clinical action: Avoid combination; if unavoidable, reduce warfarin dose and monitor INR 2-3x/week; switch to LMWH.",
+      "Eating relevance: Patients on warfarin should maintain consistent vitamin K intake; avoid large changes in leafy greens.",
+      "Graph: NonChemoDrug Warfarin HAS_INTERACTION_WITH ChemoDrug Methotrexate."
+    ],
+    "metadata": {
+      "type": "graph",
+      "difficulty": "medium",
+      "source": "graph",
+      "reasoning_type": "explanation",
+      "requires_graph": true,
+      "requires_vector": false,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "Does taking warfarin alongside cisplatin chemotherapy require any special monitoring?",
+    "ground_truth": "Yes. The warfarin–cisplatin interaction is classified as MODERATE (DI_WAR_CISP). Cisplatin-induced nausea and reduced oral intake alter vitamin K absorption, and cisplatin-associated thrombocytopenia compounds anticoagulation risk, both destabilising INR. Management: monitor INR at each chemotherapy cycle; support nutritional intake to maintain consistent vitamin K levels; switch to LMWH if INR becomes unstable. Adequate oral fluid intake around cisplatin is also protective against the associated nephrotoxicity.",
+    "contexts": [
+      "DrugInteraction DI_WAR_CISP: Warfarin + Cisplatin: Cisplatin-induced nausea and reduced oral intake alter vitamin K absorption, destabilising INR. Severity: Moderate.",
+      "Mechanism: Nutritional disruption and thrombocytopenia compound anticoagulation risk.",
+      "Clinical action: Monitor INR at each chemo cycle; supplement nutrition; switch to LMWH if INR unstable.",
+      "Graph: NonChemoDrug Warfarin HAS_INTERACTION_WITH ChemoDrug Cisplatin."
+    ],
+    "metadata": {
+      "type": "graph",
+      "difficulty": "medium",
+      "source": "graph",
+      "reasoning_type": "explanation",
+      "requires_graph": true,
+      "requires_vector": false,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "Can a breast cancer patient taking low-dose aspirin safely receive capecitabine chemotherapy?",
+    "ground_truth": "Caution is required. The aspirin–capecitabine interaction is classified as MODERATE (DI_ASP_CAP). Low-dose aspirin can increase 5-FU plasma levels and worsen gastrointestinal toxicity (diarrhea, mucositis) via two mechanisms: platelet inhibition reduces 5-FU catabolism, and increased mucosal prostaglandin inhibition worsens GI damage. Management: use with caution; monitor closely for GI toxicity; consider alternative antiplatelet strategies if bleeding risk is high. If the combination is clinically necessary, the patient should be counselled on early reporting of diarrhea and mouth sores.",
+    "contexts": [
+      "DrugInteraction DI_ASP_CAP: Aspirin + Capecitabine: Low-dose aspirin can increase 5-FU plasma levels and GI toxicity (diarrhoea, mucositis) via platelet inhibition. Severity: Moderate.",
+      "Mechanism: Platelet inhibition reduces 5-FU catabolism; increased mucosal prostaglandin inhibition worsens GI damage.",
+      "Clinical action: Use with caution; monitor for GI toxicity; consider alternatives if bleeding risk high.",
+      "Graph: NonChemoDrug Aspirin HAS_INTERACTION_WITH ChemoDrug Capecitabine.",
+      "Graph: Cancer Breast Cancer TREATED_WITH ChemoDrug Capecitabine {line:'metastatic/adjuvant'}."
+    ],
+    "metadata": {
+      "type": "graph",
+      "difficulty": "medium",
+      "source": "graph",
+      "reasoning_type": "explanation",
+      "requires_graph": true,
+      "requires_vector": false,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "What is the interaction between fluconazole and cyclophosphamide and what is its clinical impact?",
+    "ground_truth": "The fluconazole–cyclophosphamide interaction is classified as MODERATE (DI_FLUCO_CYCL). Fluconazole inhibits CYP2C9 and CYP3A4, reducing the metabolic activation of cyclophosphamide by impairing formation of 4-hydroxycyclophosphamide (the active metabolite). This reduces cyclophosphamide's anti-tumour efficacy and may alter the toxic metabolite profile. Management: monitor treatment efficacy; consider switching to an alternative antifungal such as caspofungin (an echinocandin that does not inhibit CYP enzymes); or adjust cyclophosphamide dose if fluconazole cannot be avoided.",
+    "contexts": [
+      "DrugInteraction DI_FLUCO_CYCL: Fluconazole + Cyclophosphamide: Fluconazole inhibits CYP2C9 and CYP3A4, reducing metabolic activation of cyclophosphamide, reducing efficacy and potentially altering toxic metabolite profile. Severity: Moderate.",
+      "Mechanism: CYP inhibition reduces 4-hydroxycyclophosphamide formation (active metabolite).",
+      "Clinical action: Monitor efficacy; consider alternative antifungal (caspofungin) or adjust cyclophosphamide dose.",
+      "Graph: NonChemoDrug Fluconazole HAS_INTERACTION_WITH ChemoDrug Cyclophosphamide."
+    ],
+    "metadata": {
+      "type": "graph",
+      "difficulty": "medium",
+      "source": "graph",
+      "reasoning_type": "explanation",
+      "requires_graph": true,
+      "requires_vector": false,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "Why should voriconazole be avoided in patients receiving etoposide chemotherapy?",
+    "ground_truth": "The voriconazole–etoposide interaction is classified as SEVERE (DI_VORI_ETOPOS). Voriconazole is a strong CYP3A4 inhibitor and inhibits CYP3A4-mediated clearance of etoposide, significantly increasing etoposide plasma exposure and raising the risk of severe myelosuppression. Management: avoid this combination; if voriconazole is clinically unavoidable, reduce the etoposide dose by 25–50% and monitor haematological parameters closely. Etoposide is used in salvage regimens for both osteosarcoma (IFOS/Etoposide) and acute leukemia (FLAG-IDA, ESHAP salvage), making this interaction particularly relevant in haematological malignancy patients requiring antifungal prophylaxis.",
+    "contexts": [
+      "DrugInteraction DI_VORI_ETOPOS: Voriconazole + Etoposide: Voriconazole inhibits CYP3A4-mediated etoposide clearance, increasing etoposide exposure and myelosuppression risk. Severity: Severe.",
+      "Mechanism: CYP3A4 inhibition reduces etoposide clearance.",
+      "Clinical action: Avoid combination; if necessary reduce etoposide dose by 25-50% with close haematological monitoring.",
+      "Graph: NonChemoDrug Voriconazole HAS_INTERACTION_WITH ChemoDrug Etoposide.",
+      "Graph: Cancer Osteosarcoma TREATED_WITH ChemoDrug Etoposide {line:'salvage', regimen:'IFOS/Etoposide'}.",
+      "Graph: Cancer Acute Leukemia TREATED_WITH ChemoDrug Etoposide {line:'salvage'}."
+    ],
+    "metadata": {
+      "type": "graph",
+      "difficulty": "medium",
+      "source": "graph",
+      "reasoning_type": "explanation",
+      "requires_graph": true,
+      "requires_vector": false,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "What effect does carbamazepine have on etoposide chemotherapy effectiveness?",
+    "ground_truth": "The carbamazepine–etoposide interaction is classified as SEVERE (DI_CBZ_ETOPOS). Carbamazepine is a strong inducer of CYP3A4 and upregulates P-glycoprotein, reducing etoposide AUC by up to 50% and severely compromising anti-tumour efficacy. Management: switch the antiepileptic to a non-enzyme-inducing agent (levetiracetam, lamotrigine, or lacosamide); if switching is not possible, consider increasing the etoposide dose under therapeutic drug monitoring. This interaction is especially relevant in brain tumour patients who may require both etoposide and antiepileptic therapy simultaneously.",
+    "contexts": [
+      "DrugInteraction DI_CBZ_ETOPOS: Carbamazepine + Etoposide: CYP3A4 induction by carbamazepine reduces etoposide AUC by up to 50%, severely compromising efficacy. Severity: Severe.",
+      "Mechanism: CYP3A4 induction and P-gp upregulation reduces etoposide bioavailability.",
+      "Clinical action: Switch AED; consider increasing etoposide dose if switching not possible with TDM.",
+      "Graph: NonChemoDrug Carbamazepine HAS_INTERACTION_WITH ChemoDrug Etoposide.",
+      "NonChemoDrug Carbamazepine drug_class: Antiepileptic / Mood stabiliser; mechanism: Sodium channel blockade; strong CYP3A4 inducer."
+    ],
+    "metadata": {
+      "type": "graph",
+      "difficulty": "medium",
+      "source": "graph",
+      "reasoning_type": "explanation",
+      "requires_graph": true,
+      "requires_vector": false,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "What is the interaction between phenytoin and methotrexate, and what dietary precaution applies to tube-fed patients?",
+    "ground_truth": "The phenytoin–methotrexate interaction is classified as MODERATE (DI_PHENY_MTX). Methotrexate may reduce phenytoin absorption from the gastrointestinal tract, causing phenytoin plasma levels to drop and potentially leading to seizure breakthrough. The mechanism involves reduced GI absorption of phenytoin and possible protein binding competition. Management: monitor phenytoin levels weekly during MTX therapy; separate doses; consider IV phenytoin if oral absorption is unreliable; or switch to a non-interacting antiepileptic. An important dietary note: for patients receiving enteral (tube) nutrition, phenytoin absorption is significantly affected by continuous tube feeds; feeds should be held for at least 2 hours before and after phenytoin dosing to ensure adequate absorption.",
+    "contexts": [
+      "DrugInteraction DI_PHENY_MTX: Phenytoin + Methotrexate: Methotrexate may reduce phenytoin absorption; phenytoin levels can drop causing seizure breakthrough. Severity: Moderate.",
+      "Mechanism: Reduced GI absorption of phenytoin; possible protein binding competition.",
+      "Clinical action: Monitor phenytoin levels weekly during MTX; separate doses; consider IV phenytoin or switch AED.",
+      "Eating relevance: Phenytoin absorption affected by tube feeds; hold feeds around phenytoin dose by 2 hours.",
+      "Graph: NonChemoDrug Phenytoin HAS_INTERACTION_WITH ChemoDrug Methotrexate."
+    ],
+    "metadata": {
+      "type": "hybrid",
+      "difficulty": "hard",
+      "source": "mixed",
+      "reasoning_type": "multi-hop",
+      "requires_graph": true,
+      "requires_vector": false,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "Can a patient on high-dose methotrexate safely receive ciprofloxacin for a bacterial infection?",
+    "ground_truth": "No — this combination should be avoided wherever possible. The ciprofloxacin–methotrexate interaction is classified as SEVERE (DI_CIPRO_MTX). Ciprofloxacin inhibits OAT1 and OAT3 renal organic anion transporters, reducing the tubular secretion of methotrexate and dramatically increasing MTX plasma levels, which can cause severe mucositis, myelosuppression, and nephrotoxicity. Management: avoid concurrent use with high-dose MTX; if the patient has a serious bacterial infection requiring treatment, delay the next MTX cycle until the antibiotic course is complete; closely monitor MTX levels and leucovorin rescue if overlap is unavoidable.",
+    "contexts": [
+      "DrugInteraction DI_CIPRO_MTX: Ciprofloxacin + Methotrexate: Ciprofloxacin inhibits OAT1/OAT3 renal MTX secretion, increasing MTX levels and toxicity. Severity: Severe.",
+      "Mechanism: Competitive inhibition of organic anion transporters in renal tubules.",
+      "Clinical action: Avoid concurrent use with HD-MTX; delay next MTX cycle if infection requires ciprofloxacin; monitor MTX levels.",
+      "Graph: NonChemoDrug Ciprofloxacin HAS_INTERACTION_WITH ChemoDrug Methotrexate.",
+      "Graph: Cancer Osteosarcoma TREATED_WITH ChemoDrug Methotrexate {line:'neoadjuvant/adjuvant', regimen:'MAP protocol (HD-MTX + Adriamycin + Cisplatin)'}."
+    ],
+    "metadata": {
+      "type": "graph",
+      "difficulty": "medium",
+      "source": "graph",
+      "reasoning_type": "explanation",
+      "requires_graph": true,
+      "requires_vector": false,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "Why is co-trimoxazole (TMP-SMX) contraindicated during methotrexate therapy and what are the nutritional consequences?",
+    "ground_truth": "The co-trimoxazole–methotrexate interaction is classified as SEVERE (DI_COTRIMOX_MTX). Both trimethoprim and methotrexate inhibit dihydrofolate reductase (DHFR), producing an additive antifolate effect that causes severe myelosuppression and mucositis. The combination is contraindicated during MTX therapy. If PCP prophylaxis is required, atovaquone should be used instead of co-trimoxazole. The combined mucositis from this interaction is severe and typically requires liquid-only nutrition; parenteral nutrition may become necessary, making this interaction clinically dangerous from both a haematological and nutritional standpoint.",
+    "contexts": [
+      "DrugInteraction DI_COTRIMOX_MTX: Co-trimoxazole + Methotrexate: Additive antifolate effect causing severe myelosuppression and mucositis. Severity: Severe.",
+      "Mechanism: Trimethoprim and MTX both inhibit DHFR; additive folate antagonism.",
+      "Clinical action: Contraindicated during MTX therapy; use targeted prophylaxis (atovaquone) if PCP prophylaxis required.",
+      "Eating relevance: Combined mucositis is severe, requiring liquid nutrition; parenteral nutrition may be necessary.",
+      "Graph: NonChemoDrug Co-trimoxazole (TMP-SMX) HAS_INTERACTION_WITH ChemoDrug Methotrexate."
+    ],
+    "metadata": {
+      "type": "graph",
+      "difficulty": "medium",
+      "source": "graph",
+      "reasoning_type": "explanation",
+      "requires_graph": true,
+      "requires_vector": false,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "What is the interaction between co-trimoxazole and cyclophosphamide in cancer patients?",
+    "ground_truth": "The co-trimoxazole–cyclophosphamide interaction is classified as MODERATE (DI_COTRIMOX_CYCL). Sulfamethoxazole (SMX) inhibits CYP2C9, which reduces bioactivation of cyclophosphamide by impairing formation of 4-hydroxycyclophosphamide (the active metabolite), potentially reducing anti-tumour efficacy. Additionally, trimethoprim (TMP) has an additive bone marrow suppressive effect that increases the risk of severe neutropenia. Management: monitor full blood count closely; consider adjusting cyclophosphamide dose if significant neutropenia occurs.",
+    "contexts": [
+      "DrugInteraction DI_COTRIMOX_CYCL: Co-trimoxazole + Cyclophosphamide: SMX inhibits CYP2C9 reducing cyclophosphamide bioactivation; TMP causes additive bone marrow suppression. Severity: Moderate.",
+      "Mechanism: CYP2C9 inhibition reduces 4-OH-cyclophosphamide production; myelosuppression additive effect.",
+      "Clinical action: Monitor FBC; consider dose adjustment if neutropenia severe.",
+      "Graph: NonChemoDrug Co-trimoxazole (TMP-SMX) HAS_INTERACTION_WITH ChemoDrug Cyclophosphamide."
+    ],
+    "metadata": {
+      "type": "graph",
+      "difficulty": "medium",
+      "source": "graph",
+      "reasoning_type": "explanation",
+      "requires_graph": true,
+      "requires_vector": false,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "What is the drug interaction between atorvastatin and paclitaxel and what dietary note applies?",
+    "ground_truth": "The atorvastatin–paclitaxel interaction is classified as MILD-TO-MODERATE (DI_ATORVA_PAC). Both drugs are CYP3A4 substrates; paclitaxel may competitively inhibit atorvastatin metabolism and through P-glycoprotein interaction can increase statin exposure, raising the risk of myopathy and rhabdomyolysis. Management: use the lowest effective statin dose; switch to rosuvastatin (which is not a CYP3A4 substrate) as a safer alternative; monitor creatine phosphokinase (CPK). An important dietary note: grapefruit and grapefruit juice must be avoided with both atorvastatin and paclitaxel, as grapefruit irreversibly inhibits intestinal CYP3A4, increasing exposure to both drugs.",
+    "contexts": [
+      "DrugInteraction DI_ATORVA_PAC: Atorvastatin + Paclitaxel: Both are CYP3A4 substrates; moderate pharmacokinetic interaction; paclitaxel may increase statin exposure and myopathy risk. Severity: Mild-Moderate.",
+      "Mechanism: CYP3A4 competition; possible P-gp interaction.",
+      "Clinical action: Use lowest effective statin dose; switch to rosuvastatin (not CYP3A4); monitor CPK.",
+      "Eating relevance: Myopathy from statins can reduce appetite and activity; grapefruit must be avoided with both drugs.",
+      "NutritionGuideline NG005: Avoid grapefruit, grapefruit juice, and Seville oranges during therapy with CYP3A4-metabolised oral targeted agents.",
+      "Graph: NonChemoDrug Atorvastatin HAS_INTERACTION_WITH ChemoDrug Paclitaxel."
+    ],
+    "metadata": {
+      "type": "hybrid",
+      "difficulty": "medium",
+      "source": "mixed",
+      "reasoning_type": "multi-hop",
+      "requires_graph": true,
+      "requires_vector": false,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "What is the eating-related concern when amitriptyline and cisplatin are used together?",
+    "ground_truth": "The amitriptyline–cisplatin interaction is classified as MODERATE (DI_AMITRIPT_CISP). Amitriptyline has significant anticholinergic properties that reduce GI motility; cisplatin independently causes peripheral and autonomic neuropathy leading to GI slowing. The additive anticholinergic effect from both agents creates a substantial risk of severe constipation and paralytic ileus. From an eating perspective, severe constipation causes abdominal pain and nausea, markedly reducing food intake and contributing to nutritional compromise. Management: monitor bowel function closely; initiate prophylactic laxatives; consider substituting duloxetine (which has minimal anticholinergic activity) for neuropathic pain management instead of amitriptyline.",
+    "contexts": [
+      "DrugInteraction DI_AMITRIPT_CISP: Amitriptyline + Cisplatin: Anticholinergic effects of amitriptyline compound cisplatin-induced GI slowing; constipation and ileus risk. Severity: Moderate.",
+      "Mechanism: Additive anticholinergic effects reduce GI motility.",
+      "Clinical action: Monitor bowel function; prophylactic laxatives; consider duloxetine instead for neuropathic pain.",
+      "Eating relevance: Severe constipation causes abdominal pain and nausea, markedly reducing food intake.",
+      "Graph: NonChemoDrug Amitriptyline HAS_INTERACTION_WITH ChemoDrug Cisplatin.",
+      "Graph: EatingAdverseEffect Constipation RELIEVED_BY FoodItem High-Fibre Foods {evidence:'High'}.",
+      "Graph: EatingAdverseEffect Constipation RELIEVED_BY FoodItem Water/Clear Liquids {evidence:'High'}."
+    ],
+    "metadata": {
+      "type": "hybrid",
+      "difficulty": "medium",
+      "source": "mixed",
+      "reasoning_type": "multi-hop",
+      "requires_graph": true,
+      "requires_vector": false,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "A hypertensive cancer patient on amlodipine is started on carbamazepine for seizures. What is the concern?",
+    "ground_truth": "The amlodipine–carbamazepine interaction is classified as MODERATE (DI_AMLO_CBZ). Carbamazepine is a strong CYP3A4 inducer; amlodipine is a CYP3A4 substrate (dihydropyridine calcium channel blocker). CYP3A4 induction by carbamazepine increases amlodipine clearance by approximately 50%, reducing plasma amlodipine levels and impairing blood pressure control. Uncontrolled hypertension during cancer chemotherapy increases the risk of cardiovascular events and treatment interruptions. Management: monitor blood pressure closely; may need to increase the amlodipine dose; alternatively, switch to a non-CYP3A4-substrate calcium channel blocker.",
+    "contexts": [
+      "DrugInteraction DI_AMLO_CBZ: Amlodipine + Carbamazepine: Carbamazepine induces CYP3A4, reducing amlodipine levels and blood pressure control. Severity: Moderate.",
+      "Mechanism: CYP3A4 induction increases amlodipine clearance ~50%.",
+      "Clinical action: Monitor blood pressure; may need amlodipine dose increase; or switch to non-CYP substrate CCB.",
+      "NonChemoDrug Amlodipine drug_class: Calcium channel blocker (dihydropyridine); mechanism: L-type calcium channel blockade causing vasodilation; CYP3A4 substrate.",
+      "NonChemoDrug Amlodipine TREATS Ailment Hypertension.",
+      "NonChemoDrug Carbamazepine drug_class: Antiepileptic / Mood stabiliser; strong CYP3A4 inducer."
+    ],
+    "metadata": {
+      "type": "graph",
+      "difficulty": "medium",
+      "source": "graph",
+      "reasoning_type": "explanation",
+      "requires_graph": true,
+      "requires_vector": false,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "Can a lung cancer patient on erlotinib continue taking omeprazole for acid reflux?",
+    "ground_truth": "This requires careful management. The omeprazole–erlotinib interaction is classified as MODERATE (DI_OMEP_ERLOT). Erlotinib (an EGFR TKI used in NSCLC) requires an acidic gastric environment for optimal dissolution and absorption; proton pump inhibitors like omeprazole raise gastric pH above 3, reducing erlotinib absorption by up to 46%. Management: avoid PPIs with erlotinib. If acid suppression is clinically necessary, use a short-acting antacid taken at least 4 hours before erlotinib, or switch to an H2-receptor blocker (which raises pH less dramatically). An important dietary note: erlotinib should be taken on an empty stomach or with a small low-fat meal to maximise absorption.",
+    "contexts": [
+      "DrugInteraction DI_OMEP_ERLOT: Omeprazole + Erlotinib (EGFR TKI for NSCLC): PPIs raise gastric pH, reducing erlotinib absorption by up to 46%. Severity: Moderate.",
+      "Mechanism: Erlotinib requires acidic gastric environment for optimal dissolution; pH >3 markedly reduces solubility.",
+      "Clinical action: Avoid PPIs with erlotinib; if acid suppression needed, use short-acting antacid 4h before erlotinib or H2 blocker.",
+      "Eating relevance: Take erlotinib on empty stomach or with a small low-fat meal to maximise absorption.",
+      "Graph: NonChemoDrug Omeprazole HAS_INTERACTION_WITH ChemoDrug Gemcitabine.",
+      "Graph: Cancer Lung Cancer TREATED_WITH ChemoDrug Pembrolizumab {line:'first'}.",
+      "Graph: Cancer Lung Cancer HAS_BIOMARKER Biomarker EGFR mutation {therapeutic_relevance:'EGFR TKIs: erlotinib, gefitinib, osimertinib'}."
+    ],
+    "metadata": {
+      "type": "hybrid",
+      "difficulty": "medium",
+      "source": "mixed",
+      "reasoning_type": "multi-hop",
+      "requires_graph": true,
+      "requires_vector": true,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "What is the role of mesna in preventing haemorrhagic cystitis during ifosfamide or cyclophosphamide treatment?",
+    "ground_truth": "Per NutritionGuideline NG009, mesna must be co-administered with ifosfamide and cyclophosphamide to prevent haemorrhagic cystitis. Mesna (sodium 2-mercaptoethanesulfonate) inactivates the urotoxic metabolite acrolein in the urine, which is generated when these alkylating agents are metabolised. High oral fluid intake reinforces bladder protection by diluting acrolein and increasing urine flow, reducing mucosal contact time. This is a mandatory supportive measure, not optional: ifosfamide drug notes state mesna is mandatory (typical dose: 1.8–2 g/m² for 5 days with mesna), and cyclophosphamide notes confirm haemorrhagic cystitis is prevented by mesna prophylaxis.",
+    "contexts": [
+      "NutritionGuideline NG009: Mesna must be co-administered with ifosfamide and cyclophosphamide to prevent haemorrhagic cystitis; high oral fluid intake reinforces protection. Source: Standard oncology protocol.",
+      "Graph: NutritionGuideline NG009 REQUIRED_FOR ChemoDrug Ifosfamide.",
+      "ChemoDrug Ifosfamide notes: Haemorrhagic cystitis (mesna mandatory), encephalopathy, nephrotoxicity (Fanconi syndrome). Typical dose: 1.8-2 g/m² for 5 days with mesna.",
+      "ChemoDrug Cyclophosphamide notes: Haemorrhagic cystitis (mesna prophylaxis), nausea, and immunosuppression.",
+      "FoodItem Water/Clear Liquids notes: Essential hydration; 8-12 cups/day recommended; critical for cisplatin nephrotoxicity prevention and mesna-protected regimens."
+    ],
+    "metadata": {
+      "type": "hybrid",
+      "difficulty": "medium",
+      "source": "mixed",
+      "reasoning_type": "explanation",
+      "requires_graph": true,
+      "requires_vector": false,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "What eating side effects does gemcitabine cause and in which cancers is it used?",
+    "ground_truth": "Gemcitabine causes the following eating-related adverse effects: Nausea (moderate severity, 35% frequency, onset during infusion); and Appetite Loss (moderate severity, 40% frequency, cumulative onset). It has flu-like symptoms that also contribute to reduced appetite. Gemcitabine is used across multiple cancers in the knowledge graph: Lung Cancer (first-line, Gemcitabine/Cisplatin regimen); Breast Cancer (metastatic, Gemcitabine/Paclitaxel or Gemcitabine/Carboplatin). Its mechanism involves inhibiting ribonucleotide reductase and DNA polymerase by being incorporated into DNA.",
+    "contexts": [
+      "Graph: ChemoDrug Gemcitabine CAUSES_EATING_EFFECT Nausea {severity:'Moderate', frequency:'35%', onset:'During infusion'}",
+      "Graph: ChemoDrug Gemcitabine CAUSES_EATING_EFFECT Appetite Loss {severity:'Moderate', frequency:'40%', onset:'Cumulative'}",
+      "ChemoDrug Gemcitabine notes: Used in NSCLC, pancreatic, bladder, and breast cancers; flu-like symptoms common.",
+      "Graph: Cancer Lung Cancer TREATED_WITH ChemoDrug Gemcitabine {line:'first', regimen:'Gemcitabine/Cisplatin'}",
+      "Graph: Cancer Breast Cancer TREATED_WITH ChemoDrug Gemcitabine {line:'metastatic', regimen:'Gemcitabine/Paclitaxel or Gemcitabine/Carboplatin'}"
+    ],
+    "metadata": {
+      "type": "graph",
+      "difficulty": "easy",
+      "source": "graph",
+      "reasoning_type": "retrieval",
+      "requires_graph": true,
+      "requires_vector": false,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "What eating side effects does vinorelbine cause and how is it used in lung cancer?",
+    "ground_truth": "Vinorelbine is a vinca alkaloid used as a second-line agent in lung cancer (NSCLC). Its characteristic eating-related side effects are constipation (from autonomic neuropathy via tubulin binding, similar to other vinca alkaloids) and peripheral neuropathy. These are well-established class effects of vinca alkaloids. Vinorelbine can be administered IV or orally at 25–30 mg/m² weekly. In the graph, it is recorded as a second-line treatment for Lung Cancer (Vinorelbine monotherapy, Level 2 evidence). Patients should maintain adequate fluid and fibre intake to manage constipation risk, consistent with the general constipation management guidelines.",
+    "contexts": [
+      "ChemoDrug Vinorelbine notes: Constipation and peripheral neuropathy are characteristic side effects. Route: IV or oral. Typical dose: 25-30 mg/m² weekly.",
+      "ChemoDrug Vinorelbine drug_class: Vinca alkaloid. Mechanism: Inhibits tubulin polymerisation, disrupting mitotic spindle formation.",
+      "Graph: Cancer Lung Cancer TREATED_WITH ChemoDrug Vinorelbine {line:'second', evidence:'Level 2', regimen:'Vinorelbine monotherapy'}",
+      "Graph: EatingAdverseEffect Constipation RELIEVED_BY FoodItem High-Fibre Foods {evidence:'High'}",
+      "Graph: EatingAdverseEffect Constipation RELIEVED_BY FoodItem Water/Clear Liquids {evidence:'High'}"
+    ],
+    "metadata": {
+      "type": "graph",
+      "difficulty": "easy",
+      "source": "graph",
+      "reasoning_type": "retrieval",
+      "requires_graph": true,
+      "requires_vector": false,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "What eating side effects does dacarbazine cause and why was it historically significant in melanoma treatment?",
+    "ground_truth": "Dacarbazine is an alkylating agent (triazene class) that was historically the first-line chemotherapy for melanoma before targeted therapies and immunotherapy were developed. Its mechanism involves methylation of DNA guanine residues via its active metabolite MTIC. Dacarbazine causes severe eating-related side effects: Nausea (high severity, 80% frequency, onset 1–3 hours post-dose); Vomiting (high severity, 70% frequency, acute onset); and Appetite Loss (moderate severity, 30% frequency throughout treatment). It remains one of the most emetogenic single agents and had only modest single-agent response rates in melanoma, which drove the development of more effective treatments. It is still recorded as a Level 2 evidence option for melanoma in the knowledge graph.",
+    "contexts": [
+      "Graph: ChemoDrug Dacarbazine CAUSES_EATING_EFFECT Nausea {severity:'High', frequency:'80%', onset:'1-3h post dose'}",
+      "Graph: ChemoDrug Dacarbazine CAUSES_EATING_EFFECT Vomiting {severity:'High', frequency:'70%', onset:'Acute'}",
+      "Graph: ChemoDrug Dacarbazine CAUSES_EATING_EFFECT Appetite Loss {severity:'Moderate', frequency:'30%', onset:'Throughout'}",
+      "ChemoDrug Dacarbazine notes: Historic first-line melanoma drug; severe nausea; modest single-agent response rates.",
+      "Graph: Cancer Skin Cancer TREATED_WITH ChemoDrug Dacarbazine {line:'first (historical)', evidence:'Level 2', regimen:'DTIC monotherapy for melanoma'}"
+    ],
+    "metadata": {
+      "type": "graph",
+      "difficulty": "easy",
+      "source": "graph",
+      "reasoning_type": "retrieval",
+      "requires_graph": true,
+      "requires_vector": false,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "What are the eating side effects of fluorouracil (5-FU) and what is the risk in DPD-deficient patients?",
+    "ground_truth": "Fluorouracil (5-FU) is an antimetabolite pyrimidine analogue that causes the following eating-related side effects: Diarrhoea (high severity, 60% frequency, onset Day 5–7); and Sore Mouth/Mucositis (high severity, 40% frequency, onset Day 5–10). These occur because 5-FU inhibits thymidylate synthase and becomes incorporated into RNA/DNA, damaging rapidly dividing intestinal and oral mucosal cells. An important pharmacogenomic consideration: patients with dihydropyrimidine dehydrogenase (DPD) deficiency cannot adequately catabolise 5-FU, leading to severe and potentially life-threatening toxicity including catastrophic mucositis and myelosuppression. DPD testing before 5-FU or capecitabine is recommended in many guidelines.",
+    "contexts": [
+      "Graph: ChemoDrug Fluorouracil CAUSES_EATING_EFFECT Diarrhoea {severity:'High', frequency:'60%', onset:'Day 5-7'}",
+      "Graph: ChemoDrug Fluorouracil CAUSES_EATING_EFFECT Sore Mouth (Mucositis) {severity:'High', frequency:'40%', onset:'Day 5-10'}",
+      "ChemoDrug Fluorouracil notes: Mucositis, diarrhoea, hand-foot syndrome; DPD deficiency causes severe toxicity.",
+      "ChemoDrug Fluorouracil drug_class: Antimetabolite / pyrimidine analogue. Mechanism: Inhibits thymidylate synthase; incorporated into RNA/DNA.",
+      "Graph: Cancer Breast Cancer TREATED_WITH ChemoDrug Fluorouracil {line:'adjuvant', regimen:'CMF or FAC regimen'}"
+    ],
+    "metadata": {
+      "type": "graph",
+      "difficulty": "medium",
+      "source": "graph",
+      "reasoning_type": "explanation",
+      "requires_graph": true,
+      "requires_vector": false,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "What eating side effects does L-asparaginase cause and what nutritional challenges does it create in ALL treatment?",
+    "ground_truth": "L-asparaginase is an enzyme used in ALL induction therapy that depletes asparagine, exploiting the fact that leukaemic cells lack asparagine synthetase. It causes the following eating-related adverse effects: Nausea (moderate severity, 30% frequency, acute onset); Appetite Loss (moderate severity, 40% frequency, throughout treatment); and Weight Loss (moderate severity, 25% frequency, progressive). Beyond eating effects, L-asparaginase causes pancreatitis, coagulopathy, and hepatotoxicity, which further compromise nutritional status. Hypersensitivity reactions have led to pegaspargase being preferred over native L-asparaginase in adults. The toxicity profile — particularly pancreatitis — may severely restrict oral intake and may require parenteral nutritional support.",
+    "contexts": [
+      "Graph: ChemoDrug L-Asparaginase CAUSES_EATING_EFFECT Nausea {severity:'Moderate', frequency:'30%', onset:'Acute'}",
+      "Graph: ChemoDrug L-Asparaginase CAUSES_EATING_EFFECT Appetite Loss {severity:'Moderate', frequency:'40%', onset:'During treatment'}",
+      "Graph: ChemoDrug L-Asparaginase CAUSES_EATING_EFFECT Weight Loss {severity:'Moderate', frequency:'25%', onset:'Progressive'}",
+      "ChemoDrug L-Asparaginase notes: Pancreatitis, coagulopathy, hepatotoxicity; hypersensitivity – pegaspargase preferred in adults.",
+      "Graph: SideEffect Hepatotoxicity LEADS_TO_EATING_EFFECT Appetite Loss.",
+      "Graph: Cancer Acute Leukemia TREATED_WITH ChemoDrug L-Asparaginase {line:'induction', regimen:'Hyper-CVAD and CALGB 8811'}"
+    ],
+    "metadata": {
+      "type": "hybrid",
+      "difficulty": "medium",
+      "source": "mixed",
+      "reasoning_type": "multi-hop",
+      "requires_graph": true,
+      "requires_vector": false,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "What is temozolomide and how is it used in melanoma with CNS metastases?",
+    "ground_truth": "Temozolomide is an oral alkylating agent of the imidazotetrazine class, chemically related to dacarbazine. It acts as a prodrug of MTIC, generating O6-methylguanine DNA adducts that trigger apoptosis. A key clinical advantage over dacarbazine is its ability to cross the blood-brain barrier, making it suitable for treating melanoma CNS metastases. Typical dose: 150–200 mg/m² for 5 days every 28 days, administered orally. In the knowledge graph, temozolomide is recorded as a treatment for Skin Cancer (Melanoma) specifically for CNS metastases (Level 2 evidence). It causes nausea and vomiting as its primary eating-related side effects, though these are generally less severe than with intravenous dacarbazine.",
+    "contexts": [
+      "ChemoDrug Temozolomide notes: Oral analogue of dacarbazine; crosses blood-brain barrier; used for melanoma CNS metastases. Route: Oral. Typical dose: 150-200 mg/m² for 5 days every 28 days.",
+      "ChemoDrug Temozolomide mechanism: Prodrug of MTIC; O6-methylguanine DNA adducts trigger apoptosis.",
+      "Graph: Cancer Skin Cancer TREATED_WITH ChemoDrug Temozolomide {line:'CNS metastases', evidence:'Level 2', regimen:'Temozolomide for brain mets'}",
+      "ChemoDrug Dacarbazine notes: Historic first-line melanoma drug; severe nausea; Temozolomide is its oral CNS-penetrant analogue."
+    ],
+    "metadata": {
+      "type": "vector",
+      "difficulty": "medium",
+      "source": "review",
+      "reasoning_type": "explanation",
+      "requires_graph": true,
+      "requires_vector": false,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "What is the role of epirubicin in breast cancer treatment and what eating side effects should be anticipated?",
+    "ground_truth": "Epirubicin is an anthracycline used in breast cancer adjuvant and neoadjuvant regimens, specifically in the FEC (fluorouracil, epirubicin, cyclophosphamide) and FEC-T regimens. It is less cardiotoxic than doxorubicin due to its different metabolic profile. Epirubicin causes eating-related side effects via topoisomerase II inhibition and DNA intercalation, similar to other anthracyclines. Expected side effects include Nausea and Sore Mouth (Mucositis), in line with the anthracycline class. Docetaxel, which follows epirubicin in the FEC-T regimen, additionally causes Mucositis (25%, Day 5–7), Taste and Smell Changes (30%), Diarrhoea (35%), and Weight Gain (20%, via dexamethasone premedication and fluid retention). Patients should be prepared for these cumulative eating challenges across sequential treatment blocks.",
+    "contexts": [
+      "ChemoDrug Epirubicin notes: Used in FEC and FEC-T regimens for breast cancer; less cardiotoxic than doxorubicin. Drug class: Anthracycline. Mechanism: Topoisomerase II inhibition; DNA intercalation.",
+      "Graph: Cancer Breast Cancer TREATED_WITH ChemoDrug Epirubicin {line:'neoadjuvant/adjuvant', evidence:'Level 1A', regimen:'FEC or FEC-T'}",
+      "Graph: ChemoDrug Docetaxel CAUSES_EATING_EFFECT Sore Mouth (Mucositis) {severity:'Moderate', frequency:'25%', onset:'Day 5-7'}",
+      "Graph: ChemoDrug Docetaxel CAUSES_EATING_EFFECT Taste and Smell Changes {severity:'Moderate', frequency:'30%'}",
+      "Graph: ChemoDrug Docetaxel CAUSES_EATING_EFFECT Diarrhoea {severity:'Moderate', frequency:'35%'}",
+      "Graph: ChemoDrug Docetaxel CAUSES_EATING_EFFECT Weight Gain {severity:'Moderate', frequency:'20%', mechanism:'Fluid retention + steroid'}"
+    ],
+    "metadata": {
+      "type": "hybrid",
+      "difficulty": "medium",
+      "source": "mixed",
+      "reasoning_type": "multi-hop",
+      "requires_graph": true,
+      "requires_vector": false,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "What is the exact dietary protocol approved by the FDA for preventing chemotherapy-induced peripheral neuropathy from paclitaxel?",
+    "ground_truth": "The provided source documents do not contain any FDA-approved dietary protocol specifically for preventing chemotherapy-induced peripheral neuropathy (CIPN) from paclitaxel. The knowledge graph records that paclitaxel causes peripheral neuropathy (SideEffect node), and that peripheral neuropathy leads to difficulty handling utensils and reduced ability to prepare food. Management in the graph is described as dose reduction, duloxetine, and dietary modification for fine motor difficulty, but no specific FDA-approved dietary protocol exists in the provided sources. For evidence-based CIPN management, current oncology guidelines (ASCO, NCCN) should be consulted.",
+    "contexts": [
+      "SideEffect Peripheral Neuropathy: Damage to peripheral nerves causing numbness, tingling, weakness in hands and feet. Nutrition impact: Difficulty handling utensils, reduced ability to prepare food. Management: Dose reduction; duloxetine; dietary modification for fine motor difficulty.",
+      "Graph: ChemoDrug Paclitaxel MAY_CAUSE SideEffect Peripheral Neuropathy.",
+      "No FDA-approved dietary protocol for CIPN prevention is recorded in the provided cypher or review files."
+    ],
+    "metadata": {
+      "type": "fallback",
+      "difficulty": "medium",
+      "source": "mixed",
+      "reasoning_type": "retrieval",
+      "requires_graph": false,
+      "requires_vector": false,
+      "requires_image": false,
+      "should_trigger_fallback": true
+    }
+  },
+  {
+    "question": "What is the recommended dose of inotuzumab ozogamicin for frontline ALL treatment?",
+    "ground_truth": "The provided source documents do not contain a specific frontline dose recommendation for inotuzumab ozogamicin in ALL. The acute-leukemia-review.md describes inotuzumab ozogamicin (InO) as an anti-CD22 monoclonal antibody conjugated to calicheamicin that was granted FDA Breakthrough Therapy status in 2015 for relapsed/refractory ALL. In the phase 2 trial, patients received a maximum tolerated dose of 1.8 mg/m² every 3–4 weeks, with the weekly schedule used in the pivotal Kantarjian et al. study. Frontline combination use with low-intensity Hyper-CVAD for elderly patients was described, but no specific single recommended frontline dosing table is provided. Current prescribing information should be consulted for FDA-approved dosing.",
+    "contexts": [
+      "Phase 1 studies in non-Hodgkin lymphoma established a maximum tolerated dose of 1.8 mg/m² InO given intravenously every 3 to 4 weeks.",
+      "InO was studied in frontline therapy in combination with low-intensity HCVAD for elderly patients >60 years.",
+      "Based on these results, InO was granted Breakthrough Therapy status by the FDA in 2015 and is a strong candidate for expedited approval for relapsed/refractory ALL.",
+      "No specific frontline dosing regimen table is provided in the acute-leukemia-review.md or cypher files."
+    ],
+    "metadata": {
+      "type": "fallback",
+      "difficulty": "hard",
+      "source": "review",
+      "reasoning_type": "retrieval",
+      "requires_graph": false,
+      "requires_vector": true,
+      "requires_image": false,
+      "should_trigger_fallback": true
+    }
+  },
+  {
+    "question": "What is the recommended daily caloric intake for a cancer patient receiving high-dose chemotherapy for osteosarcoma?",
+    "ground_truth": "The provided source documents do not contain a specific daily caloric intake recommendation for osteosarcoma patients receiving high-dose MAP chemotherapy. The NCI Eating Hints document provides general cancer nutrition guidance recommending 8–12 cups of liquid daily and emphasises eating calorie-dense, protein-rich foods, but does not specify a numerical caloric target for osteosarcoma. The osteosarcoma review does note that surgery increases the need for calories and protein, and that underweight patients may need a high-protein, high-calorie diet before surgery. For precise caloric targets, referral to an oncology dietitian is recommended, as caloric needs vary based on patient weight, metabolic rate, and treatment intensity.",
+    "contexts": [
+      "NCI Eating Hints: Surgery increases your need for calories and protein. If you are weak or underweight, you may need to eat a high-protein, high-calorie diet before surgery.",
+      "NCI Eating Hints: Drink plenty of liquids. Most adults should drink 8 to 12 cups of liquid a day.",
+      "Osteosarcoma review: No specific caloric target per day is stated in the provided source documents.",
+      "NCI Eating Hints: Talk with your doctor, nurse, or dietitian about what to expect. A dietitian is the best person to talk with about your diet."
+    ],
+    "metadata": {
+      "type": "fallback",
+      "difficulty": "medium",
+      "source": "review",
+      "reasoning_type": "retrieval",
+      "requires_graph": false,
+      "requires_vector": true,
+      "requires_image": false,
+      "should_trigger_fallback": true
+    }
+  },
+  {
+    "question": "What is NutritionGuideline NG001 and how does eating frequency help cancer patients manage nausea and appetite loss?",
+    "ground_truth": "NutritionGuideline NG001 states: 'Eat 5–6 small meals per day instead of 3 large meals to manage nausea, dysphagia, and appetite loss.' This is sourced from NCI Eating Hints 2022 and rated as expert consensus. The rationale is that smaller, more frequent meals keep the stomach partially full, which reduces nausea triggers, avoids the discomfort of a full stomach when appetite is poor, and makes it easier for patients with dysphagia to manage each eating episode. This guideline is linked in the graph to MANAGE EatingAdverseEffect Nausea and applies broadly across nausea, appetite loss, and swallowing difficulties caused by chemotherapy or radiation therapy.",
+    "contexts": [
+      "NutritionGuideline NG001: Eat 5-6 small meals per day instead of 3 large meals to manage nausea, dysphagia, and appetite loss. Source: NCI Eating Hints 2022. Evidence level: Expert consensus.",
+      "Graph: NutritionGuideline NG001 MANAGES EatingAdverseEffect Nausea.",
+      "NCI Eating Hints: Eat 5 or 6 small meals each day instead of 3 large meals. Many people find it is easier to eat smaller amounts more often.",
+      "EatingAdverseEffect Nausea management_tip: Eat small meals every 2-3 hours; avoid empty stomach; anti-emetics (5-HT3 antagonists, NK1 antagonists)."
+    ],
+    "metadata": {
+      "type": "graph",
+      "difficulty": "easy",
+      "source": "graph",
+      "reasoning_type": "explanation",
+      "requires_graph": true,
+      "requires_vector": true,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "What is NutritionGuideline NG002 and how much fluid should cancer patients drink daily, especially if they have vomiting or diarrhea?",
+    "ground_truth": "NutritionGuideline NG002 states: 'Drink 8–12 cups of liquid daily; increase further if vomiting or diarrhoea is present to prevent dehydration.' This guideline is sourced from NCI Eating Hints 2022 and applies to the management of Nausea, Vomiting, Diarrhoea, and Dry Mouth. The graph records NG002 as MANAGES EatingAdverseEffect Diarrhoea. In practical terms, one cup equals 8 ounces, making the daily target 64–96 ounces (approximately 1.9–2.8 litres). Water, clear broths, sports drinks, diluted juices, and herbal teas all count toward the fluid target. Keeping a water bottle nearby or setting a timer for frequent sips is advised, particularly on days when the patient cannot eat much solid food.",
+    "contexts": [
+      "NutritionGuideline NG002: Drink 8-12 cups of liquid daily; increase further if vomiting or diarrhoea is present to prevent dehydration. Source: NCI Eating Hints 2022.",
+      "Graph: NutritionGuideline NG002 MANAGES EatingAdverseEffect Diarrhoea.",
+      "NCI Eating Hints: Drink plenty of fluids to replace those you lose from diarrhea and prevent dehydration. Most adults should drink 8 to 12 cups of liquid a day.",
+      "NCI Eating Hints: It is even more important to get plenty to drink on days when you cannot eat. Drinking a lot helps your body get the liquid it needs."
+    ],
+    "metadata": {
+      "type": "graph",
+      "difficulty": "easy",
+      "source": "graph",
+      "reasoning_type": "retrieval",
+      "requires_graph": true,
+      "requires_vector": true,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "What is NutritionGuideline NG004 and why does high-dose methotrexate in osteosarcoma require leucovorin rescue and IV hydration?",
+    "ground_truth": "NutritionGuideline NG004 states: 'High-dose methotrexate requires leucovorin rescue and aggressive IV hydration with urinary alkalinisation to prevent nephrotoxicity.' This guideline applies to the high-dose MTX (HD-MTX) component of the MAP protocol used for osteosarcoma and CNS prophylaxis in ALL. Leucovorin (folinic acid) bypasses dihydrofolate reductase and rescues normal cells from MTX toxicity after a timed interval, without compromising anti-tumour activity. IV hydration (typically 3 L/m²/day) alkalinises the urine to pH >7, increasing methotrexate solubility in the renal tubules and preventing precipitate-induced nephrotoxicity. Without these supportive measures, high-dose methotrexate would cause life-threatening mucositis, myelosuppression, and renal failure.",
+    "contexts": [
+      "NutritionGuideline NG004: High-dose methotrexate requires leucovorin rescue and aggressive IV hydration with urinary alkalinisation to prevent nephrotoxicity. Applicable to: High-dose MTX protocol (osteosarcoma, ALL). Source: Osteosarcoma MAP protocol guidelines.",
+      "Graph: NutritionGuideline NG004 REQUIRED_FOR ChemoDrug Methotrexate.",
+      "Graph: TreatmentProtocol MAP (Osteosarcoma) INCLUDES_DRUG ChemoDrug Methotrexate.",
+      "ChemoDrug Methotrexate notes: Leucovorin rescue required at high doses; mucositis, nephrotoxicity, hepatotoxicity.",
+      "Graph: Cancer Osteosarcoma TREATED_WITH ChemoDrug Methotrexate {line:'neoadjuvant/adjuvant', regimen:'MAP protocol (HD-MTX + Adriamycin + Cisplatin)'}."
+    ],
+    "metadata": {
+      "type": "hybrid",
+      "difficulty": "hard",
+      "source": "mixed",
+      "reasoning_type": "explanation",
+      "requires_graph": true,
+      "requires_vector": false,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  },
+  {
+    "question": "What is NutritionGuideline NG010 and what oral rinse protocol reduces mucositis severity during chemotherapy?",
+    "ground_truth": "NutritionGuideline NG010 states: 'Oral rinse protocol: 0.9% NaCl rinse or sodium bicarbonate rinse 3–4 times daily reduces mucositis severity; good oral hygiene is essential.' This is based on MASCC/ISOO Mucositis Guidelines and is linked in the graph as MANAGES EatingAdverseEffect Sore Mouth (Mucositis). The NCI Eating Hints specifies the rinse preparation as: ¼ teaspoon baking soda and ⅛ teaspoon salt dissolved in 1 cup warm water, followed by a plain water rinse. Rinsing should occur every 1–2 hours. Mouthwashes containing alcohol must be avoided, as alcohol desiccates and irritates ulcerated mucosa. The oral rinse protocol is applicable across all chemotherapy regimens that cause mucositis, including methotrexate, doxorubicin, fluorouracil, and cytarabine.",
+    "contexts": [
+      "NutritionGuideline NG010: Oral rinse protocol: 0.9% NaCl rinse or sodium bicarbonate rinse 3-4 times daily reduces mucositis severity; good oral hygiene is essential. Source: MASCC/ISOO Mucositis Guidelines.",
+      "Graph: NutritionGuideline NG010 MANAGES EatingAdverseEffect Sore Mouth (Mucositis).",
+      "NCI Eating Hints: Rinse your mouth 3 to 4 times a day with a saltwater rinse. Mix 1/4 teaspoon baking soda and 1/8 teaspoon salt with 1 cup warm water. Rinse with plain water after using the salt water.",
+      "NCI Eating Hints: Do not use mouthwash that contains alcohol.",
+      "Graph: EatingAdverseEffect Sore Mouth (Mucositis) WORSENED_BY FoodItem Alcohol {evidence:'High', notes:'Desiccates and irritates mucosal surfaces'}."
+    ],
+    "metadata": {
+      "type": "graph",
+      "difficulty": "easy",
+      "source": "graph",
+      "reasoning_type": "retrieval",
+      "requires_graph": true,
+      "requires_vector": true,
+      "requires_image": false,
+      "should_trigger_fallback": false
+    }
+  }
+]

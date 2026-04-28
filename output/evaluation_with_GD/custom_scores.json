@@ -1,0 +1,1810 @@
+{
+  "label": "baseline",
+  "timestamp": "2026-04-23T12:12:05.433019",
+  "pipeline_model": "llama-3.3-70b-versatile",
+  "scoring_method": "LLM-free custom metrics (v4.0)",
+  "question_count": 20,
+  "aggregates": {
+    "image_recall": 1.0,
+    "web_fallback": 0.4,
+    "keyword_coverage": 0.6758,
+    "context_utilisation": 0.8615,
+    "answer_completeness": 1.0,
+    "graph_grounding": 1.0,
+    "latency_score": 0.923
+  },
+  "composite": 0.7743,
+  "metric_weights": {
+    "image_recall": 0.15,
+    "web_fallback": 0.2,
+    "keyword_coverage": 0.25,
+    "context_utilisation": 0.15,
+    "answer_completeness": 0.1,
+    "graph_grounding": 0.1,
+    "latency_score": 0.05
+  },
+  "category_stats": {
+    "graph": {
+      "count": 5,
+      "success": 5,
+      "avg_composite": 0.82,
+      "avg_keyword_cov": 0.68,
+      "avg_latency_s": 14.2,
+      "avg_latency_score": 0.86,
+      "image_tag_rate": null,
+      "web_rate": null
+    },
+    "research": {
+      "count": 5,
+      "success": 5,
+      "avg_composite": 0.7531,
+      "avg_keyword_cov": 0.5,
+      "avg_latency_s": 10.33,
+      "avg_latency_score": 0.9863,
+      "image_tag_rate": null,
+      "web_rate": null
+    },
+    "image": {
+      "count": 5,
+      "success": 5,
+      "avg_composite": 0.8586,
+      "avg_keyword_cov": 0.7033,
+      "avg_latency_s": 14.06,
+      "avg_latency_score": 0.863,
+      "image_tag_rate": 1.0,
+      "web_rate": null
+    },
+    "edge": {
+      "count": 5,
+      "success": 5,
+      "avg_composite": 0.7455,
+      "avg_keyword_cov": 0.82,
+      "avg_latency_s": 6.8,
+      "avg_latency_score": 0.9828,
+      "image_tag_rate": null,
+      "web_rate": 0.4
+    }
+  },
+  "per_question": [
+    {
+      "question": "What foods should a patient on cisplatin avoid?",
+      "answer": "According to the structured medical facts from the cancer treatment knowledge graph, specifically [G1] and [G4], a patient on cisplatin should avoid certain foods to manage the side effects of the drug. The foods to avoid include:\n\n* Spicy Foods\n* Fried / Fatty Foods\n\nThese foods can exacerbate the nausea and vomiting associated with cisplatin treatment. Instead, patients are advised to eat small, frequent meals and opt for bland foods like bananas, toast, or white bread, as well as ginger tea or ginger ale, as mentioned in [G1].\n\nIt is essential to note that cisplatin requires pre-hydration with 2-4L IV normal saline and post-hydration to prevent nephrotoxicity, and patients should be encouraged to take oral fluids, as stated in the guidelines for [G1], [G2], [G3], and [G4].\n\nPlease consult a qualified oncologist for personalized dietary advice and to discuss any concerns about your treatment.",
+      "ground_truth": "Patients should avoid alcohol, fatty fried foods, spicy foods, and large meals. Small frequent bland meals are recommended. Adequate hydration prevents nephrotoxicity.",
+      "keywords": [
+        "cisplatin",
+        "nausea",
+        "avoid",
+        "hydration",
+        "food"
+      ],
+      "query_mode": "graph",
+      "category": "graph",
+      "description": "Food avoidance — core graph traversal test",
+      "timestamp": "2026-04-23T12:05:22.187886",
+      "retrieved_contexts": [
+        {
+          "chunk_id": "breast-cancer-review_0029",
+          "text_preview": "Moreover, the study investigated enhancing cislatin's efficacy with radiation therapy. Mice with T11 tumors received tre",
+          "source": ""
+        },
+        {
+          "chunk_id": "lung-cancer-review_0026",
+          "text_preview": "Crizotinib is an oral TKI inhibitor of thefirst generation TKI with recommended oral dose is of  mg twice daily in a -da",
+          "source": ""
+        },
+        {
+          "chunk_id": "breast-cancer-review_0012",
+          "text_preview": ". For the treatment of breast cancer, a number of modern medications are suggested (9). In individuals at increased risk",
+          "source": ""
+        }
+      ],
+      "chunk_ids": [
+        "breast-cancer-review_0029",
+        "lung-cancer-review_0026",
+        "breast-cancer-review_0012"
+      ],
+      "context_count": 3,
+      "elapsed_s": 20.97,
+      "has_image_tag": false,
+      "web_fired": false,
+      "sources": [
+        "Cancer Treatment Knowledge Graph",
+        "breast-cancer-review",
+        "lung-cancer-review"
+      ],
+      "answer_preview": "According to the structured medical facts from the cancer treatment knowledge graph, specifically [G1] and [G4], a patient on cisplatin should avoid certain foods to manage the side effects of the drug. The foods to avoid include:\n\n* Spicy Foods\n* Fried / Fatty Foods\n\nThese foods can exacerbate the ",
+      "scores": {
+        "image_recall": null,
+        "web_fallback": null,
+        "keyword_coverage": 1.0,
+        "context_utilisation": 1.0,
+        "answer_completeness": 1.0,
+        "graph_grounding": 1.0,
+        "latency_score": 0.6345
+      },
+      "composite": 0.9719
+    },
+    {
+      "question": "What are the mandatory nutritional guidelines for pemetrexed?",
+      "answer": "The mandatory nutritional guidelines for pemetrexed, as stated in [G1] and [G2], include taking folic acid 400-1000mcg daily starting 7 days before the first dose and B12 1000mcg IM every 9 weeks. Additionally, patients are advised to eat 5-6 small meals per day instead of 3 large meals to manage nausea, dysphagia, and appetite loss. It is also recommended to avoid spicy foods, fried/fatty foods, citrus fruits, and acidic foods, while opting for bananas, toast/white bread, ginger tea/ginger ale, cold foods, and soft proteins like scrambled eggs.\n\nPlease consult a qualified oncologist for personalized dietary advice and to discuss any concerns regarding your treatment with pemetrexed.",
+      "ground_truth": "Pemetrexed requires folic acid 400-1000 mcg daily from 7 days before and vitamin B12 1000 mcg IM every 3 cycles to reduce haematological and GI toxicity.",
+      "keywords": [
+        "pemetrexed",
+        "folic acid",
+        "vitamin B12",
+        "mandatory",
+        "supplement"
+      ],
+      "query_mode": "graph",
+      "category": "graph",
+      "description": "Mandatory supplementation — NutritionGuideline node test",
+      "timestamp": "2026-04-23T12:05:45.690951",
+      "retrieved_contexts": [
+        {
+          "chunk_id": "lung-cancer-review_0051",
+          "text_preview": "## Key Numerical Data  \nAdela Pătcaș1#, Ana Florica Chis1#, Claudia Florentina Militaru2,3, Ioana Roxana Bordea4*, Ruxan",
+          "source": ""
+        },
+        {
+          "chunk_id": "breast-cancer-review_0017",
+          "text_preview": "Most breast malignancies are non-metastatic and breast-specific, including ductal carcinoma (over 75% of cases) and lobu",
+          "source": ""
+        },
+        {
+          "chunk_id": "acute-leukemia-review_0066",
+          "text_preview": "maximum tolerated dose (MTD) of 160 mg/m 2 administered once every three weeks was established. Reduction of tumor size",
+          "source": ""
+        }
+      ],
+      "chunk_ids": [
+        "lung-cancer-review_0051",
+        "breast-cancer-review_0017",
+        "acute-leukemia-review_0066"
+      ],
+      "context_count": 3,
+      "elapsed_s": 11.77,
+      "has_image_tag": false,
+      "web_fired": false,
+      "sources": [
+        "Cancer Treatment Knowledge Graph",
+        "lung-cancer-review",
+        "breast-cancer-review",
+        "acute-leukemia-review"
+      ],
+      "answer_preview": "The mandatory nutritional guidelines for pemetrexed, as stated in [G1] and [G2], include taking folic acid 400-1000mcg daily starting 7 days before the first dose and B12 1000mcg IM every 9 weeks. Additionally, patients are advised to eat 5-6 small meals per day instead of 3 large meals to manage na",
+      "scores": {
+        "image_recall": null,
+        "web_fallback": null,
+        "keyword_coverage": 0.6,
+        "context_utilisation": 0.3333,
+        "answer_completeness": 1.0,
+        "graph_grounding": 1.0,
+        "latency_score": 0.9411
+      },
+      "composite": 0.6878
+    },
+    {
+      "question": "A breast cancer patient on AC-T is taking warfarin. What are the dietary risks?",
+      "answer": "When considering a breast cancer patient on AC-T (a protocol that includes Doxorubicin and Cyclophosphamide) who is also taking warfarin, it's crucial to understand the potential dietary risks associated with this combination. Warfarin is an anticoagulant that can interact with various foods and drugs, affecting its efficacy and safety profile.\n\nAccording to the provided graph knowledge base, particularly [G1] and [G2], the focus is on the drugs Cyclophosphamide and Doxorubicin, which are part of the AC-T protocol. While these entries provide valuable information on the side effects and clinical notes of these drugs, they do not directly address interactions with warfarin or specific dietary risks.\n\nHowever, it's well-known that warfarin's effectiveness can be influenced by dietary factors, especially foods high in vitamin K, which can counteract warfarin's anticoagulant effects. Patients on warfarin are often advised to maintain a consistent intake of vitamin K-rich foods to avoid fluctuations in international normalized ratio (INR) levels.\n\nGiven the information provided, there is no direct reference to dietary risks associated with warfarin in the context of breast cancer treatment with AC-T. The literature references [1], [2], and [3] do not specifically address warfarin or dietary interactions in the context of breast cancer and AC-T protocol.\n\nAs shown in the clinical context, there are visual references available, such as [IMAGE: breast-cancer-review_picture_1.png], which depicts different topical drug delivery systems used in breast cancer studies. However, these visuals do not directly relate to the question about dietary risks for a patient on warfarin and AC-T.\n\nIn conclusion, while the provided information does not directly address the dietary risks for a breast cancer patient on AC-T who is taking warfarin, it is essential for such patients to be aware of the potential interactions between warfarin and certain foods, particularly those high in vitamin K. \n\nDisclaimer: This response is based on the information provided in the clinical context and may not cover all aspects of the patient's condition. It is crucial for patients to consult with a qualified oncologist for personalized advice on managing their treatment, including dietary considerations and potential drug interactions.",
+      "ground_truth": "Warfarin interacts with capecitabine raising INR and bleeding risk. Diarrhoea reduces vitamin K absorption. Consistent vitamin K intake and INR monitoring are essential.",
+      "keywords": [
+        "warfarin",
+        "INR",
+        "capecitabine",
+        "vitamin K",
+        "bleeding"
+      ],
+      "query_mode": "graph",
+      "category": "graph",
+      "description": "Drug-food-drug interaction chain",
+      "timestamp": "2026-04-23T12:06:06.080863",
+      "retrieved_contexts": [
+        {
+          "chunk_id": "breast-cancer-review_0010",
+          "text_preview": "Received: 26.09.2024 Accepted: 02.12.2024 Available Online Date: 01.01.2025  \nPremalignant cells lead to invasive illnes",
+          "source": ""
+        },
+        {
+          "chunk_id": "lung-cancer-review_0026",
+          "text_preview": "Crizotinib is an oral TKI inhibitor of thefirst generation TKI with recommended oral dose is of  mg twice daily in a -da",
+          "source": ""
+        },
+        {
+          "chunk_id": "breast-cancer-review_0041",
+          "text_preview": "Lee et al. (35) conducted a phase II randomized, double-blind, placebo-controlled trial comparing oral tamoxifen (20 mg/",
+          "source": ""
+        },
+        {
+          "chunk_id": "breast-cancer-review_0051",
+          "text_preview": "## Extracted Visual Assets Database  \nThe following figures, tables and flowcharts were extracted from this paper. When",
+          "source": ""
+        },
+        {
+          "chunk_id": "skin-cancer-types-review_0079",
+          "text_preview": "## Extracted Visual Assets Database  \nThe following figures, tables and flowcharts were extracted from this paper. When",
+          "source": ""
+        }
+      ],
+      "chunk_ids": [
+        "breast-cancer-review_0010",
+        "lung-cancer-review_0026",
+        "breast-cancer-review_0041",
+        "breast-cancer-review_0051",
+        "skin-cancer-types-review_0079"
+      ],
+      "context_count": 5,
+      "elapsed_s": 11.15,
+      "has_image_tag": true,
+      "web_fired": false,
+      "sources": [
+        "Cancer Treatment Knowledge Graph",
+        "breast-cancer-review",
+        "lung-cancer-review",
+        "skin-cancer-types-review"
+      ],
+      "answer_preview": "When considering a breast cancer patient on AC-T (a protocol that includes Doxorubicin and Cyclophosphamide) who is also taking warfarin, it's crucial to understand the potential dietary risks associated with this combination. Warfarin is an anticoagulant that can interact with various foods and dru",
+      "scores": {
+        "image_recall": null,
+        "web_fallback": null,
+        "keyword_coverage": 0.6,
+        "context_utilisation": 1.0,
+        "answer_completeness": 1.0,
+        "graph_grounding": 1.0,
+        "latency_score": 0.9615
+      },
+      "composite": 0.8432
+    },
+    {
+      "question": "What eating side effects does vincristine cause and how are they managed?",
+      "answer": "According to the structured medical facts from the cancer treatment knowledge graph [G1], Vincristine causes constipation as an eating side effect. The severity of this side effect is classified as high. To manage constipation caused by Vincristine, it is recommended to increase fluid and fibre intake, use stool softeners, gentle laxatives, and engage in physical activity. Additionally, patients are advised to eat high-fibre foods such as whole grains and legumes, and to drink plenty of water and clear liquids.\n\nThere are no relevant images to reference in this answer.\n\nDisclaimer: This information is based on the provided clinical context and should not be considered as medical advice. It is essential to consult a qualified oncologist for personalized guidance on managing side effects and nutrition during cancer treatment.",
+      "ground_truth": "Vincristine causes constipation from autonomic neuropathy. Increase dietary fibre, fluids, use stool softeners. Paralytic ileus risk increases with concurrent morphine or amitriptyline.",
+      "keywords": [
+        "vincristine",
+        "constipation",
+        "neuropathy",
+        "fibre",
+        "stool"
+      ],
+      "query_mode": "graph",
+      "category": "graph",
+      "description": "EatingAdverseEffect node traversal test",
+      "timestamp": "2026-04-23T12:06:33.445759",
+      "retrieved_contexts": [
+        {
+          "chunk_id": "acute-leukemia-review_0042",
+          "text_preview": "In patients with relapsed/refractory ALL, particularly those with multiple relapses, toxicity of multi-agent cytotoxic t",
+          "source": ""
+        },
+        {
+          "chunk_id": "breast-cancer-review_0016",
+          "text_preview": "Despite the efficacy of these medications being established through successful breast cancer preventive studies, they ha",
+          "source": ""
+        },
+        {
+          "chunk_id": "lung-cancer-review_0030",
+          "text_preview": "<!-- image -->  \nand embryo-fetal toxicity []. Alectinib is recommended in a twice-daily dose of  mg and its particular",
+          "source": ""
+        }
+      ],
+      "chunk_ids": [
+        "acute-leukemia-review_0042",
+        "breast-cancer-review_0016",
+        "lung-cancer-review_0030"
+      ],
+      "context_count": 3,
+      "elapsed_s": 15.83,
+      "has_image_tag": false,
+      "web_fired": false,
+      "sources": [
+        "Cancer Treatment Knowledge Graph",
+        "acute-leukemia-review",
+        "breast-cancer-review",
+        "lung-cancer-review"
+      ],
+      "answer_preview": "According to the structured medical facts from the cancer treatment knowledge graph [G1], Vincristine causes constipation as an eating side effect. The severity of this side effect is classified as high. To manage constipation caused by Vincristine, it is recommended to increase fluid and fibre inta",
+      "scores": {
+        "image_recall": null,
+        "web_fallback": null,
+        "keyword_coverage": 0.8,
+        "context_utilisation": 1.0,
+        "answer_completeness": 1.0,
+        "graph_grounding": 1.0,
+        "latency_score": 0.8058
+      },
+      "composite": 0.9081
+    },
+    {
+      "question": "What foods help manage nausea during chemotherapy?",
+      "answer": "To manage nausea during chemotherapy, it's essential to consider the specific foods that can help alleviate this side effect. According to the structured medical facts from the cancer treatment knowledge graph, the following foods are recommended to help manage nausea:\n\nFor patients taking Cyclophosphamide [G1], Dacarbazine [G3], it is suggested to eat Bananas, Toast/White Bread, and drink Ginger Tea or Ginger Ale. These foods are gentle on the stomach and can help reduce nausea.\n\nAdditionally, for patients taking Ipilimumab [G2], it is recommended to eat Bananas, White Rice, and Yogurt or Probiotics. These foods can help manage diarrhea, which is a common side effect of Ipilimumab, and also provide essential nutrients.\n\nIt's crucial to note that while these foods can help manage nausea, it's essential to follow the specific dietary recommendations for each medication. For example, patients taking Ipilimumab should avoid Spicy Foods, Dairy or Lactose-containing Foods, and High-Fibre Foods.\n\nPlease consult a qualified oncologist for personalized dietary advice and to discuss the best approach for managing nausea during chemotherapy.",
+      "ground_truth": "Dry crackers, plain toast, ginger tea, cold foods, and small frequent meals help manage nausea. Avoid fatty, fried, spicy, or strong-smelling foods during chemotherapy.",
+      "keywords": [
+        "nausea",
+        "ginger",
+        "crackers",
+        "bland",
+        "small meals"
+      ],
+      "query_mode": "graph",
+      "category": "graph",
+      "description": "RELIEVED_BY edge traversal test",
+      "timestamp": "2026-04-23T12:06:53.569938",
+      "retrieved_contexts": [
+        {
+          "chunk_id": "breast-cancer-review_0047",
+          "text_preview": "A multitude of studies have reported that the concurrent administration of phytochemicals and chemotherapy resulted in r",
+          "source": ""
+        },
+        {
+          "chunk_id": "osteosarcoma-review_0045",
+          "text_preview": ". The authors suggest restarting chemotherapy within thefirst 21 days postoperatively in order to maintain dose intensit",
+          "source": ""
+        },
+        {
+          "chunk_id": "acute-leukemia-review_0029",
+          "text_preview": ". In phase II of induction, cyclophosphamide is introduced along with cytarabine, oral 6-mercaptopurine (6-MP), four add",
+          "source": ""
+        }
+      ],
+      "chunk_ids": [
+        "breast-cancer-review_0047",
+        "osteosarcoma-review_0045",
+        "acute-leukemia-review_0029"
+      ],
+      "context_count": 3,
+      "elapsed_s": 11.28,
+      "has_image_tag": false,
+      "web_fired": false,
+      "sources": [
+        "breast-cancer-review",
+        "osteosarcoma-review",
+        "acute-leukemia-review"
+      ],
+      "answer_preview": "To manage nausea during chemotherapy, it's essential to consider the specific foods that can help alleviate this side effect. According to the structured medical facts from the cancer treatment knowledge graph, the following foods are recommended to help manage nausea:\n\nFor patients taking Cyclophos",
+      "scores": {
+        "image_recall": null,
+        "web_fallback": null,
+        "keyword_coverage": 0.4,
+        "context_utilisation": 0.6667,
+        "answer_completeness": 1.0,
+        "graph_grounding": 1.0,
+        "latency_score": 0.9572
+      },
+      "composite": 0.689
+    },
+    {
+      "question": "What is the 5-year overall survival rate for osteosarcoma?",
+      "answer": "The 5-year overall survival rate for osteosarcoma is greater than 65% [5]. This significant improvement in survival rates is attributed to the introduction of adjuvant chemotherapy in the treatment of osteosarcoma, which increased survival rates from 20% to 50% in the 1970s [2-4]. With the current treatment protocols involving neoadjuvant chemotherapy, wide resection, and adjuvant chemotherapy, the overall survival rate has continued to improve [7].\n\nIt's essential to note that the survival rate can vary depending on factors such as the stage of the disease, the effectiveness of treatment, and the individual's overall health. However, according to the provided sources, the current 5-year overall survival rate for osteosarcoma is greater than 65% [5].\n\nDisclaimer: The information provided is based on the available clinical context and should not be considered as medical advice. It is essential to consult with a qualified oncologist for personalized advice and treatment plans.",
+      "ground_truth": "5-year survival for localised osteosarcoma is 60-70%. Metastatic disease drops to 20-30%. Histological response >90% necrosis is the strongest prognostic factor.",
+      "keywords": [
+        "osteosarcoma",
+        "survival",
+        "60",
+        "70",
+        "necrosis",
+        "prognosis"
+      ],
+      "query_mode": "research",
+      "category": "research",
+      "description": "Survival statistics — osteosarcoma PDF retrieval",
+      "timestamp": "2026-04-23T12:07:12.367297",
+      "retrieved_contexts": [
+        {
+          "chunk_id": "osteosarcoma-review_0003",
+          "text_preview": "## Introduction  \nOsteosarcoma (OS) is a primary malignant bone tumor with a worldwide incidence of 3.4 per million peop",
+          "source": ""
+        },
+        {
+          "chunk_id": "osteosarcoma-review_0019",
+          "text_preview": "X-ray of the chest should be completed to assess pulmonary metastases, as this is the most common location of metastatic",
+          "source": ""
+        },
+        {
+          "chunk_id": "acute-leukemia-review_0019",
+          "text_preview": ". In the largest prospective trial to determine optimal treatment, MRC UKALL XII/ECOG E2993 found a significant differen",
+          "source": ""
+        },
+        {
+          "chunk_id": "osteosarcoma-review_0001",
+          "text_preview": "## Osteosarcoma: a comprehensive review  \nAmirhossein Misaghi 1 , Amanda Goldin 1 , Moayd Awad 1,2 , and Anna A Kulidjia",
+          "source": ""
+        },
+        {
+          "chunk_id": "osteosarcoma-review_0010",
+          "text_preview": "## Low-grade osteosarcoma  \nLow-grade osteosarcoma (LOS) accounts for 1-2% of all OS. However, LOS generally affects per",
+          "source": ""
+        },
+        {
+          "chunk_id": "osteosarcoma-review_0042",
+          "text_preview": "## Chemotherapy treatment  \nPrior to the 1970s, chemotherapy was not used for osteosarcoma and survival rates were disma",
+          "source": ""
+        },
+        {
+          "chunk_id": "osteosarcoma-review_0052",
+          "text_preview": "## Summary  \nOsteosarcoma is a rare bone tumor found in areas of rapid bone turnover, most commonly the distal femur and",
+          "source": ""
+        },
+        {
+          "chunk_id": "osteosarcoma-review_0037",
+          "text_preview": "Some studies have reported slightly higher recurrence rates with limb salvaging compared to amputation, however the over",
+          "source": ""
+        }
+      ],
+      "chunk_ids": [
+        "osteosarcoma-review_0003",
+        "osteosarcoma-review_0019",
+        "acute-leukemia-review_0019",
+        "osteosarcoma-review_0001",
+        "osteosarcoma-review_0010",
+        "osteosarcoma-review_0042",
+        "osteosarcoma-review_0052",
+        "osteosarcoma-review_0037"
+      ],
+      "context_count": 8,
+      "elapsed_s": 9.76,
+      "has_image_tag": false,
+      "web_fired": false,
+      "sources": [
+        "osteosarcoma-review",
+        "acute-leukemia-review"
+      ],
+      "answer_preview": "The 5-year overall survival rate for osteosarcoma is greater than 65% [5]. This significant improvement in survival rates is attributed to the introduction of adjuvant chemotherapy in the treatment of osteosarcoma, which increased survival rates from 20% to 50% in the 1970s [2-4]. With the current t",
+      "scores": {
+        "image_recall": null,
+        "web_fallback": null,
+        "keyword_coverage": 0.5,
+        "context_utilisation": 0.875,
+        "answer_completeness": 1.0,
+        "graph_grounding": null,
+        "latency_score": 1.0
+      },
+      "composite": 0.7386
+    },
+    {
+      "question": "How do ALL and AML differ in treatment?",
+      "answer": "The treatment of Acute Lymphoblastic Leukemia (ALL) and Acute Myeloid Leukemia (AML) differs in several ways. According to [5], the backbone of therapy for ALL remains multi-agent chemotherapy with vincristine, corticosteroids, and an anthracycline, with allogeneic stem cell transplantation for eligible candidates. In contrast, the treatment for AML is not explicitly stated in the provided context, but it is mentioned that decitabine, a hypomethylating agent, is being studied in combination with other agents for relapsed/refractory AML [4].\n\nThe classification of ALL is based on the immunophenotype and genotype of the leukemia, with three main types: B lymphoblastic, T lymphoblastic, and Burkitt-cell Leukemia [2]. The treatment for ALL is tailored to the specific subtype and genetic abnormalities present. For example, Ph-positive ALL is treated with tyrosine kinase inhibitors, such as dasatinib [7].\n\nIn contrast, the treatment for AML is not as clearly defined in the provided context. However, it is mentioned that decitabine is being studied in combination with other agents for relapsed/refractory AML [4]. Additionally, the use of blinatumomab, a monoclonal antibody, has been shown to be effective in eliminating minimal residual disease (MRD) in patients with relapsed/refractory ALL [6].\n\nUnfortunately, there are no visual references provided that directly compare the treatment of ALL and AML. \n\nIn conclusion, the treatment of ALL and AML differs in terms of the specific agents used and the classification of the disease. While the treatment for ALL is well-established, the treatment for AML is not as clearly defined in the provided context.\n\nDisclaimer: This information is based on the provided clinical context and should not be considered as medical advice. It is essential to consult a qualified oncologist for personalized advice and treatment.",
+      "ground_truth": "ALL is common in children and uses multi-agent protocols. AML uses 7+3 induction. Ph+ ALL requires TKIs like imatinib or dasatinib.",
+      "keywords": [
+        "ALL",
+        "AML",
+        "induction",
+        "imatinib",
+        "Philadelphia",
+        "7+3"
+      ],
+      "query_mode": "research",
+      "category": "research",
+      "description": "Leukemia subtype differentiation — leukemia PDF",
+      "timestamp": "2026-04-23T12:07:32.763103",
+      "retrieved_contexts": [
+        {
+          "chunk_id": "acute-leukemia-review_0095",
+          "text_preview": ". Novel targeted therapies offer the promise of effective anti-leukemic activity with reduced toxicity from off-target e",
+          "source": ""
+        },
+        {
+          "chunk_id": "acute-leukemia-review_0015",
+          "text_preview": "Thefirst attempt at classifying ALL was the French American British (FAB) morphological criteria that divided ALL into 3",
+          "source": ""
+        },
+        {
+          "chunk_id": "acute-leukemia-review_0027",
+          "text_preview": "The structure of treatment of adult ALL has been adapted from pediatric protocols. Unfortunately, while long-term surviv",
+          "source": ""
+        },
+        {
+          "chunk_id": "acute-leukemia-review_0081",
+          "text_preview": ". 140 Decitabine is currently being studied in the post-Allo-SCT setting (NCT02264873) and in combination with clofarabi",
+          "source": ""
+        },
+        {
+          "chunk_id": "acute-leukemia-review_0002",
+          "text_preview": "Acute lymphoblastic leukemia (ALL) is the second most common acute leukemia in adults, with an incidence of over 6500 ca",
+          "source": ""
+        },
+        {
+          "chunk_id": "acute-leukemia-review_0045",
+          "text_preview": ". 71 Importantly, in a multi-center trial (BLAST), Gokbuget et al. 72 confirmed the ability of blinatumomab to eliminate",
+          "source": ""
+        },
+        {
+          "chunk_id": "acute-leukemia-review_0009",
+          "text_preview": ". 13 This has significant therapeutic implications as it suggests that Ph-like ALL, which tends to carry a worse prognos",
+          "source": ""
+        },
+        {
+          "chunk_id": "osteosarcoma-review_0048",
+          "text_preview": "There have been no significant advances in the treatment of the disease over the last 10 plus years, however advancement",
+          "source": ""
+        },
+        {
+          "chunk_id": "skin-cancer-types-review_0079",
+          "text_preview": "## Extracted Visual Assets Database  \nThe following figures, tables and flowcharts were extracted from this paper. When",
+          "source": ""
+        },
+        {
+          "chunk_id": "lung-cancer-review_0071",
+          "text_preview": "- [IMAGE: lung-cancer-review_picture_3.png]\nCaption: FIGURE 3. The most common anaplastic lymphoma kinase (ALK)- depende",
+          "source": ""
+        }
+      ],
+      "chunk_ids": [
+        "acute-leukemia-review_0095",
+        "acute-leukemia-review_0015",
+        "acute-leukemia-review_0027",
+        "acute-leukemia-review_0081",
+        "acute-leukemia-review_0002",
+        "acute-leukemia-review_0045",
+        "acute-leukemia-review_0009",
+        "osteosarcoma-review_0048",
+        "skin-cancer-types-review_0079",
+        "lung-cancer-review_0071"
+      ],
+      "context_count": 10,
+      "elapsed_s": 10.96,
+      "has_image_tag": false,
+      "web_fired": false,
+      "sources": [
+        "acute-leukemia-review",
+        "osteosarcoma-review",
+        "skin-cancer-types-review",
+        "lung-cancer-review"
+      ],
+      "answer_preview": "The treatment of Acute Lymphoblastic Leukemia (ALL) and Acute Myeloid Leukemia (AML) differs in several ways. According to [5], the backbone of therapy for ALL remains multi-agent chemotherapy with vincristine, corticosteroids, and an anthracycline, with allogeneic stem cell transplantation for elig",
+      "scores": {
+        "image_recall": null,
+        "web_fallback": null,
+        "keyword_coverage": 0.3333,
+        "context_utilisation": 1.0,
+        "answer_completeness": 1.0,
+        "graph_grounding": null,
+        "latency_score": 0.9679
+      },
+      "composite": 0.694
+    },
+    {
+      "question": "What molecular targets guide NSCLC treatment?",
+      "answer": "The molecular targets that guide NSCLC treatment include anaplastic lymphoma kinase (ALK) gene rearrangement, as well as other targets such as epidermal growth factor receptor (EGFR) and ROS fusions [1], [3], [5]. The identification of these molecular targets is crucial for the selection of patients for personalized therapy, and various detection methods such as fluorescence in situ hybridization (FISH), immunohistochemistry (IHC), reverse transcriptase-polymerase chain reaction (RT-PCR), and next-generation sequencing (NGS) are used to detect ALK gene rearrangements [6]. As shown in the literature, the use of ALK tyrosine kinase inhibitors (TKI) has improved the quality of life and overall survival of patients with NSCLC [1], [5].\n\nThe mechanisms of resistance to ALK TKI are complex and can be divided into ALK-dependent and ALK-independent mechanisms [3], [7]. The development of second and third-generation ALK TKI, such as brigatinib and alectinib, has provided increased progression-free survival (PFS) and overall survival (OS) in comparison with chemotherapy [4], [5], [7]. However, resistance to these agents can still occur, and further research is needed to overcome these mechanisms of resistance [8].\n\nIn terms of visual references, the description of the literature identification process is shown in [IMAGE: lung-cancer-review_picture_1.png], and the most common mechanisms of resistance to anaplastic lymphoma kinase tyrosine kinase inhibitors are described in [IMAGE: lung-cancer-review_picture_2.png].\n\nIt is essential to note that the treatment of NSCLC should be individualized and guided by a qualified oncologist. The information provided here is based on the available literature and should not be considered as medical advice. If you or a loved one is diagnosed with NSCLC, it is crucial to consult with a qualified oncologist to determine the best course of treatment.",
+      "ground_truth": "EGFR mutations use erlotinib or osimertinib. ALK rearrangements use crizotinib or alectinib. PD-L1 high expressors receive pembrolizumab. KRAS G12C uses sotorasib.",
+      "keywords": [
+        "EGFR",
+        "ALK",
+        "PD-L1",
+        "pembrolizumab",
+        "NSCLC",
+        "erlotinib"
+      ],
+      "query_mode": "research",
+      "category": "research",
+      "description": "Molecular targets — lung cancer PDF",
+      "timestamp": "2026-04-23T12:07:51.445765",
+      "retrieved_contexts": [
+        {
+          "chunk_id": "lung-cancer-review_0002",
+          "text_preview": "Implementation of precision medicine in lung cancer has benefited from intense research in the past years, developing su",
+          "source": ""
+        },
+        {
+          "chunk_id": "acute-leukemia-review_0095",
+          "text_preview": ". Novel targeted therapies offer the promise of effective anti-leukemic activity with reduced toxicity from off-target e",
+          "source": ""
+        },
+        {
+          "chunk_id": "lung-cancer-review_0059",
+          "text_preview": "Despite the major therapeutic improvement of ALK TKI in NSCLC, disease progression after initial benefit has been descri",
+          "source": ""
+        },
+        {
+          "chunk_id": "lung-cancer-review_0040",
+          "text_preview": "Brigatinib is a potent molecule from the second generation of ALK TKI with approval in  for the indication of advanced N",
+          "source": ""
+        },
+        {
+          "chunk_id": "lung-cancer-review_0009",
+          "text_preview": ". The therapeutic development in this domain has led to the implementation of three generations of ALK tyrosine kinase i",
+          "source": ""
+        },
+        {
+          "chunk_id": "lung-cancer-review_0052",
+          "text_preview": "cancer (NSCLC) which represents almost 80-85% of the patients is considered a heterogeneous disease due to the wide spec",
+          "source": ""
+        },
+        {
+          "chunk_id": "lung-cancer-review_0038",
+          "text_preview": "Alectinib is a molecule from the second generation, which has proved antitumor effect on NSCLC patients with ALK rearran",
+          "source": ""
+        },
+        {
+          "chunk_id": "lung-cancer-review_0010",
+          "text_preview": "been identified upon progression [,]. From the available data, we have discovered that almost half of the mechanisms of",
+          "source": ""
+        },
+        {
+          "chunk_id": "lung-cancer-review_0070",
+          "text_preview": "## Extracted Visual Assets Database  \nThe following figures, tables and flowcharts were extracted from this paper. When",
+          "source": ""
+        }
+      ],
+      "chunk_ids": [
+        "lung-cancer-review_0002",
+        "acute-leukemia-review_0095",
+        "lung-cancer-review_0059",
+        "lung-cancer-review_0040",
+        "lung-cancer-review_0009",
+        "lung-cancer-review_0052",
+        "lung-cancer-review_0038",
+        "lung-cancer-review_0010",
+        "lung-cancer-review_0070"
+      ],
+      "context_count": 9,
+      "elapsed_s": 9.81,
+      "has_image_tag": true,
+      "web_fired": false,
+      "sources": [
+        "lung-cancer-review",
+        "acute-leukemia-review"
+      ],
+      "answer_preview": "The molecular targets that guide NSCLC treatment include anaplastic lymphoma kinase (ALK) gene rearrangement, as well as other targets such as epidermal growth factor receptor (EGFR) and ROS fusions [1], [3], [5]. The identification of these molecular targets is crucial for the selection of patients",
+      "scores": {
+        "image_recall": null,
+        "web_fallback": null,
+        "keyword_coverage": 0.5,
+        "context_utilisation": 1.0,
+        "answer_completeness": 1.0,
+        "graph_grounding": null,
+        "latency_score": 1.0
+      },
+      "composite": 0.7727
+    },
+    {
+      "question": "What staging system is used for melanoma and what is stage IV?",
+      "answer": "The staging system used for melanoma is based on the depth of tumor invasion and the presence of metastasis. According to [1], melanoma develops in five stages, with stage 0 being localized in the epidermal region and stage 4 being the stage where metastasis occurs. \n\nStage IV melanoma is characterized by the spread of the cancer to distant parts of the body, such as the lungs, liver, or brain, beyond the initial site of the tumor [1]. This stage is the most advanced stage of melanoma and indicates that the cancer has metastasized.\n\nIt's worth noting that the staging of melanoma can also be determined by the Breslow staging system, which measures the depth of invasion of the tumor in millimeters [3]. Additionally, the Clark classification system is used to describe the depth of tumor invasion, with levels ranging from I to V [3].\n\nUnfortunately, there are no relevant images provided in the clinical context to support this explanation. \n\nIn conclusion, the staging system used for melanoma is based on the depth of tumor invasion and the presence of metastasis, with stage IV being the most advanced stage. \n\nDisclaimer: This information is based on the provided clinical context and should not be considered as medical advice. If you or someone you know has been diagnosed with melanoma, it's essential to consult with a qualified oncologist to discuss the best course of treatment and to determine the specific stage of the cancer.",
+      "ground_truth": "Melanoma uses the AJCC TNM system. Stage IV indicates distant metastasis. Five-year survival has improved significantly with checkpoint inhibitor immunotherapy.",
+      "keywords": [
+        "melanoma",
+        "AJCC",
+        "TNM",
+        "stage IV",
+        "metastasis",
+        "checkpoint"
+      ],
+      "query_mode": "research",
+      "category": "research",
+      "description": "Staging system — melanoma PDF",
+      "timestamp": "2026-04-23T12:08:11.700045",
+      "retrieved_contexts": [
+        {
+          "chunk_id": "skin-cancer-types-review_0058",
+          "text_preview": "## Stages of melanoma skin cancer  \nMelanoma skin cancer develops infive stages [Figure 5]. In stage 0, melanoma develop",
+          "source": ""
+        },
+        {
+          "chunk_id": "osteosarcoma-review_0025",
+          "text_preview": "The staging classification used in osteosarcoma is the Musculoskeletal Tumor Society staging scheme, also known as the E",
+          "source": ""
+        },
+        {
+          "chunk_id": "melanoma-skin-cancer-review_0038",
+          "text_preview": ". The depth of tumor invasion can be described by the Clark [26] and Breslow classifica- tion systems [27]. Clark levels",
+          "source": ""
+        },
+        {
+          "chunk_id": "melanoma-skin-cancer-review_0006",
+          "text_preview": ". Staying informed about these evolving developments is essential for professionals dealing with melanoma patients. This",
+          "source": ""
+        },
+        {
+          "chunk_id": "melanoma-skin-cancer-review_0016",
+          "text_preview": "## 4. Subtypes: Morphology and Histopathology  \nThe different melanoma subtypes are distinguished by histology and morph",
+          "source": ""
+        },
+        {
+          "chunk_id": "melanoma-skin-cancer-review_0028",
+          "text_preview": "Adjuvant systemic therapy is also usually indicated, based on the higher risk of recurrence of stage III patients. For s",
+          "source": ""
+        },
+        {
+          "chunk_id": "melanoma-skin-cancer-review_0014",
+          "text_preview": "After acquiring genetic mutations and molecular changes, melanoma enters the vertical growth phase (VGP) and infiltrates",
+          "source": ""
+        },
+        {
+          "chunk_id": "melanoma-skin-cancer-review_0048",
+          "text_preview": "Table 1. World Health Organization classification of melanocytic tumors based on the multidimen- sional pathway classifi",
+          "source": ""
+        },
+        {
+          "chunk_id": "breast-cancer-review_0051",
+          "text_preview": "## Extracted Visual Assets Database  \nThe following figures, tables and flowcharts were extracted from this paper. When",
+          "source": ""
+        },
+        {
+          "chunk_id": "lung-cancer-review_0070",
+          "text_preview": "## Extracted Visual Assets Database  \nThe following figures, tables and flowcharts were extracted from this paper. When",
+          "source": ""
+        }
+      ],
+      "chunk_ids": [
+        "skin-cancer-types-review_0058",
+        "osteosarcoma-review_0025",
+        "melanoma-skin-cancer-review_0038",
+        "melanoma-skin-cancer-review_0006",
+        "melanoma-skin-cancer-review_0016",
+        "melanoma-skin-cancer-review_0028",
+        "melanoma-skin-cancer-review_0014",
+        "melanoma-skin-cancer-review_0048",
+        "breast-cancer-review_0051",
+        "lung-cancer-review_0070"
+      ],
+      "context_count": 10,
+      "elapsed_s": 10.39,
+      "has_image_tag": false,
+      "web_fired": false,
+      "sources": [
+        "skin-cancer-types-review",
+        "osteosarcoma-review",
+        "melanoma-skin-cancer-review",
+        "breast-cancer-review",
+        "lung-cancer-review"
+      ],
+      "answer_preview": "The staging system used for melanoma is based on the depth of tumor invasion and the presence of metastasis. According to [1], melanoma develops in five stages, with stage 0 being localized in the epidermal region and stage 4 being the stage where metastasis occurs. \n\nStage IV melanoma is characteri",
+      "scores": {
+        "image_recall": null,
+        "web_fallback": null,
+        "keyword_coverage": 0.5,
+        "context_utilisation": 0.9,
+        "answer_completeness": 1.0,
+        "graph_grounding": null,
+        "latency_score": 0.987
+      },
+      "composite": 0.7443
+    },
+    {
+      "question": "What are the main risk factors for breast cancer?",
+      "answer": "The main risk factors for breast cancer are not explicitly stated in the provided clinical context, but it is mentioned that around 50% of all breast cancers occur in women who have no recognized risk factors beyond their gender and age [1]. However, it is implied that being a woman and increasing age are significant risk factors. Additionally, it is mentioned that breast cancer chemoprevention may be necessary for women who are at an increased risk of developing the disease [6]. \n\nAs shown in the clinical context, the emphasis on early-stage breast cancer has grown, and various treatments are available, including surgery, radiation therapy, chemotherapy, hormone therapy, and targeted therapy [4], [5]. The use of anti-estrogens, such as raloxifene or tamoxifen, may also be considered as a preventive measure for women at increased risk [2]. \n\nIt is essential to note that the provided clinical context does not explicitly mention other established risk factors for breast cancer, such as family history, genetic mutations (e.g., BRCA1 and BRCA2), previous radiation exposure, and certain lifestyle factors. \n\nTherefore, based on the limited information provided, the main risk factors for breast cancer that can be inferred are being a woman and increasing age. However, it is crucial to consult a qualified oncologist for a comprehensive discussion of breast cancer risk factors and prevention strategies.\n\nDisclaimer: The information provided is based on the limited clinical context and should not be considered as a substitute for professional medical advice. It is essential to consult a qualified oncologist for personalized guidance on breast cancer risk factors, prevention, and treatment.",
+      "ground_truth": "Risk factors include age, BRCA1/2 mutations, family history, early menarche, late menopause, nulliparity, HRT, alcohol, and obesity.",
+      "keywords": [
+        "BRCA",
+        "breast cancer",
+        "risk",
+        "family history",
+        "HRT",
+        "obesity"
+      ],
+      "query_mode": "research",
+      "category": "research",
+      "description": "Risk factors — breast cancer PDF",
+      "timestamp": "2026-04-23T12:08:31.780860",
+      "retrieved_contexts": [
+        {
+          "chunk_id": "breast-cancer-review_0008",
+          "text_preview": "## Introduction  \nIn 2022, Globally 670,000 individuals died of breast cancer. Aroundfifty percent of all breast cancers",
+          "source": ""
+        },
+        {
+          "chunk_id": "breast-cancer-review_0012",
+          "text_preview": ". For the treatment of breast cancer, a number of modern medications are suggested (9). In individuals at increased risk",
+          "source": ""
+        },
+        {
+          "chunk_id": "breast-cancer-review_0041",
+          "text_preview": "Lee et al. (35) conducted a phase II randomized, double-blind, placebo-controlled trial comparing oral tamoxifen (20 mg/",
+          "source": ""
+        },
+        {
+          "chunk_id": "breast-cancer-review_0013",
+          "text_preview": "The emphasis on early-stage breast cancer has grown, due to the awareness of the treatment's long-term impact on health,",
+          "source": ""
+        },
+        {
+          "chunk_id": "breast-cancer-review_0003",
+          "text_preview": "Breast cancer remains one of the most prevalent malignancies among women globally. Despite advances in therapeutic optio",
+          "source": ""
+        },
+        {
+          "chunk_id": "breast-cancer-review_0009",
+          "text_preview": "Corresponding Author:  \nC.Sowmya; drcsowmya@sriramachandra.edu.in  \n<!-- image -->  \nseconds. Survival is more difficult",
+          "source": ""
+        },
+        {
+          "chunk_id": "breast-cancer-review_0016",
+          "text_preview": "Despite the efficacy of these medications being established through successful breast cancer preventive studies, they ha",
+          "source": ""
+        },
+        {
+          "chunk_id": "skin-cancer-types-review_0001",
+          "text_preview": "## Overview of skin cancer types and prevalence rates across continents  \nAmdad Hossain Roky a,b , Mohammed Murshedul Is",
+          "source": ""
+        },
+        {
+          "chunk_id": "breast-cancer-review_0051",
+          "text_preview": "## Extracted Visual Assets Database  \nThe following figures, tables and flowcharts were extracted from this paper. When",
+          "source": ""
+        }
+      ],
+      "chunk_ids": [
+        "breast-cancer-review_0008",
+        "breast-cancer-review_0012",
+        "breast-cancer-review_0041",
+        "breast-cancer-review_0013",
+        "breast-cancer-review_0003",
+        "breast-cancer-review_0009",
+        "breast-cancer-review_0016",
+        "skin-cancer-types-review_0001",
+        "breast-cancer-review_0051"
+      ],
+      "context_count": 9,
+      "elapsed_s": 10.71,
+      "has_image_tag": false,
+      "web_fired": false,
+      "sources": [
+        "breast-cancer-review",
+        "skin-cancer-types-review"
+      ],
+      "answer_preview": "The main risk factors for breast cancer are not explicitly stated in the provided clinical context, but it is mentioned that around 50% of all breast cancers occur in women who have no recognized risk factors beyond their gender and age [1]. However, it is implied that being a woman and increasing a",
+      "scores": {
+        "image_recall": null,
+        "web_fallback": null,
+        "keyword_coverage": 0.6667,
+        "context_utilisation": 0.8889,
+        "answer_completeness": 1.0,
+        "graph_grounding": null,
+        "latency_score": 0.9764
+      },
+      "composite": 0.8161
+    },
+    {
+      "question": "Show me the PRISMA flowchart from the systematic review.",
+      "answer": "The PRISMA flowchart from the systematic review is shown in [IMAGE: lung-cancer-review_picture_1.png]. This flowchart describes the literature identification process, which is a crucial step in conducting a systematic review [1]. The flowchart outlines the steps involved in identifying and selecting studies for inclusion in the review, including the initial search, screening, and eligibility assessment [5]. \n\nAs shown in [IMAGE: lung-cancer-review_picture_1.png], the flowchart provides a visual representation of the study selection process, allowing readers to understand the methodology used to identify relevant studies. This is an important aspect of systematic reviews, as it helps to ensure that the review is comprehensive and unbiased [8].\n\nIt's worth noting that the PRISMA flowchart is a widely accepted tool for reporting the results of systematic reviews, and its use is recommended by many scientific organizations [1]. By including this flowchart in the review, the authors provide a clear and transparent account of their methodology, which is essential for evaluating the validity and reliability of the review's findings.\n\nIf you have any further questions or concerns about the systematic review or the PRISMA flowchart, I recommend consulting with a qualified oncologist or a medical professional who can provide personalized guidance and support.\n\nDisclaimer: The information provided is based on the available clinical context and should not be considered as medical advice. It's essential to consult with a qualified oncologist or a medical professional for personalized guidance and support.",
+      "ground_truth": "The PRISMA flowchart shows records identified, screened, excluded, and included in the final systematic review synthesis.",
+      "keywords": [
+        "PRISMA",
+        "flowchart",
+        "systematic",
+        "records"
+      ],
+      "query_mode": "research",
+      "category": "image",
+      "description": "PRISMA request — must return [IMAGE:] tag",
+      "timestamp": "2026-04-23T12:08:57.037770",
+      "retrieved_contexts": [
+        {
+          "chunk_id": "lung-cancer-review_cap_0001",
+          "text_preview": "FIGURE 1. Description of the literature identification process (A Preferred Reporting Items for Systematic Review and Me",
+          "source": ""
+        },
+        {
+          "chunk_id": "melanoma-skin-cancer-review_0049",
+          "text_preview": "## Extracted Visual Assets Database  \nThe following figures, tables and flowcharts were extracted from this paper. When",
+          "source": ""
+        },
+        {
+          "chunk_id": "lung-cancer-review_0007",
+          "text_preview": "# These authors equally contributed  \nConflict of interest statement: Authors declare no conflict of interest  \nFunding:",
+          "source": ""
+        },
+        {
+          "chunk_id": "lung-cancer-review_0051",
+          "text_preview": "## Key Numerical Data  \nAdela Pătcaș1#, Ana Florica Chis1#, Claudia Florentina Militaru2,3, Ioana Roxana Bordea4*, Ruxan",
+          "source": ""
+        },
+        {
+          "chunk_id": "lung-cancer-review_0070",
+          "text_preview": "## Extracted Visual Assets Database  \nThe following figures, tables and flowcharts were extracted from this paper. When",
+          "source": ""
+        },
+        {
+          "chunk_id": "breast-cancer-review_0051",
+          "text_preview": "## Extracted Visual Assets Database  \nThe following figures, tables and flowcharts were extracted from this paper. When",
+          "source": ""
+        },
+        {
+          "chunk_id": "breast-cancer-review_0050",
+          "text_preview": "## Footnotes  \nAuthorship Contributions: Concept: N.B.S.T.,V.P .K., R.G., C.S.; Design: N.B.S.T.,V.P .K., R.G., C.S.; Da",
+          "source": ""
+        },
+        {
+          "chunk_id": "lung-cancer-review_0020",
+          "text_preview": "FIGURE 1. Description of the literature identification process (A Preferred Reporting Items for Systematic Review and Me",
+          "source": ""
+        },
+        {
+          "chunk_id": "lung-cancer-review_0070",
+          "text_preview": "## Extracted Visual Assets Database  \nThe following figures, tables and flowcharts were extracted from this paper. When",
+          "source": ""
+        },
+        {
+          "chunk_id": "lung-cancer-review_0071",
+          "text_preview": "- [IMAGE: lung-cancer-review_picture_3.png]\nCaption: FIGURE 3. The most common anaplastic lymphoma kinase (ALK)- depende",
+          "source": ""
+        }
+      ],
+      "chunk_ids": [
+        "lung-cancer-review_cap_0001",
+        "melanoma-skin-cancer-review_0049",
+        "lung-cancer-review_0007",
+        "lung-cancer-review_0051",
+        "lung-cancer-review_0070",
+        "breast-cancer-review_0051",
+        "breast-cancer-review_0050",
+        "lung-cancer-review_0020",
+        "lung-cancer-review_0070",
+        "lung-cancer-review_0071"
+      ],
+      "context_count": 10,
+      "elapsed_s": 12.76,
+      "has_image_tag": true,
+      "web_fired": false,
+      "sources": [
+        "lung-cancer-review",
+        "melanoma-skin-cancer-review",
+        "breast-cancer-review"
+      ],
+      "answer_preview": "The PRISMA flowchart from the systematic review is shown in [IMAGE: lung-cancer-review_picture_1.png]. This flowchart describes the literature identification process, which is a crucial step in conducting a systematic review [1]. The flowchart outlines the steps involved in identifying and selecting",
+      "scores": {
+        "image_recall": 1.0,
+        "web_fallback": null,
+        "keyword_coverage": 0.75,
+        "context_utilisation": 0.9,
+        "answer_completeness": 1.0,
+        "graph_grounding": null,
+        "latency_score": 0.9081
+      },
+      "composite": 0.8827
+    },
+    {
+      "question": "Are there any survival curves or Kaplan-Meier plots?",
+      "answer": "Based on the provided clinical context, there are no explicit survival curves or Kaplan-Meier plots mentioned. However, the context does provide information on survival rates and outcomes for various cancer types, including lung cancer [1], leukemia [2], [3], [6], [8], breast cancer [4], [7], and melanoma [5].\n\nFor instance, in the context of acute leukemia, it is mentioned that the blinatumomab study group had a median survival of 7.7 months, compared to 4.0 months for the standard of care group [6]. Additionally, in the context of breast cancer, it is mentioned that integrating systemic treatment, device therapy, and radiation significantly enhances survival and inhibits tumor growth in breast cancer models [4].\n\nUnfortunately, without explicit visual references to survival curves or Kaplan-Meier plots, such as [IMAGE: survival_curve.png] or [IMAGE: kaplan_meier_plot.png], it is challenging to provide a more detailed answer.\n\nIf you are looking for information on survival rates or outcomes for specific cancer types, I can try to provide more general information based on the provided context. However, please note that this information should not be considered as a substitute for consultation with a qualified oncologist.\n\nIn conclusion, while there is no explicit mention of survival curves or Kaplan-Meier plots in the provided context, there is information available on survival rates and outcomes for various cancer types. \n\nDisclaimer: The information provided is based on the limited context and should not be considered as medical advice. It is essential to consult with a qualified oncologist for personalized advice and treatment plans.",
+      "ground_truth": "Kaplan-Meier curves plot survival probability over time with median survival times and log-rank p-values for group comparisons.",
+      "keywords": [
+        "Kaplan",
+        "survival",
+        "curve",
+        "figure"
+      ],
+      "query_mode": "research",
+      "category": "image",
+      "description": "Survival curve request — must return [IMAGE:] tag",
+      "timestamp": "2026-04-23T12:09:22.523291",
+      "retrieved_contexts": [
+        {
+          "chunk_id": "lung-cancer-review_0051",
+          "text_preview": "## Key Numerical Data  \nAdela Pătcaș1#, Ana Florica Chis1#, Claudia Florentina Militaru2,3, Ioana Roxana Bordea4*, Ruxan",
+          "source": ""
+        },
+        {
+          "chunk_id": "acute-leukemia-review_0031",
+          "text_preview": ". Since there have been no studies comparing overall survival, the benefit of one corticosteroid over the other has not",
+          "source": ""
+        },
+        {
+          "chunk_id": "acute-leukemia-review_0091",
+          "text_preview": ". 161,162 The role of Allo-SCT in standard-risk adults is less clearly defined. In general, MRD has emerged as a prognos",
+          "source": ""
+        },
+        {
+          "chunk_id": "breast-cancer-review_0029",
+          "text_preview": "Moreover, the study investigated enhancing cislatin's efficacy with radiation therapy. Mice with T11 tumors received tre",
+          "source": ""
+        },
+        {
+          "chunk_id": "melanoma-skin-cancer-review_0007",
+          "text_preview": "<!-- image -->  \nAcademic Editor: Christoffer Gebhardt  \nReceived: 25 June 2025  \nRevised: 21 July 2025  \nAccepted: 24 J",
+          "source": ""
+        },
+        {
+          "chunk_id": "acute-leukemia-review_0046",
+          "text_preview": ". The blinatumomab study group ( n =271) had a median survival of 7.7 months (95% confidence interval (CI): 5.6, 9.6) ve",
+          "source": ""
+        },
+        {
+          "chunk_id": "breast-cancer-review_0014",
+          "text_preview": "Recent researchfindings from countries that have robust early-stage breast cancer screening programs suggest that the pr",
+          "source": ""
+        },
+        {
+          "chunk_id": "acute-leukemia-review_0020",
+          "text_preview": "Although clinical factors play an important role in guiding therapy, cytogenetic changes have a significant role in risk",
+          "source": ""
+        },
+        {
+          "chunk_id": "skin-cancer-types-review_0080",
+          "text_preview": "- [IMAGE: skin-cancer-types-review_table_1.png]\nCaption: Table 1 Skin cancer incidence rate across different continents",
+          "source": ""
+        },
+        {
+          "chunk_id": "skin-cancer-types-review_0079",
+          "text_preview": "## Extracted Visual Assets Database  \nThe following figures, tables and flowcharts were extracted from this paper. When",
+          "source": ""
+        }
+      ],
+      "chunk_ids": [
+        "lung-cancer-review_0051",
+        "acute-leukemia-review_0031",
+        "acute-leukemia-review_0091",
+        "breast-cancer-review_0029",
+        "melanoma-skin-cancer-review_0007",
+        "acute-leukemia-review_0046",
+        "breast-cancer-review_0014",
+        "acute-leukemia-review_0020",
+        "skin-cancer-types-review_0080",
+        "skin-cancer-types-review_0079"
+      ],
+      "context_count": 10,
+      "elapsed_s": 13.79,
+      "has_image_tag": true,
+      "web_fired": false,
+      "sources": [
+        "lung-cancer-review",
+        "acute-leukemia-review",
+        "breast-cancer-review",
+        "melanoma-skin-cancer-review",
+        "skin-cancer-types-review"
+      ],
+      "answer_preview": "Based on the provided clinical context, there are no explicit survival curves or Kaplan-Meier plots mentioned. However, the context does provide information on survival rates and outcomes for various cancer types, including lung cancer [1], leukemia [2], [3], [6], [8], breast cancer [4], [7], and me",
+      "scores": {
+        "image_recall": 1.0,
+        "web_fallback": null,
+        "keyword_coverage": 0.75,
+        "context_utilisation": 0.9,
+        "answer_completeness": 1.0,
+        "graph_grounding": null,
+        "latency_score": 0.8737
+      },
+      "composite": 0.8803
+    },
+    {
+      "question": "What does Figure 1 show in the breast cancer paper?",
+      "answer": "As shown in [IMAGE: breast-cancer-review_picture_1.png], Figure 1 illustrates the different topical drug delivery systems used in breast cancer studies [1]. This figure is referenced in the breast-cancer-review paper, which discusses the various treatment options and advancements in breast cancer research [2]. The image provides a visual representation of the different drug delivery systems, which can be useful in understanding the various approaches to treating breast cancer.\n\nAccording to the paper, recent research findings suggest that the prognosis for women diagnosed with breast cancer continues to improve, especially with the use of multidisciplinary treatment approaches [2]. However, it is essential to consider the potential drawbacks of these treatments, including cardiovascular complications, secondary cancers, and psychological distress [2].\n\nIt is crucial to note that breast cancer is a complex disease, and treatment options should be discussed with a qualified oncologist. As stated in the breast-cancer-review paper, around 50% of all breast cancers occur in women with no recognized risk factors beyond their gender and age [6].\n\nIn conclusion, Figure 1 in the breast-cancer-review paper shows the different topical drug delivery systems used in breast cancer studies. It is essential to consider the various treatment options and their potential drawbacks when discussing breast cancer treatment.\n\nDisclaimer: The information provided is based on the clinical context and should not be considered as medical advice. It is essential to consult with a qualified oncologist for personalized guidance and treatment options.",
+      "ground_truth": "Figures in breast cancer papers show treatment algorithms, molecular subtype classifications, or drug delivery system diagrams.",
+      "keywords": [
+        "figure",
+        "breast cancer",
+        "diagram"
+      ],
+      "query_mode": "research",
+      "category": "image",
+      "description": "Specific figure reference — figure_caption retrieval",
+      "timestamp": "2026-04-23T12:09:47.913304",
+      "retrieved_contexts": [
+        {
+          "chunk_id": "breast-cancer-review_0051",
+          "text_preview": "## Extracted Visual Assets Database  \nThe following figures, tables and flowcharts were extracted from this paper. When",
+          "source": ""
+        },
+        {
+          "chunk_id": "breast-cancer-review_0014",
+          "text_preview": "Recent researchfindings from countries that have robust early-stage breast cancer screening programs suggest that the pr",
+          "source": ""
+        },
+        {
+          "chunk_id": "lung-cancer-review_cap_0001",
+          "text_preview": "FIGURE 1. Description of the literature identification process (A Preferred Reporting Items for Systematic Review and Me",
+          "source": ""
+        },
+        {
+          "chunk_id": "skin-cancer-types-review_cap_0006",
+          "text_preview": "Context: Acral lentiginous melanoma...",
+          "source": ""
+        },
+        {
+          "chunk_id": "melanoma-skin-cancer-review_0031",
+          "text_preview": "## Key Numerical Data  \nCamila Caraviello 1,* , Gianluca Nazzaro 1,2,* , Gianluca Tavoletti 1,2 , Francesca Boggio 3 , N",
+          "source": ""
+        },
+        {
+          "chunk_id": "breast-cancer-review_0008",
+          "text_preview": "## Introduction  \nIn 2022, Globally 670,000 individuals died of breast cancer. Aroundfifty percent of all breast cancers",
+          "source": ""
+        },
+        {
+          "chunk_id": "breast-cancer-review_cap_0001",
+          "text_preview": "Figure 1. Different topical drug delivery system used in breast cancer studies",
+          "source": ""
+        },
+        {
+          "chunk_id": "melanoma-skin-cancer-review_0050",
+          "text_preview": "- [IMAGE: melanoma-skin-cancer-review_picture_4.png]\nCaption: Figure 3. ( a ) Lentigo maligna melanoma, gross morphology",
+          "source": ""
+        },
+        {
+          "chunk_id": "breast-cancer-review_0051",
+          "text_preview": "## Extracted Visual Assets Database  \nThe following figures, tables and flowcharts were extracted from this paper. When",
+          "source": ""
+        },
+        {
+          "chunk_id": "skin-cancer-types-review_0079",
+          "text_preview": "## Extracted Visual Assets Database  \nThe following figures, tables and flowcharts were extracted from this paper. When",
+          "source": ""
+        }
+      ],
+      "chunk_ids": [
+        "breast-cancer-review_0051",
+        "breast-cancer-review_0014",
+        "lung-cancer-review_cap_0001",
+        "skin-cancer-types-review_cap_0006",
+        "melanoma-skin-cancer-review_0031",
+        "breast-cancer-review_0008",
+        "breast-cancer-review_cap_0001",
+        "melanoma-skin-cancer-review_0050",
+        "breast-cancer-review_0051",
+        "skin-cancer-types-review_0079"
+      ],
+      "context_count": 10,
+      "elapsed_s": 12.66,
+      "has_image_tag": true,
+      "web_fired": false,
+      "sources": [
+        "breast-cancer-review",
+        "lung-cancer-review",
+        "skin-cancer-types-review",
+        "melanoma-skin-cancer-review"
+      ],
+      "answer_preview": "As shown in [IMAGE: breast-cancer-review_picture_1.png], Figure 1 illustrates the different topical drug delivery systems used in breast cancer studies [1]. This figure is referenced in the breast-cancer-review paper, which discusses the various treatment options and advancements in breast cancer re",
+      "scores": {
+        "image_recall": 1.0,
+        "web_fallback": null,
+        "keyword_coverage": 0.6667,
+        "context_utilisation": 0.8,
+        "answer_completeness": 1.0,
+        "graph_grounding": null,
+        "latency_score": 0.9113
+      },
+      "composite": 0.8318
+    },
+    {
+      "question": "Show me tables with chemotherapy dosing information.",
+      "answer": "To provide information on tables with chemotherapy dosing information, we can refer to the clinical context provided. \n\nIn the context of lung cancer, [IMAGE: lung-cancer-review_table_1.png] provides a summary description of the main studies and results of the ALK TKI in patients with ALK-positive NSCLC [1]. Additionally, [IMAGE: lung-cancer-review_table_2.png] outlines the main methods used to identify ALK mutation and mechanism of resistance, along with their advantages and limitations.\n\nFor leukemia, the dosing information for chemotherapy is discussed in [6], which mentions the structure of treatment of adult ALL, including induction, consolidation, and long-term maintenance, with CNS prophylaxis given at intervals throughout therapy. The backbone of induction therapy typically includes vincristine, corticosteroids, and an anthracycline.\n\nIn the context of osteosarcoma, [3] discusses chemotherapy treatment, including the use of Adriamycin, high-dose methotrexate, or a combination of bleomycin, Cytoxan, and actinomycin-D.\n\nWhile specific dosing information is not provided in the context for breast cancer or melanoma, [5] mentions the concurrent administration of phytochemicals and chemotherapy, which resulted in reduced toxicity and an enhanced response against multidrug-resistant breast cancer.\n\nIt's essential to note that chemotherapy dosing information can vary depending on the specific cancer type, patient population, and treatment protocol. Therefore, it's crucial to consult with a qualified oncologist to determine the most appropriate treatment plan.\n\nDisclaimer: The information provided is based on the clinical context and should not be considered as medical advice. It's essential to consult with a qualified oncologist to determine the most appropriate treatment plan and to discuss any questions or concerns related to cancer treatment.",
+      "ground_truth": "Dosing tables show drug name, dose in mg/m2, route of administration, schedule, and toxicities. Dose reduction guidelines may be included.",
+      "keywords": [
+        "table",
+        "dose",
+        "mg",
+        "schedule",
+        "toxicity"
+      ],
+      "query_mode": "research",
+      "category": "image",
+      "description": "Table request — table_caption retrieval",
+      "timestamp": "2026-04-23T12:10:26.946571",
+      "retrieved_contexts": [
+        {
+          "chunk_id": "lung-cancer-review_0070",
+          "text_preview": "## Extracted Visual Assets Database  \nThe following figures, tables and flowcharts were extracted from this paper. When",
+          "source": ""
+        },
+        {
+          "chunk_id": "skin-cancer-types-review_0008",
+          "text_preview": "* Corresponding author: School of Basic Pharmaceutical and Toxicological Sciences, College of Pharmacy, University of Lo",
+          "source": ""
+        },
+        {
+          "chunk_id": "osteosarcoma-review_0042",
+          "text_preview": "## Chemotherapy treatment  \nPrior to the 1970s, chemotherapy was not used for osteosarcoma and survival rates were disma",
+          "source": ""
+        },
+        {
+          "chunk_id": "acute-leukemia-review_0066",
+          "text_preview": "maximum tolerated dose (MTD) of 160 mg/m 2 administered once every three weeks was established. Reduction of tumor size",
+          "source": ""
+        },
+        {
+          "chunk_id": "breast-cancer-review_0047",
+          "text_preview": "A multitude of studies have reported that the concurrent administration of phytochemicals and chemotherapy resulted in r",
+          "source": ""
+        },
+        {
+          "chunk_id": "acute-leukemia-review_0027",
+          "text_preview": "The structure of treatment of adult ALL has been adapted from pediatric protocols. Unfortunately, while long-term surviv",
+          "source": ""
+        },
+        {
+          "chunk_id": "melanoma-skin-cancer-review_0031",
+          "text_preview": "## Key Numerical Data  \nCamila Caraviello 1,* , Gianluca Nazzaro 1,2,* , Gianluca Tavoletti 1,2 , Francesca Boggio 3 , N",
+          "source": ""
+        },
+        {
+          "chunk_id": "acute-leukemia-review_0052",
+          "text_preview": ". Cumulative doses were equivalent among the two treatment strategies. Overall response rate was 58%, with similar respo",
+          "source": ""
+        },
+        {
+          "chunk_id": "lung-cancer-review_0071",
+          "text_preview": "- [IMAGE: lung-cancer-review_picture_3.png]\nCaption: FIGURE 3. The most common anaplastic lymphoma kinase (ALK)- depende",
+          "source": ""
+        },
+        {
+          "chunk_id": "melanoma-skin-cancer-review_0050",
+          "text_preview": "- [IMAGE: melanoma-skin-cancer-review_picture_4.png]\nCaption: Figure 3. ( a ) Lentigo maligna melanoma, gross morphology",
+          "source": ""
+        }
+      ],
+      "chunk_ids": [
+        "lung-cancer-review_0070",
+        "skin-cancer-types-review_0008",
+        "osteosarcoma-review_0042",
+        "acute-leukemia-review_0066",
+        "breast-cancer-review_0047",
+        "acute-leukemia-review_0027",
+        "melanoma-skin-cancer-review_0031",
+        "acute-leukemia-review_0052",
+        "lung-cancer-review_0071",
+        "melanoma-skin-cancer-review_0050"
+      ],
+      "context_count": 10,
+      "elapsed_s": 21.35,
+      "has_image_tag": true,
+      "web_fired": false,
+      "sources": [
+        "lung-cancer-review",
+        "skin-cancer-types-review",
+        "osteosarcoma-review",
+        "acute-leukemia-review",
+        "breast-cancer-review",
+        "melanoma-skin-cancer-review"
+      ],
+      "answer_preview": "To provide information on tables with chemotherapy dosing information, we can refer to the clinical context provided. \n\nIn the context of lung cancer, [IMAGE: lung-cancer-review_table_1.png] provides a summary description of the main studies and results of the ALK TKI in patients with ALK-positive N",
+      "scores": {
+        "image_recall": 1.0,
+        "web_fallback": null,
+        "keyword_coverage": 0.6,
+        "context_utilisation": 0.8,
+        "answer_completeness": 1.0,
+        "graph_grounding": null,
+        "latency_score": 0.6217
+      },
+      "composite": 0.7873
+    },
+    {
+      "question": "Are there flowcharts showing leukemia treatment pathways?",
+      "answer": "Based on the provided clinical context, there are no flowcharts specifically mentioned as showing leukemia treatment pathways. However, the context does mention various figures, tables, and descriptions related to different types of cancer, including leukemia.\n\nFor leukemia, the context mentions established treatments [2], [4], [5], [6], and [8], which describe the use of multi-agent chemotherapy, targeted therapies, and other treatment approaches. However, it does not explicitly mention flowcharts showing treatment pathways.\n\nAs for visual references, the context provides several image tags, but none of them are specifically labeled as flowcharts showing leukemia treatment pathways. The available images include [IMAGE: lung-cancer-review_picture_1.png], [IMAGE: lung-cancer-review_picture_2.png], [IMAGE: skin-cancer-types-review_picture_1.png], and others, but none of these are directly related to leukemia treatment pathways.\n\nIn conclusion, based on the provided clinical context, there is no explicit mention of flowcharts showing leukemia treatment pathways. If you are looking for information on leukemia treatment, I recommend consulting the established treatments section [2], [4], [5], [6], and [8].\n\nPlease consult a qualified oncologist for personalized advice on cancer treatment.",
+      "ground_truth": "Leukemia treatment flowcharts show the pathway from diagnosis through risk stratification, induction, response assessment, and transplant decisions.",
+      "keywords": [
+        "leukemia",
+        "flowchart",
+        "pathway",
+        "induction"
+      ],
+      "query_mode": "research",
+      "category": "image",
+      "description": "Flowchart request — leukemia image retrieval",
+      "timestamp": "2026-04-23T12:10:45.000174",
+      "retrieved_contexts": [
+        {
+          "chunk_id": "lung-cancer-review_0070",
+          "text_preview": "## Extracted Visual Assets Database  \nThe following figures, tables and flowcharts were extracted from this paper. When",
+          "source": ""
+        },
+        {
+          "chunk_id": "acute-leukemia-review_0002",
+          "text_preview": "Acute lymphoblastic leukemia (ALL) is the second most common acute leukemia in adults, with an incidence of over 6500 ca",
+          "source": ""
+        },
+        {
+          "chunk_id": "melanoma-skin-cancer-review_0046",
+          "text_preview": "Thefifth edition of the World Health Organization (WHO) Classification of Skin Tumours [48], updated in 2022, reaffirmed",
+          "source": ""
+        },
+        {
+          "chunk_id": "acute-leukemia-review_0095",
+          "text_preview": ". Novel targeted therapies offer the promise of effective anti-leukemic activity with reduced toxicity from off-target e",
+          "source": ""
+        },
+        {
+          "chunk_id": "acute-leukemia-review_0031",
+          "text_preview": ". Since there have been no studies comparing overall survival, the benefit of one corticosteroid over the other has not",
+          "source": ""
+        },
+        {
+          "chunk_id": "acute-leukemia-review_0037",
+          "text_preview": "Recent studies have suggested that the AYA population, defined as aged 15 -39, may benefit from treatment on pediatric-i",
+          "source": ""
+        },
+        {
+          "chunk_id": "osteosarcoma-review_0018",
+          "text_preview": "Computed tomography (CT) scans are useful in defining cortical irregularities, fracture sites, mineralization, and neuro",
+          "source": ""
+        },
+        {
+          "chunk_id": "acute-leukemia-review_0027",
+          "text_preview": "The structure of treatment of adult ALL has been adapted from pediatric protocols. Unfortunately, while long-term surviv",
+          "source": ""
+        },
+        {
+          "chunk_id": "skin-cancer-types-review_0080",
+          "text_preview": "- [IMAGE: skin-cancer-types-review_table_1.png]\nCaption: Table 1 Skin cancer incidence rate across different continents",
+          "source": ""
+        },
+        {
+          "chunk_id": "skin-cancer-types-review_0079",
+          "text_preview": "## Extracted Visual Assets Database  \nThe following figures, tables and flowcharts were extracted from this paper. When",
+          "source": ""
+        }
+      ],
+      "chunk_ids": [
+        "lung-cancer-review_0070",
+        "acute-leukemia-review_0002",
+        "melanoma-skin-cancer-review_0046",
+        "acute-leukemia-review_0095",
+        "acute-leukemia-review_0031",
+        "acute-leukemia-review_0037",
+        "osteosarcoma-review_0018",
+        "acute-leukemia-review_0027",
+        "skin-cancer-types-review_0080",
+        "skin-cancer-types-review_0079"
+      ],
+      "context_count": 10,
+      "elapsed_s": 9.72,
+      "has_image_tag": true,
+      "web_fired": false,
+      "sources": [
+        "lung-cancer-review",
+        "acute-leukemia-review",
+        "melanoma-skin-cancer-review",
+        "osteosarcoma-review",
+        "skin-cancer-types-review"
+      ],
+      "answer_preview": "Based on the provided clinical context, there are no flowcharts specifically mentioned as showing leukemia treatment pathways. However, the context does mention various figures, tables, and descriptions related to different types of cancer, including leukemia.\n\nFor leukemia, the context mentions est",
+      "scores": {
+        "image_recall": 1.0,
+        "web_fallback": null,
+        "keyword_coverage": 0.75,
+        "context_utilisation": 1.0,
+        "answer_completeness": 1.0,
+        "graph_grounding": null,
+        "latency_score": 1.0
+      },
+      "composite": 0.9107
+    },
+    {
+      "question": "What vaccine is approved for preventing osteosarcoma?",
+      "answer": "🌐 **Answer sourced from web search** (not found in clinical literature database):\n\nThere is no vaccine currently approved for preventing osteosarcoma. Osteosarcoma is a type of bone cancer that is typically treated with a combination of surgery, chemotherapy, and radiation therapy. While there are vaccines available for certain types of cancer, such as the human papillomavirus (HPV) vaccine for cervical cancer and the hepatitis B vaccine for liver cancer, there is no vaccine specifically approved for the prevention of osteosarcoma.\n\nIt's worth noting that research into cancer vaccines is ongoing, and new developments may emerge in the future. However, as of my current knowledge, there is no approved vaccine for osteosarcoma prevention.\n\nDisclaimer: If you or a loved one is concerned about osteosarcoma or any other type of cancer, it's essential to consult a qualified oncologist for personalized advice and guidance. They can provide the most up-to-date information and recommend the best course of treatment based on individual circumstances.",
+      "ground_truth": "No vaccine is currently approved for preventing osteosarcoma in humans. This question falls outside the clinical review papers in this database.",
+      "keywords": [
+        "vaccine",
+        "osteosarcoma"
+      ],
+      "query_mode": "auto",
+      "category": "edge",
+      "description": "Out-of-corpus — must trigger web search fallback",
+      "timestamp": "2026-04-23T12:10:56.464809",
+      "retrieved_contexts": [
+        {
+          "chunk_id": "osteosarcoma-review_0001",
+          "text_preview": "## Osteosarcoma: a comprehensive review  \nAmirhossein Misaghi 1 , Amanda Goldin 1 , Moayd Awad 1,2 , and Anna A Kulidjia",
+          "source": ""
+        },
+        {
+          "chunk_id": "osteosarcoma-review_0050",
+          "text_preview": "New reconstructive modalities are also being proposed by Tsuchiya et al. They have studied the long-term outcomes of uti",
+          "source": ""
+        },
+        {
+          "chunk_id": "osteosarcoma-review_0042",
+          "text_preview": "## Chemotherapy treatment  \nPrior to the 1970s, chemotherapy was not used for osteosarcoma and survival rates were disma",
+          "source": ""
+        },
+        {
+          "chunk_id": "osteosarcoma-review_0052",
+          "text_preview": "## Summary  \nOsteosarcoma is a rare bone tumor found in areas of rapid bone turnover, most commonly the distal femur and",
+          "source": ""
+        },
+        {
+          "chunk_id": "lung-cancer-review_0009",
+          "text_preview": ". The therapeutic development in this domain has led to the implementation of three generations of ALK tyrosine kinase i",
+          "source": ""
+        },
+        {
+          "chunk_id": "osteosarcoma-review_0015",
+          "text_preview": "## Diagnosis and staging  \nThe technology and techniques used to diagnose osteosarcoma have improved over the past sever",
+          "source": ""
+        },
+        {
+          "chunk_id": "osteosarcoma-review_0002",
+          "text_preview": "Received 20 January 2017, Accepted 15 April 2017, Published online 9 April 2018  \nAbstract Osteosarcoma (OS) is a relati",
+          "source": ""
+        },
+        {
+          "chunk_id": "acute-leukemia-review_0079",
+          "text_preview": "DNA methylation is an important epigenetic modification that regulates gene expression. It has long been reported that D",
+          "source": ""
+        },
+        {
+          "chunk_id": "lung-cancer-review_0071",
+          "text_preview": "- [IMAGE: lung-cancer-review_picture_3.png]\nCaption: FIGURE 3. The most common anaplastic lymphoma kinase (ALK)- depende",
+          "source": ""
+        }
+      ],
+      "chunk_ids": [
+        "osteosarcoma-review_0001",
+        "osteosarcoma-review_0050",
+        "osteosarcoma-review_0042",
+        "osteosarcoma-review_0052",
+        "lung-cancer-review_0009",
+        "osteosarcoma-review_0015",
+        "osteosarcoma-review_0002",
+        "acute-leukemia-review_0079",
+        "lung-cancer-review_0071"
+      ],
+      "context_count": 9,
+      "elapsed_s": 1.92,
+      "has_image_tag": false,
+      "web_fired": true,
+      "sources": [
+        "https://www.cancer.gov",
+        "https://www.ncbi.nlm.nih.gov/pubmed/"
+      ],
+      "answer_preview": "🌐 **Answer sourced from web search** (not found in clinical literature database):\n\nThere is no vaccine currently approved for preventing osteosarcoma. Osteosarcoma is a type of bone cancer that is typically treated with a combination of surgery, chemotherapy, and radiation therapy. While there are v",
+      "scores": {
+        "image_recall": null,
+        "web_fallback": 1.0,
+        "keyword_coverage": 1.0,
+        "context_utilisation": 0.8889,
+        "answer_completeness": 1.0,
+        "graph_grounding": null,
+        "latency_score": 1.0
+      },
+      "composite": 0.9778
+    },
+    {
+      "question": "What is the latest FDA-approved drug for osteosarcoma in 2024?",
+      "answer": "🌐 **Answer sourced from web search** (not found in clinical literature database):\n\nBased on the provided web search results, there is no information available on the latest FDA-approved drug for osteosarcoma in 2024. The search results [W1] to [W5] appear to be related to news and current events, particularly focusing on geopolitics, diplomacy, and regional news, but do not provide any information on medical treatments or FDA approvals.\n\nAs none of the search results [W1, W2, W3, W4, W5] contain relevant information on osteosarcoma or FDA-approved drugs, I cannot provide a specific answer to the question.\n\nDisclaimer: For accurate and up-to-date information on the latest FDA-approved drugs for osteosarcoma, please consult a qualified oncologist or a reliable medical resource.",
+      "ground_truth": "This requires current regulatory information beyond the scope of the clinical review papers in this database.",
+      "keywords": [
+        "FDA",
+        "approved",
+        "osteosarcoma"
+      ],
+      "query_mode": "auto",
+      "category": "edge",
+      "description": "Recent regulatory question — proactive web fallback",
+      "timestamp": "2026-04-23T12:11:06.359589",
+      "retrieved_contexts": [
+        {
+          "chunk_id": "osteosarcoma-review_0002",
+          "text_preview": "Received 20 January 2017, Accepted 15 April 2017, Published online 9 April 2018  \nAbstract Osteosarcoma (OS) is a relati",
+          "source": ""
+        },
+        {
+          "chunk_id": "lung-cancer-review_0002",
+          "text_preview": "Implementation of precision medicine in lung cancer has benefited from intense research in the past years, developing su",
+          "source": ""
+        },
+        {
+          "chunk_id": "osteosarcoma-review_0050",
+          "text_preview": "New reconstructive modalities are also being proposed by Tsuchiya et al. They have studied the long-term outcomes of uti",
+          "source": ""
+        },
+        {
+          "chunk_id": "osteosarcoma-review_0044",
+          "text_preview": "The four chemotherapy agents that are in nearly all treatment regimens include methotrexate with leucovorin rescue, doxo",
+          "source": ""
+        },
+        {
+          "chunk_id": "osteosarcoma-review_0048",
+          "text_preview": "There have been no significant advances in the treatment of the disease over the last 10 plus years, however advancement",
+          "source": ""
+        },
+        {
+          "chunk_id": "osteosarcoma-review_0001",
+          "text_preview": "## Osteosarcoma: a comprehensive review  \nAmirhossein Misaghi 1 , Amanda Goldin 1 , Moayd Awad 1,2 , and Anna A Kulidjia",
+          "source": ""
+        },
+        {
+          "chunk_id": "osteosarcoma-review_0019",
+          "text_preview": "X-ray of the chest should be completed to assess pulmonary metastases, as this is the most common location of metastatic",
+          "source": ""
+        },
+        {
+          "chunk_id": "osteosarcoma-review_0052",
+          "text_preview": "## Summary  \nOsteosarcoma is a rare bone tumor found in areas of rapid bone turnover, most commonly the distal femur and",
+          "source": ""
+        }
+      ],
+      "chunk_ids": [
+        "osteosarcoma-review_0002",
+        "lung-cancer-review_0002",
+        "osteosarcoma-review_0050",
+        "osteosarcoma-review_0044",
+        "osteosarcoma-review_0048",
+        "osteosarcoma-review_0001",
+        "osteosarcoma-review_0019",
+        "osteosarcoma-review_0052"
+      ],
+      "context_count": 8,
+      "elapsed_s": 2.04,
+      "has_image_tag": false,
+      "web_fired": true,
+      "sources": [
+        "https://www.scmp.com/topics/us-israel-war-iran",
+        "https://www.scmp.com/live",
+        "https://www.scmp.com/news",
+        "https://www.scmp.com/news/world/middle-east",
+        "https://www.scmp.com/topics/malaysia"
+      ],
+      "answer_preview": "🌐 **Answer sourced from web search** (not found in clinical literature database):\n\nBased on the provided web search results, there is no information available on the latest FDA-approved drug for osteosarcoma in 2024. The search results [W1] to [W5] appear to be related to news and current events, pa",
+      "scores": {
+        "image_recall": null,
+        "web_fallback": 1.0,
+        "keyword_coverage": 1.0,
+        "context_utilisation": 0.625,
+        "answer_completeness": 1.0,
+        "graph_grounding": null,
+        "latency_score": 1.0
+      },
+      "composite": 0.925
+    },
+    {
+      "question": "What eating effects does paclitaxel cause and what foods to avoid?",
+      "answer": "According to the graph knowledge base [G1], Paclitaxel causes nausea as an eating effect, with a severity of moderate. To manage this, it is recommended to eat small meals every 2-3 hours and avoid having an empty stomach. Additionally, anti-emetics such as 5-HT3 antagonists and NK1 antagonists can be used.\n\nIn terms of food guidance, [G1] advises avoiding spicy foods and fried/fatty foods, while suggesting that patients eat bananas, toast/white bread, and ginger tea or ginger ale. It is also recommended to eat 5-6 small meals per day instead of 3 large meals to manage nausea, dysphagia, and appetite loss.\n\nThere are no relevant images to reference in this answer.\n\nPlease consult a qualified oncologist for personalized dietary advice and to discuss any concerns related to your cancer treatment.",
+      "ground_truth": "Paclitaxel causes nausea, taste changes, and mucositis. Patients should avoid spicy and acidic foods. Small bland meals help manage nausea.",
+      "keywords": [
+        "paclitaxel",
+        "nausea",
+        "mucositis",
+        "avoid",
+        "food"
+      ],
+      "query_mode": "auto",
+      "category": "edge",
+      "description": "Auto mode hybrid — tests graph + vector routing",
+      "timestamp": "2026-04-23T12:11:25.090947",
+      "retrieved_contexts": [
+        {
+          "chunk_id": "breast-cancer-review_0010",
+          "text_preview": "Received: 26.09.2024 Accepted: 02.12.2024 Available Online Date: 01.01.2025  \nPremalignant cells lead to invasive illnes",
+          "source": ""
+        },
+        {
+          "chunk_id": "lung-cancer-review_0026",
+          "text_preview": "Crizotinib is an oral TKI inhibitor of thefirst generation TKI with recommended oral dose is of  mg twice daily in a -da",
+          "source": ""
+        },
+        {
+          "chunk_id": "breast-cancer-review_0031",
+          "text_preview": "The chemopreventive efficacy of the α -santalol formulation was tested using an experimental 7,12-dimethylbenz anthracen",
+          "source": ""
+        },
+        {
+          "chunk_id": "acute-leukemia-review_0028",
+          "text_preview": ". 40 Due to high induction-related mortality, one-third dose reductions of cyclophosphamide and daunorubicin were implem",
+          "source": ""
+        },
+        {
+          "chunk_id": "osteosarcoma-review_0012",
+          "text_preview": "## Parosteal osteosarcoma  \nParosteal osteosarcoma (PAOS) is a low-grade osteosarcoma that originates from the periosteu",
+          "source": ""
+        },
+        {
+          "chunk_id": "breast-cancer-review_0033",
+          "text_preview": "## Liposome Nanoparticles of Raloxifene  \nIn an effort to improve the binding and antitumor efficacy of raloxifene (RXF)",
+          "source": ""
+        },
+        {
+          "chunk_id": "breast-cancer-review_0041",
+          "text_preview": "Lee et al. (35) conducted a phase II randomized, double-blind, placebo-controlled trial comparing oral tamoxifen (20 mg/",
+          "source": ""
+        },
+        {
+          "chunk_id": "breast-cancer-review_0009",
+          "text_preview": "Corresponding Author:  \nC.Sowmya; drcsowmya@sriramachandra.edu.in  \n<!-- image -->  \nseconds. Survival is more difficult",
+          "source": ""
+        }
+      ],
+      "chunk_ids": [
+        "breast-cancer-review_0010",
+        "lung-cancer-review_0026",
+        "breast-cancer-review_0031",
+        "acute-leukemia-review_0028",
+        "osteosarcoma-review_0012",
+        "breast-cancer-review_0033",
+        "breast-cancer-review_0041",
+        "breast-cancer-review_0009"
+      ],
+      "context_count": 8,
+      "elapsed_s": 9.47,
+      "has_image_tag": false,
+      "web_fired": false,
+      "sources": [
+        "Cancer Treatment Knowledge Graph",
+        "breast-cancer-review",
+        "lung-cancer-review",
+        "acute-leukemia-review",
+        "osteosarcoma-review"
+      ],
+      "answer_preview": "According to the graph knowledge base [G1], Paclitaxel causes nausea as an eating effect, with a severity of moderate. To manage this, it is recommended to eat small meals every 2-3 hours and avoid having an empty stomach. Additionally, anti-emetics such as 5-HT3 antagonists and NK1 antagonists can ",
+      "scores": {
+        "image_recall": null,
+        "web_fallback": 0.0,
+        "keyword_coverage": 0.8,
+        "context_utilisation": 0.875,
+        "answer_completeness": 1.0,
+        "graph_grounding": null,
+        "latency_score": 1.0
+      },
+      "composite": 0.6417
+    },
+    {
+      "question": "Does chemotherapy affect fertility?",
+      "answer": "The provided clinical context does not directly address the question of whether chemotherapy affects fertility. However, it's essential to consider the potential impact of chemotherapy on reproductive health.\n\nAccording to general knowledge in the field of oncology, chemotherapy can indeed affect fertility in both men and women. The extent of the impact depends on various factors, including the type and dose of chemotherapy, the age of the patient, and the duration of treatment.\n\nIn the context of the provided literature, there is no specific discussion on the effects of chemotherapy on fertility. The sources primarily focus on the treatment and management of various types of cancer, including breast cancer, osteosarcoma, and leukemia.\n\nAs there are no relevant images provided in the clinical context that directly relate to the question of chemotherapy's effect on fertility, no visual references can be included.\n\nIn conclusion, while the provided clinical context does not explicitly address the question, it is known that chemotherapy can affect fertility. However, the extent of this impact can vary depending on several factors.\n\nDisclaimer: This response is based on general knowledge and the provided clinical context. It is essential to consult a qualified oncologist for personalized advice and guidance on the potential effects of chemotherapy on fertility.",
+      "ground_truth": "Alkylating agents like cyclophosphamide can cause gonadal toxicity and infertility. Fertility preservation should be discussed before treatment.",
+      "keywords": [
+        "fertility",
+        "chemotherapy",
+        "gonadal",
+        "cyclophosphamide"
+      ],
+      "query_mode": "auto",
+      "category": "edge",
+      "description": "Partially in-corpus — mixed retrieval test",
+      "timestamp": "2026-04-23T12:11:40.850106",
+      "retrieved_contexts": [
+        {
+          "chunk_id": "breast-cancer-review_0010",
+          "text_preview": "Received: 26.09.2024 Accepted: 02.12.2024 Available Online Date: 01.01.2025  \nPremalignant cells lead to invasive illnes",
+          "source": ""
+        },
+        {
+          "chunk_id": "osteosarcoma-review_0049",
+          "text_preview": ". A proposed theory as to the dogma of chemotherapy was noting that edema improves post-treatment, leading to the belief",
+          "source": ""
+        },
+        {
+          "chunk_id": "acute-leukemia-review_0029",
+          "text_preview": ". In phase II of induction, cyclophosphamide is introduced along with cytarabine, oral 6-mercaptopurine (6-MP), four add",
+          "source": ""
+        },
+        {
+          "chunk_id": "osteosarcoma-review_0042",
+          "text_preview": "## Chemotherapy treatment  \nPrior to the 1970s, chemotherapy was not used for osteosarcoma and survival rates were disma",
+          "source": ""
+        },
+        {
+          "chunk_id": "breast-cancer-review_0029",
+          "text_preview": "Moreover, the study investigated enhancing cislatin's efficacy with radiation therapy. Mice with T11 tumors received tre",
+          "source": ""
+        },
+        {
+          "chunk_id": "acute-leukemia-review_0020",
+          "text_preview": "Although clinical factors play an important role in guiding therapy, cytogenetic changes have a significant role in risk",
+          "source": ""
+        },
+        {
+          "chunk_id": "osteosarcoma-review_0045",
+          "text_preview": ". The authors suggest restarting chemotherapy within thefirst 21 days postoperatively in order to maintain dose intensit",
+          "source": ""
+        },
+        {
+          "chunk_id": "acute-leukemia-review_0038",
+          "text_preview": ". 36 They observed a significant improvement in CR, EFS and OS, which was most marked in patients younger than age of 45",
+          "source": ""
+        },
+        {
+          "chunk_id": "skin-cancer-types-review_0079",
+          "text_preview": "## Extracted Visual Assets Database  \nThe following figures, tables and flowcharts were extracted from this paper. When",
+          "source": ""
+        }
+      ],
+      "chunk_ids": [
+        "breast-cancer-review_0010",
+        "osteosarcoma-review_0049",
+        "acute-leukemia-review_0029",
+        "osteosarcoma-review_0042",
+        "breast-cancer-review_0029",
+        "acute-leukemia-review_0020",
+        "osteosarcoma-review_0045",
+        "acute-leukemia-review_0038",
+        "skin-cancer-types-review_0079"
+      ],
+      "context_count": 9,
+      "elapsed_s": 8.0,
+      "has_image_tag": false,
+      "web_fired": false,
+      "sources": [
+        "breast-cancer-review",
+        "osteosarcoma-review",
+        "acute-leukemia-review",
+        "skin-cancer-types-review"
+      ],
+      "answer_preview": "The provided clinical context does not directly address the question of whether chemotherapy affects fertility. However, it's essential to consider the potential impact of chemotherapy on reproductive health.\n\nAccording to general knowledge in the field of oncology, chemotherapy can indeed affect fe",
+      "scores": {
+        "image_recall": null,
+        "web_fallback": 0.0,
+        "keyword_coverage": 0.5,
+        "context_utilisation": 0.7778,
+        "answer_completeness": 1.0,
+        "graph_grounding": null,
+        "latency_score": 1.0
+      },
+      "composite": 0.5222
+    },
+    {
+      "question": "What is the standard treatment for stage III melanoma?",
+      "answer": "The standard treatment for stage III melanoma typically involves adjuvant systemic therapy, based on the higher risk of recurrence in these patients [3]. For stage IIIA patients with very small sentinel lymph node (SLN) tumor deposits only, systemic therapy could be avoided due to the low risk of disease recurrence [3]. However, for all other stage III patients, one year of adjuvant systemic therapy is usually indicated. The therapy is based on the BRAF V600 mutation status, with BRAF wild-type tumors being treated with PD-1 inhibitors (nivolumab or pembrolizumab) [3], and BRAF-mutant tumors being treated with either a PD-1 inhibitor or targeted therapy with BRAF plus MEK inhibitors (dabrafenib plus trametinib) [3].\n\nIt's also important to note that the treatment of individuals with a positive SLNB with complete lymph node resection (CLND) is related to increased morbidity without a benefit in survival, as demonstrated by the DeCOG-SLT and MSLT II trials [7]. CLND should be reserved for specific patients with a higher SLN tumor burden and adverse histological characteristics of the primary lesion that could predict a higher probability of additional positive lymph nodes [7].\n\nPlease consult a qualified oncologist for personalized advice on treating stage III melanoma, as the best course of treatment may vary depending on individual circumstances.",
+      "ground_truth": "Stage III melanoma is treated with surgery plus adjuvant anti-PD-1 immunotherapy or BRAF/MEK inhibitors for BRAF V600E mutated tumours.",
+      "keywords": [
+        "melanoma",
+        "stage III",
+        "surgery",
+        "pembrolizumab",
+        "BRAF"
+      ],
+      "query_mode": "research",
+      "category": "edge",
+      "description": "Specific staging question — precise retrieval test",
+      "timestamp": "2026-04-23T12:12:04.431522",
+      "retrieved_contexts": [
+        {
+          "chunk_id": "melanoma-skin-cancer-review_0033",
+          "text_preview": "Cutaneous melanoma is a skin cancer caused by the abnormal proliferation of melanocytes in the epidermis. Its incidence",
+          "source": ""
+        },
+        {
+          "chunk_id": "osteosarcoma-review_0026",
+          "text_preview": "## Treatment  \nConventional treatment for OS consists of a combination of neoadjuvant and adjuvant chemotherapy, and sur",
+          "source": ""
+        },
+        {
+          "chunk_id": "melanoma-skin-cancer-review_0028",
+          "text_preview": "Adjuvant systemic therapy is also usually indicated, based on the higher risk of recurrence of stage III patients. For s",
+          "source": ""
+        },
+        {
+          "chunk_id": "skin-cancer-types-review_0058",
+          "text_preview": "## Stages of melanoma skin cancer  \nMelanoma skin cancer develops infive stages [Figure 5]. In stage 0, melanoma develop",
+          "source": ""
+        },
+        {
+          "chunk_id": "acute-leukemia-review_0090",
+          "text_preview": "After achieving complete response, treatment options include consolidation and maintenance chemotherapy or Allo-SCT for",
+          "source": ""
+        },
+        {
+          "chunk_id": "melanoma-skin-cancer-review_0038",
+          "text_preview": ". The depth of tumor invasion can be described by the Clark [26] and Breslow classifica- tion systems [27]. Clark levels",
+          "source": ""
+        },
+        {
+          "chunk_id": "melanoma-skin-cancer-review_0027",
+          "text_preview": "## 9.5.2. Positive Sentinel Lymph Node Biopsy  \nFor patients with a positive sentinel lymph node biopsy, clinical observ",
+          "source": ""
+        },
+        {
+          "chunk_id": "melanoma-skin-cancer-review_0007",
+          "text_preview": "<!-- image -->  \nAcademic Editor: Christoffer Gebhardt  \nReceived: 25 June 2025  \nRevised: 21 July 2025  \nAccepted: 24 J",
+          "source": ""
+        }
+      ],
+      "chunk_ids": [
+        "melanoma-skin-cancer-review_0033",
+        "osteosarcoma-review_0026",
+        "melanoma-skin-cancer-review_0028",
+        "skin-cancer-types-review_0058",
+        "acute-leukemia-review_0090",
+        "melanoma-skin-cancer-review_0038",
+        "melanoma-skin-cancer-review_0027",
+        "melanoma-skin-cancer-review_0007"
+      ],
+      "context_count": 8,
+      "elapsed_s": 12.59,
+      "has_image_tag": false,
+      "web_fired": false,
+      "sources": [
+        "melanoma-skin-cancer-review",
+        "osteosarcoma-review",
+        "skin-cancer-types-review",
+        "acute-leukemia-review"
+      ],
+      "answer_preview": "The standard treatment for stage III melanoma typically involves adjuvant systemic therapy, based on the higher risk of recurrence in these patients [3]. For stage IIIA patients with very small sentinel lymph node (SLN) tumor deposits only, systemic therapy could be avoided due to the low risk of di",
+      "scores": {
+        "image_recall": null,
+        "web_fallback": 0.0,
+        "keyword_coverage": 0.8,
+        "context_utilisation": 1.0,
+        "answer_completeness": 1.0,
+        "graph_grounding": null,
+        "latency_score": 0.9138
+      },
+      "composite": 0.6609
+    }
+  ]
+}

@@ -435,14 +435,14 @@ with st.sidebar:
 # =============================================================================
 
 st.markdown("""
-<div class="medchat-title">
+<h1 class="medchat-title">
     <span class="medchat-dark">MedChat – </span>
     <span class="medchat-green">Graph RAG Healthcare Assistant</span>
-</div>
-<div class="medchat-subtext">
+</h1>
+<p class="medchat-subtext">
 AI-powered system using medical knowledge graphs and peer-reviewed literature
 to help cancer patients understand treatments, nutrition, and clinical guidance.
-</div>
+</p>
 """, unsafe_allow_html=True)
 
 st.caption(
@@ -465,7 +465,11 @@ with tab_upload:
     uploaded_file = st.file_uploader(
         "Upload report (.txt or .pdf)", type=["txt", "pdf"]
     )
-    pasted_report = st.text_area("Or paste report text here:", height=200)
+    pasted_report = st.text_area(
+        "Or paste report text here:",
+        height=200,
+        placeholder="e.g. Diagnosed with Stage II Breast Cancer. Current treatment: Tamoxifen...",
+    )
 
     patient_context = ""
     upload_source   = ""
@@ -479,6 +483,7 @@ with tab_upload:
 
     if patient_context:
         st.success(f"Report loaded ({upload_source})")
+        st.info("Switch to the 'Chat' tab to see your automated analysis.")
         with st.expander("Preview loaded report"):
             preview = patient_context[:800]
             if len(patient_context) > 800:

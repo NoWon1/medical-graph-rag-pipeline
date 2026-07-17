@@ -211,10 +211,14 @@ def render_message_with_images(text: str):
                 st.markdown(part)
         else:
             filename = part.strip().strip('`"\'')
-            img_path = IMAGE_DIR / filename
+
+            # Security Fix: Prevent path traversal by extracting only the filename
+            safe_filename = Path(filename).name
+            img_path = IMAGE_DIR / safe_filename
+
             if img_path.exists():
-                st.markdown(f"**Reference Visual:** `{filename}`")
-                st.image(str(img_path), caption=filename, use_container_width=True)
+                st.markdown(f"**Reference Visual:** `{safe_filename}`")
+                st.image(str(img_path), caption=safe_filename, use_container_width=True)
 
 
 def render_followup_buttons(followups: list[str], turn_key: str):

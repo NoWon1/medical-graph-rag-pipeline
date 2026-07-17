@@ -1,0 +1,4 @@
+## 2024-05-24 - Path Traversal Vulnerability in Image Serving
+**Vulnerability:** Path traversal vulnerability in `cancer_app.py` within the `render_message_with_images` function where user-controlled filename input was directly appended to `IMAGE_DIR` to retrieve images.
+**Learning:** This existed because the application assumed all image filenames within the text markers `[IMAGE: ...]` were safe and did not validate or sanitize them against directory traversal characters (e.g. `../`).
+**Prevention:** Always extract only the filename base using tools like `Path(filename).name` or `os.path.basename` when combining user input or potentially unsafe data with a directory path, preventing directory escapes.

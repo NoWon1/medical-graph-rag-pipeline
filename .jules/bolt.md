@@ -1,0 +1,3 @@
+## 2024-05-15 - MMR Reranking O(N^2) Bottleneck
+**Learning:** The default MMR implementation in `cancer_retrieval.py` was re-computing the max cosine similarity across ALL selected documents for EVERY remaining candidate in every iteration. This O(k^2 * N) operation creates severe latency spikes when K and N grow large during retrieval scaling.
+**Action:** Always check loop structures inside ranking algorithms. Cache the previous iterations' calculations (e.g., store the max similarity per candidate) and only compute the delta (similarity to the newly selected item) to drop complexity from O(N^2) to O(N).

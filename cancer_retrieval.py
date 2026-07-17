@@ -175,15 +175,25 @@ def mmr_rerank(query: str, candidates: List[Document], embed_model: HuggingFaceE
     query_vec = embed_model.embed_query(query)
     doc_vecs  = embed_model.embed_documents([d.page_content for d in candidates])
     relevance = [_cosine(v, query_vec) for v in doc_vecs]
+
     selected, remaining = [], list(range(len(candidates)))
+    max_sim_to_selected = [float("-inf")] * len(candidates)
+
     for _ in range(min(k, len(candidates))):
-        if not selected: best = max(remaining, key=lambda i: relevance[i])
+        if not selected:
+            best = max(remaining, key=lambda i: relevance[i])
         else:
             best, best_score = -1, float("-inf")
+            last_selected_vec = doc_vecs[selected[-1]]
             for idx in remaining:
-                max_sim = max(_cosine(doc_vecs[idx], doc_vecs[s]) for s in selected)
-                score   = lambda_mult * relevance[idx] - (1 - lambda_mult) * max_sim
-                if score > best_score: best_score, best = score, idx
+                # Update cached max_sim with the newly selected document
+                sim = _cosine(doc_vecs[idx], last_selected_vec)
+                if sim > max_sim_to_selected[idx]:
+                    max_sim_to_selected[idx] = sim
+
+                score = lambda_mult * relevance[idx] - (1 - lambda_mult) * max_sim_to_selected[idx]
+                if score > best_score:
+                    best_score, best = score, idx
         selected.append(best)
         remaining.remove(best)
     return [candidates[i] for i in selected]

@@ -91,8 +91,8 @@ div[data-testid="stChatInput"] textarea {
     box-shadow: none !important;
 }
 div[data-testid="stChatInput"] textarea:focus {
-    border: 1px solid #e53935 !important;
-    box-shadow: none !important;
+    border: 1px solid #2fa36b !important;
+    box-shadow: 0 0 0 2px rgba(47, 163, 107, 0.2) !important;
     outline: none !important;
 }
 .stButton>button {
@@ -113,8 +113,8 @@ textarea {
     box-shadow: none !important;
 }
 textarea:focus {
-    border: 1px solid #e53935 !important;
-    box-shadow: none !important;
+    border: 1px solid #2fa36b !important;
+    box-shadow: 0 0 0 2px rgba(47, 163, 107, 0.2) !important;
     outline: none !important;
 }
 textarea::placeholder { color: #7a8a9a !important; }
@@ -462,10 +462,16 @@ tab_chat, tab_upload = st.tabs(["Chat", "Upload Report"])
 
 with tab_upload:
     st.subheader("Upload Patient Report")
+    st.info("Uploading or pasting a patient report enables automatic, personalised analysis of diagnosis, staging, and treatment options against clinical literature and knowledge graphs.")
+
     uploaded_file = st.file_uploader(
         "Upload report (.txt or .pdf)", type=["txt", "pdf"]
     )
-    pasted_report = st.text_area("Or paste report text here:", height=200)
+    pasted_report = st.text_area(
+        "Or paste report text here:",
+        height=200,
+        placeholder="Paste clinical notes, pathology report, or treatment plan here..."
+    )
 
     patient_context = ""
     upload_source   = ""

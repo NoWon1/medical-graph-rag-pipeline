@@ -211,10 +211,12 @@ def render_message_with_images(text: str):
                 st.markdown(part)
         else:
             filename = part.strip().strip('`"\'')
-            img_path = IMAGE_DIR / filename
-            if img_path.exists():
-                st.markdown(f"**Reference Visual:** `{filename}`")
-                st.image(str(img_path), caption=filename, use_container_width=True)
+            # SECURE: Prevent path traversal by extracting just the name
+            safe_filename = Path(filename).name
+            img_path = IMAGE_DIR / safe_filename
+            if img_path.is_file():
+                st.markdown(f"**Reference Visual:** `{safe_filename}`")
+                st.image(str(img_path), caption=safe_filename, use_container_width=True)
 
 
 def render_followup_buttons(followups: list[str], turn_key: str):
@@ -322,8 +324,8 @@ def _run_auto_analysis(
                 )
 
             except Exception as e:
-                st.error(f"Analysis error: {e}")
-                st.exception(e)
+                # SECURE: Fail securely without exposing sensitive internal stack traces
+                st.error("An error occurred during analysis. Please try again.")
 
 # =============================================================================
 # SESSION STATE INITIALISATION
@@ -586,8 +588,8 @@ with tab_chat:
                         del st.session_state["followups"][oldest]
 
                 except Exception as e:
-                    st.error(f"Pipeline error: {e}")
-                    st.exception(e)
+                    # SECURE: Fail securely without exposing sensitive internal stack traces
+                    st.error("An error occurred generating the response. Please try again.")
                     followups    = []
                     new_turn_idx = len(st.session_state.messages) - 1
 

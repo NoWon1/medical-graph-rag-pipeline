@@ -83,6 +83,7 @@ div[data-testid="stChatInput"] {
     box-shadow: none !important;
 }
 div[data-testid="stChatInput"] textarea {
+    transition: all 0.2s ease;
     background-color: #f4fbf7 !important;
     border: 1px solid #d0d7de !important;
     border-radius: 12px !important;
@@ -91,20 +92,23 @@ div[data-testid="stChatInput"] textarea {
     box-shadow: none !important;
 }
 div[data-testid="stChatInput"] textarea:focus {
-    border: 1px solid #e53935 !important;
+    border: 1px solid #2fa36b !important;
     box-shadow: none !important;
     outline: none !important;
 }
 .stButton>button {
+    transition: all 0.2s ease;
     border-radius: 10px;
     background-color: #2fa36b;
     color: white;
     border: none;
 }
 .stButton>button:hover { background-color: #248a59; }
+.stButton>button:focus-visible { outline: 2px solid #248a59; outline-offset: 2px; }
 .streamlit-expanderHeader { font-weight: 600; }
 [data-testid="stChatMessage"] { border-radius: 12px; padding: 10px; }
 textarea {
+    transition: all 0.2s ease;
     background-color: #f4fbf7 !important;
     border: 1px solid #cfe8dc !important;
     border-radius: 12px !important;
@@ -113,7 +117,7 @@ textarea {
     box-shadow: none !important;
 }
 textarea:focus {
-    border: 1px solid #e53935 !important;
+    border: 1px solid #2fa36b !important;
     box-shadow: none !important;
     outline: none !important;
 }
@@ -463,9 +467,9 @@ tab_chat, tab_upload = st.tabs(["Chat", "Upload Report"])
 with tab_upload:
     st.subheader("Upload Patient Report")
     uploaded_file = st.file_uploader(
-        "Upload report (.txt or .pdf)", type=["txt", "pdf"]
+        "Upload report (.txt or .pdf)", type=["txt", "pdf"], help="Upload your clinical notes, pathology reports, or treatment plans for analysis."
     )
-    pasted_report = st.text_area("Or paste report text here:", height=200)
+    pasted_report = st.text_area("Or paste report text here:", height=200, placeholder="Paste clinical notes, pathology report, or treatment plan here...")
 
     patient_context = ""
     upload_source   = ""

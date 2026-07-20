@@ -28,6 +28,7 @@ import re
 import json
 import math
 from pathlib import Path
+import numpy as np
 from typing import Any, List, Optional
 
 from dotenv import load_dotenv
@@ -164,16 +165,17 @@ def reciprocal_rank_fusion(dense_docs: List[Document], sparse_docs: List[Documen
     sorted_ids = sorted(scores, key=lambda x: scores[x], reverse=True)
     return [doc_map[i] for i in sorted_ids[:top_n]]
 
-def _cosine(v1: List[float], v2: List[float]) -> float:
-    dot   = sum(a * b for a, b in zip(v1, v2))
-    norm1 = math.sqrt(sum(a * a for a in v1))
-    norm2 = math.sqrt(sum(b * b for b in v2))
-    return 0.0 if (norm1 == 0 or norm2 == 0) else dot / (norm1 * norm2)
+def _cosine(v1, v2) -> float:
+    dot = np.dot(v1, v2)
+    norm1 = np.linalg.norm(v1)
+    norm2 = np.linalg.norm(v2)
+    return 0.0 if (norm1 == 0 or norm2 == 0) else float(dot / (norm1 * norm2))
 
 def mmr_rerank(query: str, candidates: List[Document], embed_model: HuggingFaceEmbeddings, k: int = K_MMR_FINAL, lambda_mult: float = MMR_LAMBDA) -> List[Document]:
     if not candidates or len(candidates) <= k: return candidates
-    query_vec = embed_model.embed_query(query)
-    doc_vecs  = embed_model.embed_documents([d.page_content for d in candidates])
+    # Optimized: pre-cast to NumPy arrays for faster vectorized cosine similarity
+    query_vec = np.array(embed_model.embed_query(query))
+    doc_vecs  = [np.array(v) for v in embed_model.embed_documents([d.page_content for d in candidates])]
     relevance = [_cosine(v, query_vec) for v in doc_vecs]
     selected, remaining = [], list(range(len(candidates)))
     for _ in range(min(k, len(candidates))):
@@ -238,8 +240,9 @@ def _retrieve_image_chunks(query: str) -> List[Document]:
 
         # 3. Dense Vector Semantic Reranking
         embed_model = get_embeddings()
-        query_vec = embed_model.embed_query(query)
-        doc_vecs = embed_model.embed_documents([d.page_content for d in unique_candidates])
+        # Optimized: pre-cast to NumPy arrays for faster vectorized cosine similarity
+    query_vec = np.array(embed_model.embed_query(query))
+        doc_vecs = [np.array(v) for v in embed_model.embed_documents([d.page_content for d in unique_candidates])]
         
         scored_candidates = []
         for i, doc in enumerate(unique_candidates):

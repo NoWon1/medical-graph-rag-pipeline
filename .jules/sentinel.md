@@ -1,0 +1,4 @@
+## 2024-05-18 - Path Traversal / LFI via LLM output tags
+**Vulnerability:** The application extracts image filenames directly from LLM-generated output tags (e.g. `[IMAGE: ../../../etc/passwd]`) and concatenates them with `IMAGE_DIR` to display images without sanitization.
+**Learning:** In applications where LLM output is parsed to reference local files, the LLM acts as an untrusted user input source. If the LLM output is not properly sanitized, an attacker could potentially prompt-inject the LLM to output malicious file paths, leading to Path Traversal or Local File Inclusion (LFI).
+**Prevention:** Always sanitize file paths derived from external sources or LLM outputs by extracting the safe filename component (e.g., using `Path(filename).name`) and verifying that the final resolved path strictly resides within the intended base directory (e.g., using `img_path.is_relative_to(IMAGE_DIR.resolve())`).

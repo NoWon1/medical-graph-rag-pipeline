@@ -210,9 +210,13 @@ def render_message_with_images(text: str):
             if part.strip():
                 st.markdown(part)
         else:
-            filename = part.strip().strip('`"\'')
-            img_path = IMAGE_DIR / filename
-            if img_path.exists():
+            # 🛡️ Sentinel: Sanitize filename to prevent Path Traversal/LFI vulnerabilities
+            # from LLM output. Ensure we only get the base filename.
+            filename = Path(part.strip().strip('`"\'')).name
+            img_path = (IMAGE_DIR / filename).resolve()
+
+            # 🛡️ Sentinel: Verify the resolved path strictly resides within IMAGE_DIR
+            if img_path.is_relative_to(IMAGE_DIR.resolve()) and img_path.is_file():
                 st.markdown(f"**Reference Visual:** `{filename}`")
                 st.image(str(img_path), caption=filename, use_container_width=True)
 

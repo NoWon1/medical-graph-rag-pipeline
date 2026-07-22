@@ -1,0 +1,4 @@
+## 2026-07-22 - Optimize Cosine Similarity Calculations
+
+**Learning:** Pure Python loops (`sum(a * b for a, b in zip(v1, v2))`) are a major bottleneck for vector embeddings, and NumPy `np.float64` objects cannot be properly serialized to JSON and cause API or Streamlit components to crash. Additionally, repeatedly casting variables across large iterables results in unnecessary overhead.
+**Action:** When working with embedding distance metrics like cosine similarity in loops, cast collections initially with NumPy arrays before loop evaluation. Leverage optimized NumPy functions like `np.dot` and `np.linalg.norm` and always strictly return values explicitly cast to native `float()` types.

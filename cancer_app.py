@@ -211,10 +211,16 @@ def render_message_with_images(text: str):
                 st.markdown(part)
         else:
             filename = part.strip().strip('`"\'')
-            img_path = IMAGE_DIR / filename
-            if img_path.exists():
-                st.markdown(f"**Reference Visual:** `{filename}`")
-                st.image(str(img_path), caption=filename, use_container_width=True)
+            # Fix path traversal vulnerability:
+            # Treat LLM outputs as untrusted user input, extract safe filename
+            safe_filename = Path(filename).name
+            img_path = (IMAGE_DIR / safe_filename).resolve()
+
+            # Verify the resolved path strictly resides within the intended base directory
+            # and confirm the target is specifically a file, not a directory
+            if img_path.is_relative_to(IMAGE_DIR.resolve()) and img_path.is_file():
+                st.markdown(f"**Reference Visual:** `{safe_filename}`")
+                st.image(str(img_path), caption=safe_filename, use_container_width=True)
 
 
 def render_followup_buttons(followups: list[str], turn_key: str):

@@ -1,0 +1,3 @@
+## 2024-05-24 - Avoid Alarming Colors for Standard Interactions
+**Learning:** Using colors like red (e.g., `#e53935`) for standard interaction states such as focus rings falsely signals critical errors to users in a medical application context, which can cause unnecessary alarm.
+**Action:** Rely on brand colors (e.g., green `#2fa36b`) for safe, expected UI feedback on inputs and other interactive elements.

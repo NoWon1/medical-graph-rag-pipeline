@@ -91,7 +91,7 @@ div[data-testid="stChatInput"] textarea {
     box-shadow: none !important;
 }
 div[data-testid="stChatInput"] textarea:focus {
-    border: 1px solid #e53935 !important;
+    border: 1px solid #2fa36b !important;
     box-shadow: none !important;
     outline: none !important;
 }
@@ -113,7 +113,7 @@ textarea {
     box-shadow: none !important;
 }
 textarea:focus {
-    border: 1px solid #e53935 !important;
+    border: 1px solid #2fa36b !important;
     box-shadow: none !important;
     outline: none !important;
 }

@@ -1,0 +1,3 @@
+## 2024-07-24 - Python list loops in vector reranking cause computation bottleneck
+**Learning:** Pure Python `math` module implementation of cosine similarity inside hot loops (like MMR reranking) creates a significant CPU computation bottleneck and high overhead. Vectorizing with NumPy requires not just the function calculation update, but also explicitly pre-casting the vectors out-of-loop to `numpy.ndarray` to prevent repeated type conversions in the hot path.
+**Action:** When working on dense vector calculations or similarity metrics (like MMR or cosine), always pre-cast embeddings to `numpy.ndarray` once, and use vectorized `np.dot` and `np.linalg.norm` with an explicit native Python `float()` cast for the final result.

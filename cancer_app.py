@@ -210,9 +210,12 @@ def render_message_with_images(text: str):
             if part.strip():
                 st.markdown(part)
         else:
-            filename = part.strip().strip('`"\'')
-            img_path = IMAGE_DIR / filename
-            if img_path.exists():
+            # Sanitize LLM-generated filename to prevent path traversal
+            filename = Path(part.strip().strip('`"\'')).name
+            img_path = (IMAGE_DIR / filename).resolve()
+
+            # Verify the resolved path strictly resides within intended base directory and is a file
+            if img_path.is_relative_to(IMAGE_DIR.resolve()) and img_path.is_file():
                 st.markdown(f"**Reference Visual:** `{filename}`")
                 st.image(str(img_path), caption=filename, use_container_width=True)
 

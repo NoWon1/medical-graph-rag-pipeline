@@ -210,11 +210,18 @@ def render_message_with_images(text: str):
             if part.strip():
                 st.markdown(part)
         else:
-            filename = part.strip().strip('`"\'')
-            img_path = IMAGE_DIR / filename
-            if img_path.exists():
-                st.markdown(f"**Reference Visual:** `{filename}`")
-                st.image(str(img_path), caption=filename, use_container_width=True)
+            raw_filename = part.strip().strip('`"\'')
+            # 🛡️ Sentinel: Prevent Path Traversal / LFI by extracting only the filename
+            # and strictly verifying it resolves inside the IMAGE_DIR boundary.
+            safe_filename = Path(raw_filename).name
+            img_path = (IMAGE_DIR / safe_filename).resolve()
+
+            if img_path.is_relative_to(IMAGE_DIR.resolve()) and img_path.is_file():
+                st.markdown(f"**Reference Visual:** `{safe_filename}`")
+                st.image(str(img_path), caption=safe_filename, use_container_width=True)
+            else:
+                # 🛡️ Sentinel: Fail securely without exposing path details
+                st.markdown(f"**Reference Visual:** `[Image unavailable]`")
 
 
 def render_followup_buttons(followups: list[str], turn_key: str):

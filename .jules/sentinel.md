@@ -1,0 +1,4 @@
+## 2024-05-24 - LLM-Directed Path Traversal in Image Rendering
+**Vulnerability:** Path traversal (LFI) in `cancer_app.py`'s `render_message_with_images` where an LLM could generate a maliciously crafted `[IMAGE: ../../../etc/passwd]` tag causing the application to read and potentially display local files.
+**Learning:** LLM outputs must be treated as untrusted user input, especially when used to construct file paths. The system previously only used `.exists()` which is insufficient as it resolves directory traversal characters (`../`).
+**Prevention:** Always sanitize file paths derived from external sources or LLMs by extracting the safe filename component (e.g., `Path(filename).name`), verifying the resolved path strictly resides within the intended base directory (e.g., using `is_relative_to`), and confirming the target is specifically a file (e.g., `.is_file()`).

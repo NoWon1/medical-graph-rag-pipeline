@@ -91,8 +91,8 @@ div[data-testid="stChatInput"] textarea {
     box-shadow: none !important;
 }
 div[data-testid="stChatInput"] textarea:focus {
-    border: 1px solid #e53935 !important;
-    box-shadow: none !important;
+    border: 1px solid #2fa36b !important;
+    box-shadow: 0 0 0 2px rgba(47, 163, 107, 0.2) !important;
     outline: none !important;
 }
 .stButton>button {
@@ -113,8 +113,8 @@ textarea {
     box-shadow: none !important;
 }
 textarea:focus {
-    border: 1px solid #e53935 !important;
-    box-shadow: none !important;
+    border: 1px solid #2fa36b !important;
+    box-shadow: 0 0 0 2px rgba(47, 163, 107, 0.2) !important;
     outline: none !important;
 }
 textarea::placeholder { color: #7a8a9a !important; }

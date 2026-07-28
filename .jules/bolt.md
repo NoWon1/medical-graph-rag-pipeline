@@ -1,0 +1,3 @@
+## 2024-05-24 - NumPy Vectorization & Streamlit Serialization
+**Learning:** When vectorizing Python loops using NumPy (e.g., in cosine similarity calculations), pre-cast lists to NumPy arrays before entering nested hot loops to avoid implicit conversion overhead. Additionally, when returning scalar values from NumPy calculations that interact with APIs or Streamlit components, explicitly cast the result to a native Python `float()` to prevent JSON serialization errors caused by `np.float64` types.
+**Action:** Use `np.asarray()` outside of nested loops and `float(np.dot(...) / ...)` for native scalar returns when replacing pure Python loops with NumPy vector math in Streamlit applications.

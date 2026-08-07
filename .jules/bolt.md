@@ -1,0 +1,3 @@
+## 2026-08-07 - Vectorized Cosine Similarity in Hot Loops
+**Learning:** Pure Python `zip` and `sum` loops for calculating cosine similarity are significant performance bottlenecks when called thousands of times inside loops (like `mmr_rerank` or image retrieval). Implicit casting of arrays inside the loop further degrades performance. Also, numpy arrays returning float64 types can cause JSON serialization errors when interacting with APIs.
+**Action:** Always pre-cast inputs to NumPy arrays (`np.asarray`) before passing them to vectorized functions within hot loops. Use `np.dot` and `np.linalg.norm` for similarity, and critically, explicitly cast the scalar output to a native Python `float()` to prevent downstream serialization crashes.

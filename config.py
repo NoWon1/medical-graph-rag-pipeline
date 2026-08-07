@@ -80,6 +80,20 @@ GROQ_API_KEY   = os.getenv("GROQ_API_KEY", "")
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY", "")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
 
+# =============================================================================
+# CACHE
+# =============================================================================
+
+CACHE_ENABLED = os.getenv("CACHE_ENABLED", "true").lower() in {"1", "true", "yes", "on"}
+CACHE_BACKEND = os.getenv("CACHE_BACKEND", "memory")
+REDIS_URL = os.getenv("REDIS_URL", "")
+REDIS_HOST = os.getenv("REDIS_HOST", "localhost")
+REDIS_PORT = int(os.getenv("REDIS_PORT", "6379"))
+REDIS_DB = int(os.getenv("REDIS_DB", "0"))
+REDIS_USERNAME = os.getenv("REDIS_USERNAME", "")
+REDIS_PASSWORD = os.getenv("REDIS_PASSWORD", "")
+REDIS_SSL = os.getenv("REDIS_SSL", "false").lower() in {"1", "true", "yes", "on"}
+
 # 2. Pipeline "Student" Config (The model answering the questions)
 PIPELINE_LLM_PROVIDER = os.getenv("PIPELINE_LLM_PROVIDER", "groq")
 GROQ_MODEL_QUERY      = os.getenv("PIPELINE_LLM_MODEL", "llama-3.1-8b-instant")

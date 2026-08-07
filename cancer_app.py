@@ -324,8 +324,8 @@ def _run_auto_analysis(
                 )
 
             except Exception as e:
-                st.error(f"Analysis error: {e}")
-                st.exception(e)
+                print(f"Analysis error: {e}") # 🛡️ Sentinel: Log internal error details
+                st.error("An error occurred during analysis. Please try again.") # 🛡️ Sentinel: Fail securely without leaking internals
 
 # =============================================================================
 # SESSION STATE INITIALISATION
@@ -588,8 +588,8 @@ with tab_chat:
                         del st.session_state["followups"][oldest]
 
                 except Exception as e:
-                    st.error(f"Pipeline error: {e}")
-                    st.exception(e)
+                    print(f"Pipeline error: {e}") # 🛡️ Sentinel: Log internal error details
+                    st.error("An error occurred while generating the response.") # 🛡️ Sentinel: Fail securely without leaking internals
                     followups    = []
                     new_turn_idx = len(st.session_state.messages) - 1
 

@@ -76,13 +76,17 @@ class RedisCacheBackend(BaseCacheBackend):
         if REDIS_URL:
             client = redis.Redis.from_url(REDIS_URL, decode_responses=True)
         else:
+            auth_kwargs = {}
+            if REDIS_PASSWORD:
+                auth_kwargs["password"] = REDIS_PASSWORD
             client = redis.Redis(
                 host=REDIS_HOST,
                 port=REDIS_PORT,
                 db=REDIS_DB,
                 username=REDIS_USERNAME or None,
-                password=REDIS_PASSWORD or None,
                 ssl=REDIS_SSL,
+                decode_responses=True,
+                **auth_kwargs,
             )
         client.ping()
         return client

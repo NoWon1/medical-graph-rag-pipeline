@@ -212,6 +212,11 @@ def render_message_with_images(text: str):
         else:
             # 🛡️ Sentinel: Prevent Path Traversal/LFI by sanitizing filename and verifying path
             filename = part.strip().strip('`"\'')
+            # Security: Sanitize LLM-provided filename to prevent path traversal
+            safe_filename = Path(filename).name
+            img_path = (IMAGE_DIR / safe_filename).resolve()
+
+            # Verify the resolved path is within IMAGE_DIR and is a file
             safe_filename = Path(filename).name
             img_path = (IMAGE_DIR / safe_filename).resolve()
             if img_path.is_relative_to(IMAGE_DIR.resolve()) and img_path.is_file():

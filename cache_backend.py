@@ -81,9 +81,8 @@ class RedisCacheBackend(BaseCacheBackend):
                 port=REDIS_PORT,
                 db=REDIS_DB,
                 username=REDIS_USERNAME or None,
-                ****** or None,
+                password=REDIS_PASSWORD or None,
                 ssl=REDIS_SSL,
-                decode_responses=True,
             )
         client.ping()
         return client

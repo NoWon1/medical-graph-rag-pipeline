@@ -212,6 +212,19 @@ def render_message_with_images(text: str):
         else:
             # 🛡️ Sentinel: Prevent Path Traversal/LFI by sanitizing filename and verifying path
             filename = part.strip().strip('`"\'')
+
+            # Security Fix: Prevent Path Traversal by extracting safe filename
+            # and ensuring it resolves securely within IMAGE_DIR.
+            try:
+                safe_filename = Path(filename).name
+                img_path = (IMAGE_DIR / safe_filename).resolve()
+
+                if img_path.is_relative_to(IMAGE_DIR.resolve()) and img_path.exists():
+                    st.markdown(f"**Reference Visual:** `{safe_filename}`")
+                    st.image(str(img_path), caption=safe_filename, use_container_width=True)
+            except Exception as e:
+                # Fail securely: Do not leak path details on error
+                pass
             safe_filename = Path(filename).name
             img_path = (IMAGE_DIR / safe_filename).resolve()
             if img_path.is_relative_to(IMAGE_DIR.resolve()) and img_path.is_file():

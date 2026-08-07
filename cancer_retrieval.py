@@ -701,7 +701,8 @@ def generate_answer(query: str, patient_report: str = "", chat_history: list = N
     
     except Exception as e:
         import traceback; traceback.print_exc()
-        return f"Error in retrieval pipeline: {str(e)}", []
+        # 🛡️ Sentinel: Fail securely, preventing traceback leakage via API
+        return "An internal error occurred during the retrieval process.", []
 
 
 def generate_answer_stream(query: str, patient_report: str = "", chat_history: list = None, cancer_filter: str = "", query_mode: str = QUERY_MODE_DEFAULT):
@@ -758,8 +759,9 @@ def generate_answer_stream(query: str, patient_report: str = "", chat_history: l
         st.session_state.update({"stream_buffer": full_answer, "stream_sources": src, "stream_followups": followups, "stream_reasoning": path})
 
     except Exception as e:
-        yield f"Stream error: {str(e)}"
         import traceback; traceback.print_exc()
+        # 🛡️ Sentinel: Fail securely, preventing traceback leakage via API
+        yield "An internal error occurred during the streaming process."
 
 # =============================================================================
 # DEMO

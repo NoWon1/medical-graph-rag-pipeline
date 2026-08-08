@@ -1,0 +1,3 @@
+## 2026-08-08 - Vectorizing Python Loops and Array Overhead
+**Learning:** Pure Python nested loops calculating vector properties (like cosine similarity with math functions) cause significant bottlenecks during hot paths like MMR reranking or dense reranking. However, simply using numpy inside the loop can introduce implicit list-to-array conversion overhead.
+**Action:** Always pre-cast inputs to native NumPy arrays (e.g., `np.array()`) *before* entering hot loops. Vectorize calculations using `np.linalg.norm` and `np.dot`. Ensure any scalar results returned by numpy (like `np.float64`) are explicitly cast back to native Python `float()` to prevent JSON serialization errors in downstream systems (like Streamlit or APIs).

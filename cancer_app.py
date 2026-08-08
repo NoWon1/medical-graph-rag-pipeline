@@ -39,6 +39,7 @@
 
 import re
 import hashlib
+import logging
 from pathlib import Path
 
 import streamlit as st
@@ -324,8 +325,10 @@ def _run_auto_analysis(
                 )
 
             except Exception as e:
-                st.error(f"Analysis error: {e}")
-                st.exception(e)
+                # 🛡️ Sentinel: Prevent information exposure by logging details server-side
+                # and showing a generic error to the user
+                logging.error("Exception occurred during analysis", exc_info=True)
+                st.error("An error occurred during analysis. Please try again.")
 
 # =============================================================================
 # SESSION STATE INITIALISATION
@@ -588,8 +591,10 @@ with tab_chat:
                         del st.session_state["followups"][oldest]
 
                 except Exception as e:
-                    st.error(f"Pipeline error: {e}")
-                    st.exception(e)
+                    # 🛡️ Sentinel: Prevent information exposure by logging details server-side
+                    # and showing a generic error to the user
+                    logging.error("Exception occurred in the pipeline", exc_info=True)
+                    st.error("An error occurred in the pipeline. Please try again.")
                     followups    = []
                     new_turn_idx = len(st.session_state.messages) - 1
 

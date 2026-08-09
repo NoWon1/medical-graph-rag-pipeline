@@ -1,0 +1,3 @@
+## 2026-08-09 - Vectorize embeddings comparison for performance
+**Learning:** Pure Python nested loops and scalar math operations (`math.sqrt`, `sum`) for cosine similarity calculations on dense embeddings (768d+) introduce severe implicit conversion and iteration overhead. This becomes a major performance bottleneck during MMR (Maximal Marginal Relevance) reranking, where thousands of comparisons happen in the hot loop.
+**Action:** Always pre-cast lists of embeddings into native `numpy` arrays (`np.array()`) *before* entering nested loops, and use vectorized operations (`np.dot`, `np.linalg.norm`) for mathematical calculations. Explicitly cast the final scalar results back to Python primitives (`float()`) to avoid JSON serialization bugs down the line.

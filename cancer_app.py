@@ -120,6 +120,7 @@ textarea:focus {
 textarea::placeholder { color: #7a8a9a !important; }
 ::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-thumb { background: #c5d1dc; border-radius: 10px; }
+*:focus-visible { outline: 2px solid #2fa36b !important; outline-offset: 2px; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -463,9 +464,14 @@ tab_chat, tab_upload = st.tabs(["Chat", "Upload Report"])
 with tab_upload:
     st.subheader("Upload Patient Report")
     uploaded_file = st.file_uploader(
-        "Upload report (.txt or .pdf)", type=["txt", "pdf"]
+        "Upload report (.txt or .pdf)", type=["txt", "pdf"],
+        help="Upload a clinical report or test results for automatic analysis."
     )
-    pasted_report = st.text_area("Or paste report text here:", height=200)
+    pasted_report = st.text_area(
+        "Or paste report text here:", height=200,
+        placeholder="Paste the contents of your medical report here...",
+        help="If you don't have a file, you can copy and paste the text directly."
+    )
 
     patient_context = ""
     upload_source   = ""

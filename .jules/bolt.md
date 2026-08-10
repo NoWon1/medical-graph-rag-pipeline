@@ -1,0 +1,3 @@
+## 2026-08-10 - Implicit Conversion Overhead in Nested Vector Math
+**Learning:** Found a major performance bottleneck where standard Python `List[float]` vectors were being repeatedly cast to NumPy arrays implicitly inside hot loops (e.g. nested MMR calculation and Image Retrieval). This caused excessive implicit conversion overhead.
+**Action:** Always cast Python `List[float]` variables to `np.ndarray` BEFORE they enter hot paths and pass these pre-cast arrays strictly to vectorized functions like `np.dot` and `np.linalg.norm`. Additionally, when APIs or UI components depend on the outputs of numpy scalar values (like cosine similarity), explicitly cast back to native `float()` to prevent JSON serialization crashes on `np.float64`.

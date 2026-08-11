@@ -1,0 +1,3 @@
+## 2024-05-15 - Vector similarity optimization
+**Learning:** Pure Python nested loops for vector calculations like MMR (Maximal Marginal Relevance) in `cancer_retrieval.py` are extremely slow. The O(k * N) comparisons in MMR and image retrieval involve thousands of cosine similarity calculations which become a severe bottleneck without NumPy.
+**Action:** When comparing vector embeddings, use `numpy` vectorized operations instead of native Python list comprehensions. Explicitly pre-cast input lists to `np.ndarray` before passing to the cosine similarity function inside hot loops to maximize performance.

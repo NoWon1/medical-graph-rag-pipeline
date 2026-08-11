@@ -226,7 +226,7 @@ def render_followup_buttons(followups: list[str], turn_key: str):
     for i, (col, question) in enumerate(zip(cols, followups)):
         with col:
             key = f"fup_{turn_key}_{i}_{abs(hash(question)) % 999983}"
-            if st.button(f"Q. {question}", key=key, use_container_width=True):
+            if st.button(f"Q. {question}", key=key, use_container_width=True, help="Click to ask this follow-up question"):
                 st.session_state["triggered_followup"] = question
 
 
@@ -463,9 +463,15 @@ tab_chat, tab_upload = st.tabs(["Chat", "Upload Report"])
 with tab_upload:
     st.subheader("Upload Patient Report")
     uploaded_file = st.file_uploader(
-        "Upload report (.txt or .pdf)", type=["txt", "pdf"]
+        "Upload report (.txt or .pdf)", type=["txt", "pdf"],
+        help="Upload a clinical report for automatic personalised analysis."
     )
-    pasted_report = st.text_area("Or paste report text here:", height=200)
+    pasted_report = st.text_area(
+        "Or paste report text here:",
+        height=200,
+        placeholder="Paste the contents of your clinical report here...",
+        help="Paste your clinical report text directly if you don't have a file."
+    )
 
     patient_context = ""
     upload_source   = ""

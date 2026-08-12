@@ -463,9 +463,10 @@ tab_chat, tab_upload = st.tabs(["Chat", "Upload Report"])
 with tab_upload:
     st.subheader("Upload Patient Report")
     uploaded_file = st.file_uploader(
-        "Upload report (.txt or .pdf)", type=["txt", "pdf"]
+        "Upload report (.txt or .pdf)", type=["txt", "pdf"],
+        help="Upload a clinical report containing diagnosis, stage, and treatment plan."
     )
-    pasted_report = st.text_area("Or paste report text here:", height=200)
+    pasted_report = st.text_area("Or paste report text here:", height=200, placeholder="E.g., The patient was diagnosed with stage II breast cancer...")
 
     patient_context = ""
     upload_source   = ""

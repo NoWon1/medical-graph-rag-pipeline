@@ -28,8 +28,9 @@ import re
 import json
 import math
 from pathlib import Path
-from typing import Any, List, Optional
+from typing import Any, List, Optional, Union
 
+import numpy as np
 from dotenv import load_dotenv
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_neo4j import Neo4jVector
@@ -164,24 +165,29 @@ def reciprocal_rank_fusion(dense_docs: List[Document], sparse_docs: List[Documen
     sorted_ids = sorted(scores, key=lambda x: scores[x], reverse=True)
     return [doc_map[i] for i in sorted_ids[:top_n]]
 
-def _cosine(v1: List[float], v2: List[float]) -> float:
-    dot   = sum(a * b for a, b in zip(v1, v2))
-    norm1 = math.sqrt(sum(a * a for a in v1))
-    norm2 = math.sqrt(sum(b * b for b in v2))
-    return 0.0 if (norm1 == 0 or norm2 == 0) else dot / (norm1 * norm2)
+def _cosine(v1: Union[List[float], np.ndarray], v2: Union[List[float], np.ndarray]) -> float:
+    # ⚡ Bolt: Vectorized cosine similarity calculation using NumPy for performance
+    v1_arr = np.asarray(v1)
+    v2_arr = np.asarray(v2)
+    norm1 = float(np.linalg.norm(v1_arr))
+    norm2 = float(np.linalg.norm(v2_arr))
+    return 0.0 if (norm1 == 0 or norm2 == 0) else float(np.dot(v1_arr, v2_arr) / (norm1 * norm2))
 
 def mmr_rerank(query: str, candidates: List[Document], embed_model: HuggingFaceEmbeddings, k: int = K_MMR_FINAL, lambda_mult: float = MMR_LAMBDA) -> List[Document]:
     if not candidates or len(candidates) <= k: return candidates
     query_vec = embed_model.embed_query(query)
     doc_vecs  = embed_model.embed_documents([d.page_content for d in candidates])
-    relevance = [_cosine(v, query_vec) for v in doc_vecs]
+    # ⚡ Bolt: Pre-cast to NumPy arrays outside hot loop for performance
+    query_vec_arr = np.asarray(query_vec)
+    doc_vecs_arr = [np.asarray(v) for v in doc_vecs]
+    relevance = [_cosine(v, query_vec_arr) for v in doc_vecs_arr]
     selected, remaining = [], list(range(len(candidates)))
     for _ in range(min(k, len(candidates))):
         if not selected: best = max(remaining, key=lambda i: relevance[i])
         else:
             best, best_score = -1, float("-inf")
             for idx in remaining:
-                max_sim = max(_cosine(doc_vecs[idx], doc_vecs[s]) for s in selected)
+                max_sim = max(_cosine(doc_vecs_arr[idx], doc_vecs_arr[s]) for s in selected)
                 score   = lambda_mult * relevance[idx] - (1 - lambda_mult) * max_sim
                 if score > best_score: best_score, best = score, idx
         selected.append(best)

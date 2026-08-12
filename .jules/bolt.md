@@ -1,0 +1,3 @@
+## 2026-08-12 - Vectorized Cosine Similarity and MMR Ranking
+**Learning:** Hot loops inside complex array processing workflows (e.g. `mmr_rerank` filtering) represent massive performance bottlenecks due to Python interpreter overhead when processing thousands of individual array items or vectors.
+**Action:** When calculating repeated `_cosine` similarities in Python nested loops over vectors, pre-cast Python arrays to NumPy arrays (`np.asarray(...)`) BEFORE the loop. Refactor functions heavily called inside these loops to exclusively use NumPy primitive vectors, array operators, and native NumPy methods like `np.dot` and `np.linalg.norm` for substantial throughput improvements.

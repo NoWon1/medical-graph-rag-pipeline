@@ -1,0 +1,3 @@
+## 2025-02-13 - Vectorized Cosine Similarity
+**Learning:** When using vectorized operations (like np.dot) in a python web app (Streamlit) or passing them to JSON-based APIs, ensure you cast scalar values back to native Python types (e.g. `float()`) to prevent JSON serialization errors from `np.float64`. Also, pre-cast inputs to NumPy arrays outside of loops to prevent implicit type casting overhead during hot loops.
+**Action:** Always wrap numpy scalar returns in standard python types (e.g. `float(np.dot(...))`) when working in web app environments, and cast arrays before nested calculation loops.

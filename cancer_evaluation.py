@@ -1356,56 +1356,6 @@
 #      "description": "Specific staging"},
 # ]
 
-# # =============================================================================
-# # HELPERS
-# # =============================================================================
-
-# def _get_contexts(q: str, mode: str) -> list[str]:
-#     try:
-#         fn = {QUERY_MODE_RESEARCH: _run_research_mode,
-#               QUERY_MODE_GRAPH:    _run_graph_mode}.get(mode, _run_auto_mode)
-#         _, docs, _, _ = fn(q, "", [], "")
-#         ctx = [d.page_content for d in docs if d.page_content.strip()]
-#         for img in _retrieve_image_chunks(q):
-#             if img.page_content.strip():
-#                 ctx.append(img.page_content)
-#         return ctx or ["No context retrieved"]
-#     except Exception as e:
-#         return [f"Error: {e}"]
-
-# def _image_score(ans: str, cat: str) -> Optional[float]:
-#     if cat != "image": return None
-#     import re
-#     if re.search(r'\[IMAGE:\s*[^\]]+\]', ans, re.IGNORECASE): return 1.0
-#     if any(k in ans.lower() for k in ["figure","table","chart","flowchart","diagram"]): return 0.5
-#     return 0.0
-
-# def _web_score(ans: str, cat: str) -> Optional[float]:
-#     if cat != "edge": return None
-#     return 1.0 if ("🌐" in ans or "[W1]" in ans or "web search" in ans.lower()) else 0.0
-
-# def _safe(v) -> Optional[float]:
-#     try:
-#         f = float(v)
-#         return None if (math.isnan(f) or math.isinf(f)) else round(f, 4)
-#     except (TypeError, ValueError):
-#         return None
-
-# def _mean_col(df, col: str) -> Optional[float]:
-#     if col not in df.columns: return None
-#     good = [_safe(v) for v in df[col].tolist() if _safe(v) is not None]
-#     return round(sum(good)/len(good), 4) if good else None
-
-# def _grade(v) -> str:
-#     f = _safe(v)
-#     if f is None or f == 0.0: return "❓  "
-#     if f >= 0.80: return "✅  "
-#     if f >= 0.60: return "⚠️  "
-#     return "❌  "
-
-# # =============================================================================
-# # MAIN RUNNER
-# # =============================================================================
 
 # def run_evaluation(label="baseline", quick=False, category=None) -> dict:
 #     if not _RAGAS_AVAILABLE:

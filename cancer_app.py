@@ -173,7 +173,9 @@ def extract_text_from_pdf(file_bytes: bytes) -> str:
                 text_parts.append(f"[Page {page_num + 1}]\n{page_text}")
         doc.close()
     except Exception as e:
-        return f"[PDF extraction error: {e}]"
+        # 🛡️ Sentinel: Fail securely without exposing raw stack traces to the LLM or UI
+        logging.error("PDF extraction error", exc_info=True)
+        return "[PDF extraction error: Unable to process the uploaded file.]"
     return "\n\n".join(text_parts)
 
 

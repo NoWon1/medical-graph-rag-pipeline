@@ -503,7 +503,23 @@ _OUT_OF_CORPUS_PATTERNS = [
     r'\bherbal\b', r'\bsupplement\b', r'\balternative medicine\b' 
 ]
 
+
+def _combine_sources_properly(src1: list, src2: list) -> list:
+    combined = src1 + src2
+    seen = set()
+    unique = []
+    for s in combined:
+        # Use URL or label as unique key
+        key = s.get("url") or s.get("label")
+        if key:
+            if key in seen:
+                continue
+            seen.add(key)
+        unique.append(s)
+    return unique
+
 def _is_out_of_corpus_query(query: str) -> bool:
+
     q = query.lower()
     return any(re.search(p, q) for p in _OUT_OF_CORPUS_PATTERNS)
 
@@ -682,7 +698,9 @@ def generate_answer(query: str, patient_report: str = "", chat_history: list = N
         elif query_mode == QUERY_MODE_GRAPH: ctx, docs, src, path = _run_graph_mode(query, patient_report, chat_history, cancer_filter)
         else: ctx, docs, src, path = _run_auto_mode(query, patient_report, chat_history, cancer_filter)
 
-        if not ctx.strip(): return _web_search_fallback("", query, patient_report, rag_is_empty=True)
+        if not ctx.strip():
+            fallback_ans, fallback_src = _web_search_fallback("", query, patient_report, rag_is_empty=True)
+            return fallback_ans, _combine_sources_properly(src, fallback_src)
 
         history_text = "\n".join([f"{m['role'].upper()}: {m['content'][:300]}" for m in chat_history[-4:]]) if chat_history else ""
         prompt = _build_prompt(query, patient_report, ctx, history_text, query_mode, path)
@@ -693,8 +711,7 @@ def generate_answer(query: str, patient_report: str = "", chat_history: list = N
             print("   ⚠️  RAG insufficient → web fallback...")
             fallback_ans, fallback_src = _web_search_fallback(answer, query, patient_report, rag_is_empty=(len(answer.strip()) < 300))
             
-            # 🟢 FIX: Combine sources here too!
-            src = src + fallback_src
+            src = _combine_sources_properly(src, fallback_src)
             return fallback_ans, src
             
         return answer, src
@@ -725,8 +742,9 @@ def generate_answer_stream(query: str, patient_report: str = "", chat_history: l
         else: ctx, docs, src, path = _run_auto_mode(query, patient_report, chat_history, cancer_filter)
 
         if not ctx.strip():
-            ans, src = _web_search_fallback("", query, patient_report, rag_is_empty=True)
+            ans, fallback_src = _web_search_fallback("", query, patient_report, rag_is_empty=True)
             yield ans
+            src = _combine_sources_properly(src, fallback_src)
             st.session_state.update({"stream_buffer": ans, "stream_sources": src, "stream_followups": [], "stream_reasoning": "web fallback"})
             return
 
@@ -751,8 +769,7 @@ def generate_answer_stream(query: str, patient_report: str = "", chat_history: l
                 
             full_answer = fallback_ans
             
-            # 🟢 FIX: Combine the sources, do not overwrite! (Using 'src' to match your variables)
-            src = src + fallback_src
+            src = _combine_sources_properly(src, fallback_src)
 
         followups = _generate_followups(full_answer, query, query_mode)
         st.session_state.update({"stream_buffer": full_answer, "stream_sources": src, "stream_followups": followups, "stream_reasoning": path})

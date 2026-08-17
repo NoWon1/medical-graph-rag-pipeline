@@ -2601,8 +2601,8 @@ def _get_contexts(q: str, mode: str) -> list[str]:
             if img.page_content.strip():
                 ctx.append(img.page_content)
 
-        # 🟢 TPM FIX: Keep only top 2 contexts
-        ctx = ctx[:2]
+        # 🟢 THE TPM FIX: Keep only the Top 3 contexts to avoid 6000 TPM Groq limits
+        ctx = ctx[:3]
                 
         return ctx or ["No context retrieved"]
     

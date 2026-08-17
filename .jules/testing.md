@@ -1,0 +1,3 @@
+## 2024-08-14 - Exclude compiled Python bytecode
+**Learning:** Compiled Python bytecode artifacts (`__pycache__/*.pyc`) were accidentally committed to the staging area during test development. These binary files bloat the repository, create merge conflicts, and are environment-dependent.
+**Action:** Always ensure that `__pycache__` directories and `*.pyc` files are explicitly excluded via `.gitignore` and run `git status` to verify the working directory is clean of such binary artifacts before completing pre-commit steps. If they are accidentally added, use `git rm -r --cached __pycache__/` to remove them from the staging area.

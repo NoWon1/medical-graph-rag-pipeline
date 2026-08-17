@@ -109,17 +109,26 @@ def get_dense_retriever(cancer_filter: str = "") -> BaseRetriever:
 
 _bm25_retriever:       Optional[BM25Retriever] = None
 _image_bm25_retriever: Optional[BM25Retriever] = None
+_cached_raw_chunks:    Optional[List[dict]] = None
+
+def _load_all_chunks() -> List[dict]:
+    global _cached_raw_chunks
+    if _cached_raw_chunks is not None:
+        return _cached_raw_chunks
+    _cached_raw_chunks = []
+    for json_path in sorted(CHUNK_DIR.glob("*_chunks.json")):
+        with open(json_path, "r", encoding="utf-8") as f:
+            _cached_raw_chunks.extend(json.load(f))
+    return _cached_raw_chunks
 
 def get_bm25_retriever() -> BM25Retriever:
     global _bm25_retriever
     if _bm25_retriever is not None:
         return _bm25_retriever
     print("   📖 Building BM25 index from chunk files...")
-    documents = []
-    for json_path in sorted(CHUNK_DIR.glob("*_chunks.json")):
-        with open(json_path, "r", encoding="utf-8") as f:
-            for chunk in json.load(f):
-                documents.append(Document(page_content=chunk.get("content", ""), metadata=chunk))
+    # ⚡ Bolt: Cache JSON parsing to avoid N+1 disk I/O when building multiple retrievers
+    chunks = _load_all_chunks()
+    documents = [Document(page_content=chunk.get("content", ""), metadata=chunk) for chunk in chunks]
     if not documents:
         raise FileNotFoundError(f"No chunk files in {CHUNK_DIR}. Run cancer_ingestion.py first.")
     _bm25_retriever   = BM25Retriever.from_documents(documents)
@@ -132,14 +141,14 @@ def get_image_bm25_retriever() -> Optional[BM25Retriever]:
     global _image_bm25_retriever
     if _image_bm25_retriever is not None:
         return _image_bm25_retriever
+    # ⚡ Bolt: Cache JSON parsing to avoid N+1 disk I/O when building multiple retrievers
+    chunks = _load_all_chunks()
     image_docs = []
-    for json_path in sorted(CHUNK_DIR.glob("*_chunks.json")):
-        with open(json_path, "r", encoding="utf-8") as f:
-            for chunk in json.load(f):
-                content = chunk.get("content", "")
-                has_tag = chunk.get("has_image_tags", False) or "[IMAGE:" in content.upper()
-                if has_tag:
-                    image_docs.append(Document(page_content=content, metadata=chunk))
+    for chunk in chunks:
+        content = chunk.get("content", "")
+        has_tag = chunk.get("has_image_tags", False) or "[IMAGE:" in content.upper()
+        if has_tag:
+            image_docs.append(Document(page_content=content, metadata=chunk))
     if not image_docs:
         print("   ℹ️  No image-tagged chunks found — image retrieval disabled")
         return None

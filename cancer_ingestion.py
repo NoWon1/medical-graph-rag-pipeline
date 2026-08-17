@@ -617,9 +617,14 @@ class CaptionChunkBuilder:
         self._seen_caps.add(norm)
 
         try:
-            rel_path = str(img_path.relative_to(BASE_DIR))
-        except ValueError:
-            rel_path = str(img_path)
+            resolved_img = img_path.resolve()
+            resolved_base = BASE_DIR.resolve()
+            if not resolved_img.is_relative_to(resolved_base):
+                raise ValueError("Path traversal detected")
+            rel_path = str(resolved_img.relative_to(resolved_base))
+        except (ValueError, RuntimeError):
+            # 🛡️ Sentinel: Prevent Path Traversal by falling back to safe filename
+            rel_path = img_path.name
 
         cap_idx      = len(self._seen_caps)
         chunk_id     = f"{self.source_name}_cap_{cap_idx:04d}"

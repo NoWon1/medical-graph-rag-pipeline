@@ -30,6 +30,7 @@ import math
 import numpy as np
 from pathlib import Path
 from typing import Any, List, Optional, Union
+from dataclasses import dataclass
 
 from dotenv import load_dotenv
 from langchain_huggingface import HuggingFaceEmbeddings
@@ -454,12 +455,21 @@ def build_context(vector_docs: List[Document], graph_context: str = "", image_do
 
     return "\n\n".join(parts)
 
-def _build_prompt(query: str, patient_report: str, context_text: str, history_text: str, query_mode: str, reasoning_path: str = "") -> str:
+@dataclass
+class PromptContext:
+    query: str
+    patient_report: str
+    context_text: str
+    history_text: str
+    query_mode: str
+    reasoning_path: str = ""
+
+def _build_prompt(context: PromptContext) -> str:
     mode_instruction = {
         QUERY_MODE_RESEARCH: "You are answering from peer-reviewed clinical literature. Cite source numbers [1], [2] etc.",
         QUERY_MODE_GRAPH: "You are answering primarily from a structured medical knowledge graph ([G1], [G2] etc.).",
         QUERY_MODE_AUTO: "You are answering from both a structured knowledge graph and peer-reviewed literature.",
-    }.get(query_mode, "")
+    }.get(context.query_mode, "")
 
     visual_instruction = """
 VISUAL REFERENCES INSTRUCTIONS (mandatory):
@@ -473,16 +483,16 @@ VISUAL REFERENCES INSTRUCTIONS (mandatory):
 {mode_instruction}
 
 PATIENT REPORT:
-{patient_report if patient_report else "No patient report provided."}
+{context.patient_report if context.patient_report else "No patient report provided."}
 
 CONVERSATION HISTORY:
-{history_text if history_text else "No prior conversation."}
+{context.history_text if context.history_text else "No prior conversation."}
 
 CLINICAL CONTEXT:
-{context_text}
+{context.context_text}
 
 QUESTION:
-{query}
+{context.query}
 
 {visual_instruction}
 ANSWER INSTRUCTIONS:
@@ -491,7 +501,7 @@ ANSWER INSTRUCTIONS:
 - If not in context, clearly state you do not have enough information.
 - End with a disclaimer advising consultation with an oncologist.
 
-REASONING PATH (internal): {reasoning_path}
+REASONING PATH (internal): {context.reasoning_path}
 """
 
 # =============================================================================
@@ -706,7 +716,15 @@ def generate_answer(query: str, patient_report: str = "", chat_history: list = N
             return fallback_ans, _combine_sources_properly(src, fallback_src)
 
         history_text = "\n".join([f"{m['role'].upper()}: {m['content'][:300]}" for m in chat_history[-4:]]) if chat_history else ""
-        prompt = _build_prompt(query, patient_report, ctx, history_text, query_mode, path)
+        prompt_context = PromptContext(
+            query=query,
+            patient_report=patient_report,
+            context_text=ctx,
+            history_text=history_text,
+            query_mode=query_mode,
+            reasoning_path=path
+        )
+        prompt = _build_prompt(prompt_context)
         response = Groq(api_key=GROQ_API_KEY).chat.completions.create(model=GROQ_MODEL_QUERY, temperature=GROQ_TEMP_QUERY, messages=[{"role": "user", "content": prompt}])
         answer = response.choices[0].message.content or ""
 
@@ -752,7 +770,15 @@ def generate_answer_stream(query: str, patient_report: str = "", chat_history: l
             return
 
         history_text = "\n".join([f"{m['role'].upper()}: {m['content'][:300]}" for m in chat_history[-4:]]) if chat_history else ""
-        prompt = _build_prompt(query, patient_report, ctx, history_text, query_mode, path)
+        prompt_context = PromptContext(
+            query=query,
+            patient_report=patient_report,
+            context_text=ctx,
+            history_text=history_text,
+            query_mode=query_mode,
+            reasoning_path=path
+        )
+        prompt = _build_prompt(prompt_context)
         stream = Groq(api_key=GROQ_API_KEY).chat.completions.create(model=GROQ_MODEL_QUERY, temperature=GROQ_TEMP_QUERY, messages=[{"role": "user", "content": prompt}], stream=True)
 
         full_answer = ""

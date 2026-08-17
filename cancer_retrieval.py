@@ -226,8 +226,10 @@ def _retrieve_image_chunks(query: str) -> List[Document]:
         # 2. Deduplicate images by filename
         seen_filenames = set()
         unique_candidates = []
+        # Pre-compile regex to avoid instantiation overhead inside the loop
+        image_tag_regex = re.compile(IMAGE_TAG_PATTERN, flags=re.IGNORECASE)
         for doc in bm25_results:
-            match = re.search(IMAGE_TAG_PATTERN, doc.page_content, flags=re.IGNORECASE)
+            match = image_tag_regex.search(doc.page_content)
             filename = match.group(1).strip() if match else None
             if filename and filename not in seen_filenames:
                 seen_filenames.add(filename)

@@ -152,16 +152,21 @@ def get_image_bm25_retriever() -> Optional[BM25Retriever]:
 # =============================================================================
 
 def reciprocal_rank_fusion(dense_docs: List[Document], sparse_docs: List[Document], k: int = RRF_K, top_n: int = K_RRF_FINAL) -> List[Document]:
+    # ⚡ Bolt: Optimize dictionary lookups in Reciprocal Rank Fusion
+    # Avoids always calling str(id(doc)) and creating unnecessary strings/function overhead by lazy evaluating if "chunk_id" is missing
     scores, doc_map = {}, {}
     for rank, doc in enumerate(dense_docs):
-        did = doc.metadata.get("chunk_id", str(id(doc)))
+        did = doc.metadata.get("chunk_id")
+        if did is None: did = str(id(doc))
         scores[did]  = scores.get(did, 0.0) + 1.0 / (k + rank + 1)
         doc_map[did] = doc
     for rank, doc in enumerate(sparse_docs):
-        did = doc.metadata.get("chunk_id", str(id(doc)))
+        did = doc.metadata.get("chunk_id")
+        if did is None: did = str(id(doc))
         scores[did]  = scores.get(did, 0.0) + 1.0 / (k + rank + 1)
         doc_map[did] = doc
-    sorted_ids = sorted(scores, key=lambda x: scores[x], reverse=True)
+    # ⚡ Bolt: Use key=scores.get in sorted instead of key=lambda x: scores[x] to avoid lambda overhead and multiple lookups
+    sorted_ids = sorted(scores, key=scores.get, reverse=True)
     return [doc_map[i] for i in sorted_ids[:top_n]]
 
 def _cosine(v1: List[float], v2: List[float]) -> float:

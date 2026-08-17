@@ -32,6 +32,7 @@ import uuid
 import hashlib
 import unicodedata
 from pathlib import Path
+from dataclasses import dataclass
 from typing import Optional
 
 import fitz
@@ -471,6 +472,14 @@ def _ocr_page(page: fitz.Page) -> str:
 # CAPTION CHUNK BUILDER
 # =============================================================================
 
+@dataclass
+class AssetMetadata:
+    caption_text: str
+    img_filename: str
+    img_path: Path
+    asset_type: str
+    tier: str
+
 class CaptionChunkBuilder:
     _CAPTION_RE = re.compile(
         r'((?:Supplementary\s+)?(?:Fig(?:ure)?\.?|Table)\s*\d+[a-zA-Z]?'
@@ -529,7 +538,14 @@ class CaptionChunkBuilder:
                 img.save(fp, "PNG")
 
             caption_text, tier = self._extract_caption_docling(element, items, i)
-            doc_chunk, meta    = self._make_caption_chunk(caption_text, img_filename, img_path, "Picture" if is_picture else "Table", tier)
+            asset = AssetMetadata(
+                caption_text=caption_text,
+                img_filename=img_filename,
+                img_path=img_path,
+                asset_type="Picture" if is_picture else "Table",
+                tier=tier
+            )
+            doc_chunk, meta    = self._make_caption_chunk(asset)
             if doc_chunk is not None:
                 caption_docs.append(doc_chunk)
                 self._master_meta.append(meta)
@@ -579,7 +595,14 @@ class CaptionChunkBuilder:
                 seen.add(cleaned)
                 asset_type = "Table" if re.match(r'table', cleaned, re.IGNORECASE) else "Picture"
                 img_fname  = f"{self.source_name}_regex_cap_{len(caption_docs)+1:04d}.png"
-                doc_chunk, meta = self._make_caption_chunk(cleaned, img_fname, local_image_dir / img_fname, asset_type, "pymupdf_regex")
+                asset = AssetMetadata(
+                    caption_text=cleaned,
+                    img_filename=img_fname,
+                    img_path=local_image_dir / img_fname,
+                    asset_type=asset_type,
+                    tier="pymupdf_regex"
+                )
+                doc_chunk, meta = self._make_caption_chunk(asset)
                 if doc_chunk is not None:
                     caption_docs.append(doc_chunk)
                     self._master_meta.append(meta)
@@ -610,20 +633,20 @@ class CaptionChunkBuilder:
                 return f"Context: {nxt.text.strip()[:300]}...", "context_fallback"
         return "Visual asset extracted from document.", "no_caption"
 
-    def _make_caption_chunk(self, caption_text: str, img_filename: str, img_path: Path, asset_type: str, tier: str) -> tuple[Optional[LCDoc], dict]:
-        norm = re.sub(r'\s+', ' ', caption_text.lower().strip())
+    def _make_caption_chunk(self, asset: AssetMetadata) -> tuple[Optional[LCDoc], dict]:
+        norm = re.sub(r'\s+', ' ', asset.caption_text.lower().strip())
         if norm in self._seen_caps:
             return None, {}
         self._seen_caps.add(norm)
 
         try:
-            rel_path = str(img_path.relative_to(BASE_DIR))
+            rel_path = str(asset.img_path.relative_to(BASE_DIR))
         except ValueError:
-            rel_path = str(img_path)
+            rel_path = str(asset.img_path)
 
         cap_idx      = len(self._seen_caps)
         chunk_id     = f"{self.source_name}_cap_{cap_idx:04d}"
-        content_type = "table_caption" if asset_type == "Table" else "figure_caption"
+        content_type = "table_caption" if asset.asset_type == "Table" else "figure_caption"
 
         metadata = {
             "chunk_id":        chunk_id,
@@ -631,13 +654,13 @@ class CaptionChunkBuilder:
             "source_url":      get_source_url(self.source_name),
             "cancer_type":     self.cancer_type,
             "content_type":    content_type,
-            "asset_type":      asset_type,
-            "image_filename":  img_filename,
+            "asset_type":      asset.asset_type,
+            "image_filename":  asset.img_filename,
             "image_path":      rel_path,
-            "extraction_tier": tier,
-            "char_length":     len(caption_text),
+            "extraction_tier": asset.tier,
+            "char_length":     len(asset.caption_text),
         }
-        return LCDoc(page_content=caption_text, metadata=metadata), {**metadata, "caption": caption_text}
+        return LCDoc(page_content=asset.caption_text, metadata=metadata), {**metadata, "caption": asset.caption_text}
 
 # =============================================================================
 # TABLE DATA EXTRACTOR

@@ -190,7 +190,7 @@ def load_report_from_upload(uploaded_file) -> str:
 
 
 def _report_hash(text: str) -> str:
-    return hashlib.sha256(text.encode("utf-8", errors="replace")).hexdigest()
+    return hashlib.md5(text.encode('utf-8')).hexdigest()[:8] if text else ""
 
 
 def render_message_with_images(text: str):

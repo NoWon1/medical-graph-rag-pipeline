@@ -267,14 +267,22 @@ NOISE_FIGURE_OVERRIDE_PATTERNS = [
 ]
 
 def _compute_phash(img: Image.Image, hash_size: int = 8) -> int:
-    grey   = img.convert("L").resize((hash_size + 1, hash_size), Image.LANCZOS)
+    grey = img.convert("L").resize((hash_size + 1, hash_size), Image.LANCZOS)
+
+    # ⚡ Bolt: Vectorize pHash calculation using NumPy for speed, or a single-loop fallback
+    if _NUMPY:
+        pixels = np.array(grey)
+        diff = pixels[:, :-1] > pixels[:, 1:]
+        return int.from_bytes(np.packbits(diff.ravel()).tobytes(), 'big')
+
     pixels = list(grey.getdata())
-    bits   = 0
+    bits = 0
+    width = hash_size + 1
     for row in range(hash_size):
-        for col in range(hash_size):
-            left  = pixels[row * (hash_size + 1) + col]
-            right = pixels[row * (hash_size + 1) + col + 1]
-            bits  = (bits << 1) | (1 if left > right else 0)
+        idx = row * width
+        for _ in range(hash_size):
+            bits = (bits << 1) | (1 if pixels[idx] > pixels[idx + 1] else 0)
+            idx += 1
     return bits
 
 def _phash_hamming(h1: int, h2: int) -> int:

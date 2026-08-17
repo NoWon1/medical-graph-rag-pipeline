@@ -41,6 +41,10 @@ NEO4J_DATABASE = os.getenv("NEO4J_DATABASE",  "neo4j")
 CHUNK_INDEX_NAME = "chunk_vector_index"
 
 
+def escape_identifier(identifier: str) -> str:
+    """Securely escape Neo4j identifiers to prevent Cypher injection."""
+    return "`" + identifier.replace("`", "``") + "`"
+
 def get_driver():
     return GraphDatabase.driver(NEO4J_URI, auth=(NEO4J_USERNAME, NEO4J_PASSWORD))
 
@@ -147,7 +151,8 @@ def option1_clear_medchat_nodes(driver):
 
         # Step 7: Drop vector index
         try:
-            session.run(f"DROP INDEX {CHUNK_INDEX_NAME} IF EXISTS")
+            escaped_index_name = escape_identifier(CHUNK_INDEX_NAME)
+            session.run(f"DROP INDEX {escaped_index_name} IF EXISTS")
             print(f"   ✅ Vector index '{CHUNK_INDEX_NAME}' dropped")
         except Exception as e:
             print(f"   ℹ️  Index drop note: {e}")
@@ -156,7 +161,8 @@ def option1_clear_medchat_nodes(driver):
         constraints_to_drop = ["entity_unique", "community_id"]
         for constraint in constraints_to_drop:
             try:
-                session.run(f"DROP CONSTRAINT {constraint} IF EXISTS")
+                escaped_constraint = escape_identifier(constraint)
+                session.run(f"DROP CONSTRAINT {escaped_constraint} IF EXISTS")
                 print(f"   ✅ Constraint '{constraint}' dropped")
             except Exception as e:
                 print(f"   ℹ️  Constraint '{constraint}' note: {e}")
@@ -180,7 +186,8 @@ def option2_full_wipe(driver):
             for idx in indexes:
                 idx_name = idx.get("name", "")
                 if idx_name:
-                    session.run(f"DROP INDEX {idx_name} IF EXISTS")
+                    escaped_idx_name = escape_identifier(idx_name)
+                    session.run(f"DROP INDEX {escaped_idx_name} IF EXISTS")
                     print(f"   ✅ Dropped vector index: {idx_name}")
         except Exception as e:
             print(f"   ℹ️  Index drop note: {e}")
@@ -191,7 +198,8 @@ def option2_full_wipe(driver):
             for c in constraints:
                 c_name = c.get("name", "")
                 if c_name:
-                    session.run(f"DROP CONSTRAINT {c_name} IF EXISTS")
+                    escaped_c_name = escape_identifier(c_name)
+                    session.run(f"DROP CONSTRAINT {escaped_c_name} IF EXISTS")
                     print(f"   ✅ Dropped constraint: {c_name}")
         except Exception as e:
             print(f"   ℹ️  Constraint drop note: {e}")
@@ -226,7 +234,8 @@ def option3_index_only(driver):
 
     with driver.session(database=NEO4J_DATABASE) as session:
         try:
-            session.run(f"DROP INDEX {CHUNK_INDEX_NAME} IF EXISTS")
+            escaped_index_name = escape_identifier(CHUNK_INDEX_NAME)
+            session.run(f"DROP INDEX {escaped_index_name} IF EXISTS")
             print(f"   ✅ Vector index '{CHUNK_INDEX_NAME}' dropped")
             print("   Run cancer_ingestion.py to rebuild it.")
         except Exception as e:

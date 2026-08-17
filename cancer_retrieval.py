@@ -132,14 +132,13 @@ def get_image_bm25_retriever() -> Optional[BM25Retriever]:
     global _image_bm25_retriever
     if _image_bm25_retriever is not None:
         return _image_bm25_retriever
+    main_retriever = get_bm25_retriever()
     image_docs = []
-    for json_path in sorted(CHUNK_DIR.glob("*_chunks.json")):
-        with open(json_path, "r", encoding="utf-8") as f:
-            for chunk in json.load(f):
-                content = chunk.get("content", "")
-                has_tag = chunk.get("has_image_tags", False) or "[IMAGE:" in content.upper()
-                if has_tag:
-                    image_docs.append(Document(page_content=content, metadata=chunk))
+    for doc in main_retriever.docs:
+        content = doc.page_content
+        has_tag = doc.metadata.get("has_image_tags", False) or "[IMAGE:" in content.upper()
+        if has_tag:
+            image_docs.append(doc)
     if not image_docs:
         print("   ℹ️  No image-tagged chunks found — image retrieval disabled")
         return None

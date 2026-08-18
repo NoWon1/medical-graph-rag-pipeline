@@ -562,7 +562,9 @@ def _web_search_fallback(rag_answer: str, query: str, patient_report: str, rag_i
         resp = client.chat.completions.create(model=GROQ_MODEL_QUERY, temperature=GROQ_TEMP_QUERY, messages=[{"role": "user", "content": web_prompt}])
         web_answer = resp.choices[0].message.content or ""
     except Exception as e:
-        web_answer = f"Could not generate web answer: {e}"
+        import logging
+        logging.error("Web search fallback error", exc_info=True)
+        web_answer = "Could not generate web answer due to an internal error."
 
     if rag_is_empty:
         final_answer = f"🌐 **Answer sourced from web search** (not found in literature database):\n\n{web_answer.strip()}"
@@ -700,8 +702,9 @@ def generate_answer(query: str, patient_report: str = "", chat_history: list = N
         return answer, src
     
     except Exception as e:
-        import traceback; traceback.print_exc()
-        return f"Error in retrieval pipeline: {str(e)}", []
+        import logging
+        logging.error("Error in retrieval pipeline", exc_info=True)
+        return "An error occurred in the retrieval pipeline. Please check server logs.", []
 
 
 def generate_answer_stream(query: str, patient_report: str = "", chat_history: list = None, cancer_filter: str = "", query_mode: str = QUERY_MODE_DEFAULT):
@@ -758,8 +761,9 @@ def generate_answer_stream(query: str, patient_report: str = "", chat_history: l
         st.session_state.update({"stream_buffer": full_answer, "stream_sources": src, "stream_followups": followups, "stream_reasoning": path})
 
     except Exception as e:
-        yield f"Stream error: {str(e)}"
-        import traceback; traceback.print_exc()
+        import logging
+        logging.error("Stream error", exc_info=True)
+        yield "An error occurred during answer streaming. Please check server logs."
 
 # =============================================================================
 # DEMO

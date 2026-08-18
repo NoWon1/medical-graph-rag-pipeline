@@ -1,3 +1,6 @@
 ## 2024-05-24 - Vectorize Cosine Similarity for Performance
 **Learning:** When calculating vector similarities in hot loops, pure Python math functions introduce significant overhead compared to `numpy`. However, `numpy` scalar results (like `np.float64` from `np.dot`) can break JSON serialization later in the API pipeline if not carefully handled. Also, passing standard lists into a vectorized function inside a nested loop causes implicit type-casting overhead on every iteration.
 **Action:** Always pre-cast variables to `np.array` *outside* of hot loops, and explicitly cast the final scalar result back to a native Python `float()` before returning it from the similarity function. Ensure type hints use `Union[List[float], np.ndarray]` to prevent linter/type errors.
+## 2024-05-25 - Fully Vectorize O(N^2) MMR Reranking Loops
+**Learning:** O(N^2) vector similarity comparisons (like MMR) are extremely slow when done using loop-based `_cosine` functions, even if pre-cast to numpy arrays. Doing full matrix multiplications using `np.dot` with `L2` normalization provides massive speedups (e.g., >100x).
+**Action:** Replace nested loops of pairwise cosine comparisons with fully vectorized NumPy matrix multiplications `np.dot(doc_mat, doc_mat.T)`, but always remember to apply L2 normalizations to guarantee mathematically correct cosine similarity.

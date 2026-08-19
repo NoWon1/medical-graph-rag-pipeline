@@ -173,17 +173,39 @@ def _cosine(v1: Union[List[float], np.ndarray], v2: Union[List[float], np.ndarra
 
 def mmr_rerank(query: str, candidates: List[Document], embed_model: HuggingFaceEmbeddings, k: int = K_MMR_FINAL, lambda_mult: float = MMR_LAMBDA) -> List[Document]:
     if not candidates or len(candidates) <= k: return candidates
-    # Bolt: Pre-cast to numpy arrays before hot loops to avoid implicit conversion overhead during _cosine calculation
+
+    # Bolt: Fully vectorized NumPy matrix multiplications for MMR
     query_vec = np.array(embed_model.embed_query(query))
     doc_vecs  = [np.array(v) for v in embed_model.embed_documents([d.page_content for d in candidates])]
-    relevance = [_cosine(v, query_vec) for v in doc_vecs]
-    selected, remaining = [], list(range(len(candidates)))
-    for _ in range(min(k, len(candidates))):
+    doc_mat = np.array(doc_vecs)
+
+    if doc_mat.size == 0: return candidates
+
+    query_norm = np.linalg.norm(query_vec)
+    doc_norms = np.linalg.norm(doc_mat, axis=1)
+
+    # Precompute relevance scores using dot products
+    valid_masks = (query_norm != 0) & (doc_norms != 0)
+    relevance = np.zeros(len(doc_mat))
+    if query_norm != 0:
+        relevance[valid_masks] = np.dot(doc_mat[valid_masks], query_vec) / (query_norm * doc_norms[valid_masks])
+
+    # Precompute all pairwise cosine similarities
+    sim_matrix = np.zeros((len(doc_mat), len(doc_mat)))
+    valid_doc_masks = doc_norms != 0
+    if np.any(valid_doc_masks):
+        valid_docs = doc_mat[valid_doc_masks]
+        valid_norms = doc_norms[valid_doc_masks]
+        norm_matrix = np.outer(valid_norms, valid_norms)
+        sim_matrix[np.ix_(valid_doc_masks, valid_doc_masks)] = np.dot(valid_docs, valid_docs.T) / norm_matrix
+
+    selected, remaining = [], list(range(len(doc_mat)))
+    for _ in range(min(k, len(doc_mat))):
         if not selected: best = max(remaining, key=lambda i: relevance[i])
         else:
             best, best_score = -1, float("-inf")
             for idx in remaining:
-                max_sim = max(_cosine(doc_vecs[idx], doc_vecs[s]) for s in selected)
+                max_sim = max(float(sim_matrix[idx, s]) for s in selected)
                 score   = lambda_mult * relevance[idx] - (1 - lambda_mult) * max_sim
                 if score > best_score: best_score, best = score, idx
         selected.append(best)

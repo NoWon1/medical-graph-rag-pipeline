@@ -24,6 +24,7 @@
 
 from __future__ import annotations
 
+import logging
 import re
 import json
 import math
@@ -562,7 +563,9 @@ def _web_search_fallback(rag_answer: str, query: str, patient_report: str, rag_i
         resp = client.chat.completions.create(model=GROQ_MODEL_QUERY, temperature=GROQ_TEMP_QUERY, messages=[{"role": "user", "content": web_prompt}])
         web_answer = resp.choices[0].message.content or ""
     except Exception as e:
-        web_answer = f"Could not generate web answer: {e}"
+        # 🛡️ Sentinel: Prevent stack trace/error leakage
+        logging.error("Could not generate web answer", exc_info=True)
+        web_answer = "An error occurred generating web answer. Please check server logs."
 
     if rag_is_empty:
         final_answer = f"🌐 **Answer sourced from web search** (not found in literature database):\n\n{web_answer.strip()}"
@@ -700,8 +703,9 @@ def generate_answer(query: str, patient_report: str = "", chat_history: list = N
         return answer, src
     
     except Exception as e:
-        import traceback; traceback.print_exc()
-        return f"Error in retrieval pipeline: {str(e)}", []
+        # 🛡️ Sentinel: Prevent stack trace/error leakage
+        logging.error("Error in retrieval pipeline", exc_info=True)
+        return "An error occurred in the retrieval pipeline. Please check server logs.", []
 
 
 def generate_answer_stream(query: str, patient_report: str = "", chat_history: list = None, cancer_filter: str = "", query_mode: str = QUERY_MODE_DEFAULT):
@@ -758,8 +762,9 @@ def generate_answer_stream(query: str, patient_report: str = "", chat_history: l
         st.session_state.update({"stream_buffer": full_answer, "stream_sources": src, "stream_followups": followups, "stream_reasoning": path})
 
     except Exception as e:
-        yield f"Stream error: {str(e)}"
-        import traceback; traceback.print_exc()
+        # 🛡️ Sentinel: Prevent stack trace/error leakage
+        logging.error("Stream error", exc_info=True)
+        yield "An error occurred during stream generation. Please check server logs."
 
 # =============================================================================
 # DEMO

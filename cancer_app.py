@@ -117,6 +117,14 @@ textarea:focus {
     box-shadow: none !important;
     outline: none !important;
 }
+div[data-testid="stChatInput"] textarea:focus-visible,
+textarea:focus-visible,
+.stButton>button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+    outline: 2px solid #2fa36b !important;
+    outline-offset: 2px !important;
+}
 textarea::placeholder { color: #7a8a9a !important; }
 ::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-thumb { background: #c5d1dc; border-radius: 10px; }

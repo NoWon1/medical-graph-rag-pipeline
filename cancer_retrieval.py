@@ -173,21 +173,41 @@ def _cosine(v1: Union[List[float], np.ndarray], v2: Union[List[float], np.ndarra
 
 def mmr_rerank(query: str, candidates: List[Document], embed_model: HuggingFaceEmbeddings, k: int = K_MMR_FINAL, lambda_mult: float = MMR_LAMBDA) -> List[Document]:
     if not candidates or len(candidates) <= k: return candidates
-    # Bolt: Pre-cast to numpy arrays before hot loops to avoid implicit conversion overhead during _cosine calculation
+
+    # Bolt: Vectorized MMR implementation using matrix multiplication for performance
     query_vec = np.array(embed_model.embed_query(query))
-    doc_vecs  = [np.array(v) for v in embed_model.embed_documents([d.page_content for d in candidates])]
-    relevance = [_cosine(v, query_vec) for v in doc_vecs]
-    selected, remaining = [], list(range(len(candidates)))
+    doc_mat = np.array(embed_model.embed_documents([d.page_content for d in candidates]))
+
+    if doc_mat.size == 0: return []
+
+    # L2 normalize for cosine similarity
+    query_norm = np.linalg.norm(query_vec)
+    query_vec = query_vec / query_norm if query_norm > 0 else query_vec
+
+    doc_norms = np.linalg.norm(doc_mat, axis=1, keepdims=True)
+    doc_norms[doc_norms == 0] = 1
+    doc_mat = doc_mat / doc_norms
+
+    relevance = np.dot(doc_mat, query_vec)
+    sim_matrix = np.dot(doc_mat, doc_mat.T)
+
+    selected = []
+    remaining = list(range(len(candidates)))
+
     for _ in range(min(k, len(candidates))):
-        if not selected: best = max(remaining, key=lambda i: relevance[i])
+        if not selected:
+            best = max(remaining, key=lambda i: relevance[i])
         else:
             best, best_score = -1, float("-inf")
             for idx in remaining:
-                max_sim = max(_cosine(doc_vecs[idx], doc_vecs[s]) for s in selected)
-                score   = lambda_mult * relevance[idx] - (1 - lambda_mult) * max_sim
-                if score > best_score: best_score, best = score, idx
+                max_sim = np.max(sim_matrix[idx, selected])
+                score = lambda_mult * relevance[idx] - (1 - lambda_mult) * max_sim
+                if score > best_score:
+                    best_score = score
+                    best = idx
         selected.append(best)
         remaining.remove(best)
+
     return [candidates[i] for i in selected]
 
 class HybridMMRRetriever(BaseRetriever):

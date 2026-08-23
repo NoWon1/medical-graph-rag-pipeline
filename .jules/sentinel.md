@@ -6,3 +6,7 @@
 **Vulnerability:** The application was exposing detailed stack traces to the user interface via `st.exception(e)` and `st.error(f"... {e}")` in `cancer_app.py`.
 **Learning:** Returning raw exception strings or stack traces directly to the UI leaks internal implementation details, which could be exploited by an attacker to understand the system architecture or identify vulnerable components.
 **Prevention:** Always catch exceptions and return generic, safe error messages to the user (e.g., "An error occurred. Please check server logs."). Log the detailed exception, including the stack trace, securely to the server console or a logging system using `logging.error(..., exc_info=True)`.
+## 2025-02-12 - Fix stack trace exposure in retrieval pipeline
+**Vulnerability:** The application was exposing detailed exception strings via `str(e)` and logging stack traces with `traceback.print_exc()` in `cancer_retrieval.py`, violating fail securely principles.
+**Learning:** Returning raw exception strings directly from backend pipelines to the UI leaks internal implementation details.
+**Prevention:** Always catch exceptions and return generic, safe error messages to the user (e.g., "An error occurred during retrieval. Please check server logs."). Log the detailed exception securely to the server console or a logging system using `logging.error(..., exc_info=True)`.

@@ -173,17 +173,29 @@ def _cosine(v1: Union[List[float], np.ndarray], v2: Union[List[float], np.ndarra
 
 def mmr_rerank(query: str, candidates: List[Document], embed_model: HuggingFaceEmbeddings, k: int = K_MMR_FINAL, lambda_mult: float = MMR_LAMBDA) -> List[Document]:
     if not candidates or len(candidates) <= k: return candidates
-    # Bolt: Pre-cast to numpy arrays before hot loops to avoid implicit conversion overhead during _cosine calculation
-    query_vec = np.array(embed_model.embed_query(query))
-    doc_vecs  = [np.array(v) for v in embed_model.embed_documents([d.page_content for d in candidates])]
-    relevance = [_cosine(v, query_vec) for v in doc_vecs]
+
+    # Bolt: Vectorize similarity calculation for MMR to replace iterative loops.
+    query_vec = np.array(embed_model.embed_query(query), dtype=float)
+    doc_mat = np.array(embed_model.embed_documents([d.page_content for d in candidates]), dtype=float)
+    if doc_mat.size == 0: return []
+
+    q_norm = np.linalg.norm(query_vec)
+    if q_norm > 0: query_vec = query_vec / q_norm
+
+    d_norms = np.linalg.norm(doc_mat, axis=1, keepdims=True)
+    d_norms[d_norms == 0] = 1.0
+    doc_mat = doc_mat / d_norms
+
+    relevance = np.dot(doc_mat, query_vec)
+    sim_matrix = np.dot(doc_mat, doc_mat.T)
+
     selected, remaining = [], list(range(len(candidates)))
     for _ in range(min(k, len(candidates))):
         if not selected: best = max(remaining, key=lambda i: relevance[i])
         else:
             best, best_score = -1, float("-inf")
             for idx in remaining:
-                max_sim = max(_cosine(doc_vecs[idx], doc_vecs[s]) for s in selected)
+                max_sim = max(sim_matrix[idx, s] for s in selected)
                 score   = lambda_mult * relevance[idx] - (1 - lambda_mult) * max_sim
                 if score > best_score: best_score, best = score, idx
         selected.append(best)

@@ -173,18 +173,35 @@ def _cosine(v1: Union[List[float], np.ndarray], v2: Union[List[float], np.ndarra
 
 def mmr_rerank(query: str, candidates: List[Document], embed_model: HuggingFaceEmbeddings, k: int = K_MMR_FINAL, lambda_mult: float = MMR_LAMBDA) -> List[Document]:
     if not candidates or len(candidates) <= k: return candidates
-    # Bolt: Pre-cast to numpy arrays before hot loops to avoid implicit conversion overhead during _cosine calculation
+    # Bolt: Replaced iterative _cosine loops with fully vectorized Numpy matrix operations.
+    # By L2 normalizing and using np.dot, we avoid N^2 python loop overhead.
     query_vec = np.array(embed_model.embed_query(query))
-    doc_vecs  = [np.array(v) for v in embed_model.embed_documents([d.page_content for d in candidates])]
-    relevance = [_cosine(v, query_vec) for v in doc_vecs]
+    doc_mat = np.array(embed_model.embed_documents([d.page_content for d in candidates]))
+
+    if doc_mat.size == 0: return []
+
+    # L2 Normalize query_vec
+    q_norm = float(np.linalg.norm(query_vec))
+    norm_query = query_vec if q_norm == 0 else query_vec / q_norm
+
+    # L2 Normalize doc_mat
+    d_norms = np.linalg.norm(doc_mat, axis=1, keepdims=True)
+    d_norms[d_norms == 0] = 1.0
+    norm_docs = doc_mat / d_norms
+
+    # Compute relevance and similarity matrices entirely in C
+    relevance = np.dot(norm_docs, norm_query).flatten()
+    sim_matrix = np.dot(norm_docs, norm_docs.T)
+
     selected, remaining = [], list(range(len(candidates)))
     for _ in range(min(k, len(candidates))):
-        if not selected: best = max(remaining, key=lambda i: relevance[i])
+        if not selected: best = max(remaining, key=lambda i: float(relevance[i]))
         else:
             best, best_score = -1, float("-inf")
             for idx in remaining:
-                max_sim = max(_cosine(doc_vecs[idx], doc_vecs[s]) for s in selected)
-                score   = lambda_mult * relevance[idx] - (1 - lambda_mult) * max_sim
+                max_sim = max(float(sim_matrix[idx, s]) for s in selected)
+                # Bolt: Explicit float() casting prevents numpy json serialization errors downstream
+                score   = lambda_mult * float(relevance[idx]) - (1 - lambda_mult) * max_sim
                 if score > best_score: best_score, best = score, idx
         selected.append(best)
         remaining.remove(best)

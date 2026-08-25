@@ -1,3 +1,6 @@
 ## 2024-05-24 - Vectorize Cosine Similarity for Performance
 **Learning:** When calculating vector similarities in hot loops, pure Python math functions introduce significant overhead compared to `numpy`. However, `numpy` scalar results (like `np.float64` from `np.dot`) can break JSON serialization later in the API pipeline if not carefully handled. Also, passing standard lists into a vectorized function inside a nested loop causes implicit type-casting overhead on every iteration.
 **Action:** Always pre-cast variables to `np.array` *outside* of hot loops, and explicitly cast the final scalar result back to a native Python `float()` before returning it from the similarity function. Ensure type hints use `Union[List[float], np.ndarray]` to prevent linter/type errors.
+## 2024-05-15 - Vectorized MMR Calculation
+**Learning:** Pre-casting Python lists to Numpy arrays and fully vectorizing `mmr_rerank` by computing standard cosine similarity via full matrix operations significantly improved reranking execution time by removing expensive `_cosine` Python function calls inside inner loops. Ensure to properly L2 normalize the vectors before doing `np.dot` to maintain mathematical equivalence.
+**Action:** Always prefer vectorized Numpy matrix operations and pre-cast lists to Numpy arrays when doing extensive calculations on embeddings like distance or similarity.

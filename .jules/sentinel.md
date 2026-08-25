@@ -6,3 +6,7 @@
 **Vulnerability:** The application was exposing detailed stack traces to the user interface via `st.exception(e)` and `st.error(f"... {e}")` in `cancer_app.py`.
 **Learning:** Returning raw exception strings or stack traces directly to the UI leaks internal implementation details, which could be exploited by an attacker to understand the system architecture or identify vulnerable components.
 **Prevention:** Always catch exceptions and return generic, safe error messages to the user (e.g., "An error occurred. Please check server logs."). Log the detailed exception, including the stack trace, securely to the server console or a logging system using `logging.error(..., exc_info=True)`.
+## 2024-05-18 - Stack Trace / Implementation Leak in Streamlit Retrieval Pipeline
+**Vulnerability:** The error handlers in `cancer_retrieval.py` (`generate_answer` and `generate_answer_stream`) exposed raw exception strings (`str(e)`) and used `traceback.print_exc()` which risks leaking implementation details (stack traces, variables, paths) to the end user.
+**Learning:** Streamlit pipelines that catch backend exceptions must fail securely. Directly yielding or returning `str(e)` from deeply nested components (like LangChain/Groq RAG retrieval) is an information exposure risk.
+**Prevention:** Use `logging.error(..., exc_info=True)` to capture the full traceback server-side and return generic, safe fallback messages (e.g., "An error occurred during retrieval") to the front end.

@@ -31,6 +31,7 @@ from pathlib import Path
 from typing import Any, List, Optional
 
 from dotenv import load_dotenv
+import logging
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_neo4j import Neo4jVector
 from langchain_community.retrievers import BM25Retriever
@@ -700,8 +701,8 @@ def generate_answer(query: str, patient_report: str = "", chat_history: list = N
         return answer, src
     
     except Exception as e:
-        import traceback; traceback.print_exc()
-        return f"Error in retrieval pipeline: {str(e)}", []
+        logging.error("Error in retrieval pipeline", exc_info=True)
+        return "An error occurred during retrieval. Please check the logs.", []
 
 
 def generate_answer_stream(query: str, patient_report: str = "", chat_history: list = None, cancer_filter: str = "", query_mode: str = QUERY_MODE_DEFAULT):
@@ -758,8 +759,8 @@ def generate_answer_stream(query: str, patient_report: str = "", chat_history: l
         st.session_state.update({"stream_buffer": full_answer, "stream_sources": src, "stream_followups": followups, "stream_reasoning": path})
 
     except Exception as e:
-        yield f"Stream error: {str(e)}"
-        import traceback; traceback.print_exc()
+        logging.error("Error in retrieval pipeline stream", exc_info=True)
+        yield "An error occurred during streaming. Please check the logs."
 
 # =============================================================================
 # DEMO

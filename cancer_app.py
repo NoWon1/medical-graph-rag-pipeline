@@ -95,6 +95,10 @@ div[data-testid="stChatInput"] textarea:focus {
     box-shadow: none !important;
     outline: none !important;
 }
+div[data-testid="stChatInput"] textarea:focus-visible {
+    outline: 2px solid #2fa36b !important;
+    outline-offset: 2px !important;
+}
 .stButton>button {
     border-radius: 10px;
     background-color: #2fa36b;
@@ -102,6 +106,10 @@ div[data-testid="stChatInput"] textarea:focus {
     border: none;
 }
 .stButton>button:hover { background-color: #248a59; }
+.stButton>button:focus-visible {
+    outline: 2px solid #2fa36b !important;
+    outline-offset: 2px !important;
+}
 .streamlit-expanderHeader { font-weight: 600; }
 [data-testid="stChatMessage"] { border-radius: 12px; padding: 10px; }
 textarea {
@@ -116,6 +124,10 @@ textarea:focus {
     border: 1px solid #2fa36b !important;
     box-shadow: none !important;
     outline: none !important;
+}
+textarea:focus-visible {
+    outline: 2px solid #2fa36b !important;
+    outline-offset: 2px !important;
 }
 textarea::placeholder { color: #7a8a9a !important; }
 ::-webkit-scrollbar { width: 8px; }

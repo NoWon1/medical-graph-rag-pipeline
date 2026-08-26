@@ -29,6 +29,7 @@ import json
 import math
 from pathlib import Path
 from typing import Any, List, Optional
+import logging
 
 from dotenv import load_dotenv
 from langchain_huggingface import HuggingFaceEmbeddings
@@ -700,8 +701,9 @@ def generate_answer(query: str, patient_report: str = "", chat_history: list = N
         return answer, src
     
     except Exception as e:
-        import traceback; traceback.print_exc()
-        return f"Error in retrieval pipeline: {str(e)}", []
+        import logging
+        logging.error("Pipeline error during answer generation", exc_info=True)
+        return "An error occurred during retrieval. Please check server logs.", []
 
 
 def generate_answer_stream(query: str, patient_report: str = "", chat_history: list = None, cancer_filter: str = "", query_mode: str = QUERY_MODE_DEFAULT):
@@ -758,8 +760,9 @@ def generate_answer_stream(query: str, patient_report: str = "", chat_history: l
         st.session_state.update({"stream_buffer": full_answer, "stream_sources": src, "stream_followups": followups, "stream_reasoning": path})
 
     except Exception as e:
-        yield f"Stream error: {str(e)}"
-        import traceback; traceback.print_exc()
+        import logging
+        logging.error("Stream error during answer generation", exc_info=True)
+        yield "An error occurred during streaming. Please check server logs."
 
 # =============================================================================
 # DEMO

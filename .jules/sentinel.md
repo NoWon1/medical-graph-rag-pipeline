@@ -6,3 +6,7 @@
 **Vulnerability:** The application was exposing detailed stack traces to the user interface via `st.exception(e)` and `st.error(f"... {e}")` in `cancer_app.py`.
 **Learning:** Returning raw exception strings or stack traces directly to the UI leaks internal implementation details, which could be exploited by an attacker to understand the system architecture or identify vulnerable components.
 **Prevention:** Always catch exceptions and return generic, safe error messages to the user (e.g., "An error occurred. Please check server logs."). Log the detailed exception, including the stack trace, securely to the server console or a logging system using `logging.error(..., exc_info=True)`.
+## 2026-08-27 - Prevent stack trace exposure in streaming API
+**Vulnerability:** The application was exposing detailed stack traces to the user interface via `yield f"Stream error: {str(e)}"` and returning raw exceptions in `cancer_retrieval.py`.
+**Learning:** Returning raw exception strings directly to the UI, especially via streaming functions, leaks internal implementation details.
+**Prevention:** Always catch exceptions and return generic, safe error messages to the user. Log the detailed exception, including the stack trace, securely to the server console or a logging system using `logging.error(..., exc_info=True)`.

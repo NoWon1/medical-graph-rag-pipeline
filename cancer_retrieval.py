@@ -165,26 +165,32 @@ def reciprocal_rank_fusion(dense_docs: List[Document], sparse_docs: List[Documen
     sorted_ids = sorted(scores, key=lambda x: scores[x], reverse=True)
     return [doc_map[i] for i in sorted_ids[:top_n]]
 
-def _cosine(v1: Union[List[float], np.ndarray], v2: Union[List[float], np.ndarray]) -> float:
-    dot = np.dot(v1, v2)
-    norm1 = np.linalg.norm(v1)
-    norm2 = np.linalg.norm(v2)
-    return 0.0 if (norm1 == 0 or norm2 == 0) else float(dot / (norm1 * norm2))
-
 def mmr_rerank(query: str, candidates: List[Document], embed_model: HuggingFaceEmbeddings, k: int = K_MMR_FINAL, lambda_mult: float = MMR_LAMBDA) -> List[Document]:
     if not candidates or len(candidates) <= k: return candidates
-    # Bolt: Pre-cast to numpy arrays before hot loops to avoid implicit conversion overhead during _cosine calculation
+
+    # Bolt: Fully vectorized MMR computation.
     query_vec = np.array(embed_model.embed_query(query))
-    doc_vecs  = [np.array(v) for v in embed_model.embed_documents([d.page_content for d in candidates])]
-    relevance = [_cosine(v, query_vec) for v in doc_vecs]
+    doc_mat = np.array(embed_model.embed_documents([d.page_content for d in candidates]))
+
+    if doc_mat.size == 0: return []
+
+    query_norm = np.linalg.norm(query_vec)
+    if query_norm > 0: query_vec = query_vec / query_norm
+
+    doc_norms = np.linalg.norm(doc_mat, axis=1, keepdims=True)
+    doc_mat = np.divide(doc_mat, doc_norms, out=np.zeros_like(doc_mat), where=doc_norms!=0)
+
+    relevance = np.dot(doc_mat, query_vec)
+    sim_matrix = np.dot(doc_mat, doc_mat.T)
+
     selected, remaining = [], list(range(len(candidates)))
     for _ in range(min(k, len(candidates))):
-        if not selected: best = max(remaining, key=lambda i: relevance[i])
+        if not selected: best = max(remaining, key=lambda i: float(relevance[i]))
         else:
             best, best_score = -1, float("-inf")
             for idx in remaining:
-                max_sim = max(_cosine(doc_vecs[idx], doc_vecs[s]) for s in selected)
-                score   = lambda_mult * relevance[idx] - (1 - lambda_mult) * max_sim
+                max_sim = max(float(sim_matrix[idx, s]) for s in selected)
+                score   = lambda_mult * float(relevance[idx]) - (1 - lambda_mult) * max_sim
                 if score > best_score: best_score, best = score, idx
         selected.append(best)
         remaining.remove(best)
@@ -240,14 +246,21 @@ def _retrieve_image_chunks(query: str) -> List[Document]:
 
         # 3. Dense Vector Semantic Reranking
         embed_model = get_embeddings()
-        # Bolt: Pre-cast to numpy arrays to accelerate vector comparison loops
+        # Bolt: Vectorized cosine similarity computation
         query_vec = np.array(embed_model.embed_query(query))
-        doc_vecs = [np.array(v) for v in embed_model.embed_documents([d.page_content for d in unique_candidates])]
+        doc_mat = np.array(embed_model.embed_documents([d.page_content for d in unique_candidates]))
+
+        query_norm = np.linalg.norm(query_vec)
+        if query_norm > 0: query_vec = query_vec / query_norm
+
+        doc_norms = np.linalg.norm(doc_mat, axis=1, keepdims=True)
+        doc_mat = np.divide(doc_mat, doc_norms, out=np.zeros_like(doc_mat), where=doc_norms!=0)
+
+        similarities = np.dot(doc_mat, query_vec)
         
         scored_candidates = []
         for i, doc in enumerate(unique_candidates):
-            sim = _cosine(query_vec, doc_vecs[i])
-            scored_candidates.append((sim, doc))
+            scored_candidates.append((float(similarities[i]), doc))
         
         # Sort by highest semantic meaning match
         scored_candidates.sort(key=lambda x: x[0], reverse=True)

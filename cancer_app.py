@@ -92,7 +92,7 @@ div[data-testid="stChatInput"] textarea {
 }
 div[data-testid="stChatInput"] textarea:focus {
     border: 1px solid #2fa36b !important;
-    box-shadow: none !important;
+    box-shadow: 0 0 0 3px rgba(47, 163, 107, 0.25) !important;
     outline: none !important;
 }
 .stButton>button {
@@ -102,6 +102,11 @@ div[data-testid="stChatInput"] textarea:focus {
     border: none;
 }
 .stButton>button:hover { background-color: #248a59; }
+.stButton>button:focus-visible {
+    outline: 2px solid #2fa36b !important;
+    outline-offset: 2px !important;
+    box-shadow: 0 0 0 4px rgba(47, 163, 107, 0.2) !important;
+}
 .streamlit-expanderHeader { font-weight: 600; }
 [data-testid="stChatMessage"] { border-radius: 12px; padding: 10px; }
 textarea {
@@ -114,7 +119,7 @@ textarea {
 }
 textarea:focus {
     border: 1px solid #2fa36b !important;
-    box-shadow: none !important;
+    box-shadow: 0 0 0 3px rgba(47, 163, 107, 0.25) !important;
     outline: none !important;
 }
 textarea::placeholder { color: #7a8a9a !important; }

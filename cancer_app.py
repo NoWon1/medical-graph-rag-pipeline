@@ -503,6 +503,8 @@ with tab_upload:
             if len(patient_context) > 800:
                 preview += f"\n\n... ({len(patient_context) - 800} more characters)"
             st.text(preview)
+    else:
+        st.info("💡 **No report loaded yet.** Upload a file or paste text above to receive a personalized clinical and nutritional analysis.")
 
 # =============================================================================
 # CHAT TAB

@@ -89,6 +89,7 @@ div[data-testid="stChatInput"] textarea {
     color: #1f2a44 !important;
     padding: 10px !important;
     box-shadow: none !important;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 div[data-testid="stChatInput"] textarea:focus {
     border: 1px solid #2fa36b !important;
@@ -104,8 +105,10 @@ div[data-testid="stChatInput"] textarea:focus-visible {
     background-color: #2fa36b;
     color: white;
     border: none;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
 }
 .stButton>button:hover { background-color: #248a59; }
+.stButton>button:active { transform: scale(0.98); }
 .stButton>button:focus-visible {
     box-shadow: 0 0 0 2px white, 0 0 0 4px #2fa36b !important;
     outline: none !important;
@@ -119,6 +122,7 @@ textarea {
     color: #1f2a44 !important;
     padding: 10px !important;
     box-shadow: none !important;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 textarea:focus {
     border: 1px solid #2fa36b !important;

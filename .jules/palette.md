@@ -7,3 +7,6 @@
 ## 2024-11-20 - Retain Explicit Focus-Visible States
 **Learning:** Default Streamlit custom CSS implementations often aggressively strip `outline` and `box-shadow` properties, significantly harming keyboard accessibility.
 **Action:** When styling Streamlit applications with custom CSS, always ensure explicit `:focus-visible` states are retained for interactive elements like buttons and text areas using brand-consistent colors.
+## 2025-02-18 - Utilize Empty States in Tabs
+**Learning:** In multi-tab interfaces, users might not know the purpose of a secondary tab. Empty states provide essential contextual guidance.
+**Action:** Always provide an empty state (like `st.info`) for components that require user input (like file uploads) to explain the value of interacting with them.

@@ -168,20 +168,13 @@ def reciprocal_rank_fusion(dense_docs: List[Document], sparse_docs: List[Documen
 def mmr_rerank(query: str, candidates: List[Document], embed_model: HuggingFaceEmbeddings, k: int = K_MMR_FINAL, lambda_mult: float = MMR_LAMBDA) -> List[Document]:
     if not candidates or len(candidates) <= k: return candidates
     # Bolt: Vectorized MMR calculation. Pre-calculate all pair-wise similarities and relevance scores at once.
+    # Embeddings from HuggingFaceEmbeddings(normalize_embeddings=True) are already L2 normalized.
     query_vec = np.array(embed_model.embed_query(query))
-    doc_vecs  = [np.array(v) for v in embed_model.embed_documents([d.page_content for d in candidates])]
+    doc_mat = np.array(embed_model.embed_documents([d.page_content for d in candidates]))
 
-    doc_mat = np.array(doc_vecs)
     if doc_mat.size == 0: return []
 
-    doc_norms = np.linalg.norm(doc_mat, axis=1, keepdims=True)
-    doc_norms[doc_norms == 0] = 1 # prevent divide by zero
-    doc_mat = doc_mat / doc_norms
-
-    query_norm = np.linalg.norm(query_vec)
-    query_vec_norm = query_vec / query_norm if query_norm > 0 else query_vec
-
-    relevance = np.dot(doc_mat, query_vec_norm).flatten()
+    relevance = np.dot(doc_mat, query_vec).flatten()
     sim_matrix = np.dot(doc_mat, doc_mat.T)
 
     selected, remaining = [], list(range(len(candidates)))
@@ -248,30 +241,27 @@ def _retrieve_image_chunks(query: str) -> List[Document]:
         embed_model = get_embeddings()
 
         # Bolt: Fully vectorized NumPy matrix multiplication to compute all cosine similarities at once.
+        # Embeddings from HuggingFaceEmbeddings(normalize_embeddings=True) are already L2 normalized.
         query_vec = np.array(embed_model.embed_query(query))
-        doc_vecs = [np.array(v) for v in embed_model.embed_documents([d.page_content for d in unique_candidates])]
+        doc_mat = np.array(embed_model.embed_documents([d.page_content for d in unique_candidates]))
         
-        doc_mat = np.array(doc_vecs)
         if doc_mat.size == 0:
-            scored_candidates = []
+            best_docs = []
         else:
-            doc_norms = np.linalg.norm(doc_mat, axis=1, keepdims=True)
-            doc_norms[doc_norms == 0] = 1 # prevent divide by zero
-            doc_mat_norm = doc_mat / doc_norms
+            sims = np.dot(doc_mat, query_vec).flatten()
+            k = min(2, len(sims))
+            if k > 0:
+                # Argpartition is faster than full sort
+                indices = np.argpartition(sims, -k)[-k:]
+                top_indices = indices[np.argsort(sims[indices])[::-1]]
+                best_docs = [unique_candidates[i] for i in top_indices]
+            else:
+                best_docs = []
 
-            query_norm = np.linalg.norm(query_vec)
-            query_vec_norm = query_vec / query_norm if query_norm > 0 else query_vec
-
-            sims = np.dot(doc_mat_norm, query_vec_norm).flatten()
-            scored_candidates = [(float(sims[i]), doc) for i, doc in enumerate(unique_candidates)]
-
-        # Sort by highest semantic meaning match
-        scored_candidates.sort(key=lambda x: x[0], reverse=True)
-        
         img_retriever.k = 3 # Reset hygiene
         
         # Return the top 2 absolute best semantic matches
-        return [doc for sim, doc in scored_candidates][:2]
+        return best_docs
 
     except Exception as e:
         print(f"   ⚠️  Image chunk retrieval error: {e}")

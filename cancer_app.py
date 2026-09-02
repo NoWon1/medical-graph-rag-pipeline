@@ -162,7 +162,10 @@ _MODE_BADGE = {
 # HELPER FUNCTIONS — unchanged from v4 except render_streaming_answer
 # =============================================================================
 
+@st.cache_data(show_spinner=False)
 def extract_text_from_pdf(file_bytes: bytes) -> str:
+    # Bolt optimization: Streamlit reruns on every interaction. Caching this expensive C-extension
+    # PDF parsing prevents blocking the main thread when a file remains in the uploader across chat turns.
     text_parts = []
     try:
         doc = fitz.open(stream=file_bytes, filetype="pdf")

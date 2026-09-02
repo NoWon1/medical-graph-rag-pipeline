@@ -10,3 +10,7 @@
 **Vulnerability:** PDF parsing errors returned raw exception strings (`str(e)`) which could be rendered by the LLM and exposed to the user, leaking internal application state and stack trace details.
 **Learning:** Even if an error message is not directly rendered via `st.error()`, returning raw exceptions in data pipelines that feed into the UI or LLM prompts still constitutes an information leakage risk.
 **Prevention:** Always log detailed exceptions to the server console using `logging.error(..., exc_info=True)` and return sanitized, generic error messages to any downstream function that interacts with the UI or LLM.
+## 2025-02-09 - Missing Input Length Limits
+**Vulnerability:** The application was missing input length limits on user chat messages and pasted reports in `st.chat_input` and `st.text_area`.
+**Learning:** Without explicit character limits, malicious users or bots can submit massive payloads (e.g., Megabytes of text) which can cause Denial of Service (DoS) by exhausting server memory, or incur massive costs and API rate limits by sending excessively large prompts to the LLM backend.
+**Prevention:** Always use the `max_chars` attribute on frontend input components like `st.text_area` and `st.chat_input` to restrict input sizes to reasonable limits based on the application's intended use case.

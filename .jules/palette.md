@@ -14,3 +14,6 @@
 ## 2024-05-24 - [Smooth Interactions in Streamlit]
 **Learning:** Streamlit custom CSS overrides often leave state changes (like hover, focus-visible, and active) feeling jarring because they lack default CSS transitions.
 **Action:** Always include `transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;` and an `:active { transform: scale(0.98); }` state when overriding Streamlit component styles to maintain a polished, modern feel.
+## 2025-02-18 - Provide Actionable Error States
+**Learning:** Exposing raw stack traces (e.g., `st.exception()`) confuses users and provides zero guidance during failure states.
+**Action:** Always provide clear, actionable fallback messages (e.g., 'try rephrasing') via `st.error()` while securely logging the actual trace to the server.

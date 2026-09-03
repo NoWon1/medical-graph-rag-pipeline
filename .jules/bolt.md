@@ -7,3 +7,6 @@
 ## 2024-11-20 - Removed Redundant Vector Normalizations
 **Learning:** When using `HuggingFaceEmbeddings` initialized with `normalize_embeddings=True`, the `embed_query` and `embed_documents` functions natively return L2-normalized vectors. Redundantly calculating and applying `np.linalg.norm` over the vectors manually wastes CPU cycles. Also, `embed_documents` returns a list of lists which can be passed directly to `np.array()` instead of using a slow list comprehension. Furthermore, using `np.argpartition` for top-k selection is significantly faster than sorting the entire list of similarities.
 **Action:** Always verify if the underlying embedding model already performs normalization before adding mathematical overhead. Use `np.array()` directly on the batch output instead of iterating over individual items. Use `np.argpartition` when only the top `k` elements are needed.
+## 2024-05-23 - Streamlit Re-execution Rendering Path
+**Learning:** Streamlit re-executes top-to-bottom on every turn. Expensive data-processing functions like PDF parsing called directly from the main render path will cause UI lag by re-computing on every user interaction unless explicitly cached.
+**Action:** Always wrap expensive data-processing functions (like PDF parsing) with `@st.cache_data(show_spinner=False)` to prevent unnecessary re-computation.

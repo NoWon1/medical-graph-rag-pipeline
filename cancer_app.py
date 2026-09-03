@@ -162,6 +162,7 @@ _MODE_BADGE = {
 # HELPER FUNCTIONS — unchanged from v4 except render_streaming_answer
 # =============================================================================
 
+@st.cache_data(show_spinner=False)  # Bolt: Cache expensive PDF parsing so it doesn't re-execute on every re-render
 def extract_text_from_pdf(file_bytes: bytes) -> str:
     text_parts = []
     try:

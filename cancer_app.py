@@ -40,6 +40,7 @@
 import re
 import hashlib
 from pathlib import Path
+import logging
 
 import streamlit as st
 import fitz
@@ -338,8 +339,8 @@ def _run_auto_analysis(
                 )
 
             except Exception as e:
-                st.error(f"Analysis error: {e}")
-                st.exception(e)
+                logging.error("Analysis error", exc_info=True)
+                st.error("We encountered an issue analysing your report. Please check the file format or try again later.")
 
 # =============================================================================
 # SESSION STATE INITIALISATION
@@ -611,8 +612,8 @@ with tab_chat:
                         del st.session_state["followups"][oldest]
 
                 except Exception as e:
-                    st.error(f"Pipeline error: {e}")
-                    st.exception(e)
+                    logging.error("Pipeline error", exc_info=True)
+                    st.error("I'm sorry, I encountered an error processing your request. Please try rephrasing your question.")
                     followups    = []
                     new_turn_idx = len(st.session_state.messages) - 1
 

@@ -162,7 +162,9 @@ _MODE_BADGE = {
 # HELPER FUNCTIONS — unchanged from v4 except render_streaming_answer
 # =============================================================================
 
+@st.cache_data(show_spinner=False)
 def extract_text_from_pdf(file_bytes: bytes) -> str:
+    """⚡ Bolt: Cached to prevent expensive PDF re-parsing on every Streamlit re-render"""
     text_parts = []
     try:
         doc = fitz.open(stream=file_bytes, filetype="pdf")

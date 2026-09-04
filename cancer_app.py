@@ -488,6 +488,7 @@ with tab_upload:
     pasted_report = st.text_area(
         "Or paste report text here:",
         height=200,
+        max_chars=10000,
         placeholder="Paste the contents of your clinical report here...",
         help="Paste text if you don't have a file to upload."
     )
@@ -525,7 +526,8 @@ with tab_chat:
 
     chat_container = st.container()
     typed_query    = st.chat_input(
-        "E.g., What foods should I avoid while on cisplatin?"
+        "E.g., What foods should I avoid while on cisplatin?",
+        max_chars=1000
     )
     user_query = triggered_followup or typed_query
 

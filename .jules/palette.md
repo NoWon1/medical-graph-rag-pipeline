@@ -17,3 +17,6 @@
 ## 2025-03-01 - Add Visual Character Limits to Text Inputs
 **Learning:** Streamlit text inputs lack visual bounds by default, leading to uncertainty about how much text can be pasted. Adding `max_chars` provides a helpful, auto-updating character counter in the UI.
 **Action:** Always include `max_chars` on `st.text_area` and `st.chat_input` to provide clear visual constraints and improve user guidance.
+## 2025-03-01 - Avoid Raw Exceptions in UI
+**Learning:** Using `st.exception()` leaks internal stack traces to the UI, creating a confusing and alarming user experience during errors.
+**Action:** Instead, log detailed errors safely to the server console using `logging.error(..., exc_info=True)` and provide clear, actionable fallback messages (e.g., 'Please try again') via `st.error()`.

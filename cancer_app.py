@@ -470,7 +470,7 @@ with tab_upload:
     uploaded_file = st.file_uploader(
         "Upload report (.txt or .pdf)", type=["txt", "pdf"]
     )
-    pasted_report = st.text_area("Or paste report text here:", height=200)
+    pasted_report = st.text_area("Or paste report text here:", height=200, max_chars=10000)
 
     patient_context = ""
     upload_source   = ""
@@ -503,7 +503,7 @@ with tab_chat:
 
     chat_container = st.container()
     typed_query    = st.chat_input(
-        "E.g., What foods should I avoid while on cisplatin?"
+        "E.g., What foods should I avoid while on cisplatin?", max_chars=1000
     )
     user_query = triggered_followup or typed_query
 

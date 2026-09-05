@@ -14,3 +14,6 @@
 ## 2024-05-24 - [Smooth Interactions in Streamlit]
 **Learning:** Streamlit custom CSS overrides often leave state changes (like hover, focus-visible, and active) feeling jarring because they lack default CSS transitions.
 **Action:** Always include `transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;` and an `:active { transform: scale(0.98); }` state when overriding Streamlit component styles to maintain a polished, modern feel.
+## 2025-03-01 - Add Visual Character Limits to Text Inputs
+**Learning:** Streamlit text inputs lack visual bounds by default, leading to uncertainty about how much text can be pasted. Adding `max_chars` provides a helpful, auto-updating character counter in the UI.
+**Action:** Always include `max_chars` on `st.text_area` and `st.chat_input` to provide clear visual constraints and improve user guidance.

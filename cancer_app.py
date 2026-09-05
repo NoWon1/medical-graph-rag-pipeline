@@ -185,11 +185,15 @@ def load_report_from_upload(uploaded_file) -> str:
     raw_bytes = uploaded_file.getvalue()
     name      = uploaded_file.name.lower()
     if name.endswith(".pdf"):
-        return extract_text_from_pdf(raw_bytes)
-    try:
-        return raw_bytes.decode("utf-8")
-    except UnicodeDecodeError:
-        return raw_bytes.decode("latin-1", errors="replace")
+        text = extract_text_from_pdf(raw_bytes)
+    else:
+        try:
+            text = raw_bytes.decode("utf-8")
+        except UnicodeDecodeError:
+            text = raw_bytes.decode("latin-1", errors="replace")
+
+    # 🛡️ Sentinel: Enforce max length on uploaded files to prevent DoS/token exhaustion
+    return text[:10000]
 
 
 def _report_hash(text: str) -> str:

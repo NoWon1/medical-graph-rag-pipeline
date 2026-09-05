@@ -14,3 +14,7 @@
 **Vulnerability:** Streamlit `st.text_area` and `st.chat_input` lacked character limits (`max_chars`), exposing the application to potential Denial of Service (DoS) attacks and excessive backend API costs if users pasted massive amounts of text.
 **Learning:** Default Streamlit text components do not restrict input size natively. Any UI component that feeds into an LLM or database must have explicit length bounds to prevent resource exhaustion and unbounded API charges.
 **Prevention:** Always explicitly define the `max_chars` parameter on Streamlit text inputs (e.g., `st.text_area`, `st.text_input`, `st.chat_input`) when building user-facing interfaces.
+## 2025-02-09 - Missing length limits on file uploads
+**Vulnerability:** File uploads in Streamlit lacked explicit size or character limits when read into memory (`load_report_from_upload`), exposing the application to Denial of Service (DoS) attacks and backend token exhaustion.
+**Learning:** Even if manual text inputs are constrained, file upload mechanisms that feed into the same processing pipeline can bypass those constraints, allowing massive payloads to crash the server or run up API costs.
+**Prevention:** Always enforce strict length limits (e.g., slicing text to a maximum character count like `text[:10000]`) on any data extracted from user-uploaded files before passing it to LLMs or downstream logic.

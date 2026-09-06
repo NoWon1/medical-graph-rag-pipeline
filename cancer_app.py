@@ -39,6 +39,7 @@
 
 import re
 import hashlib
+import logging
 from pathlib import Path
 
 import streamlit as st
@@ -89,10 +90,15 @@ div[data-testid="stChatInput"] textarea {
     color: #1f2a44 !important;
     padding: 10px !important;
     box-shadow: none !important;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 div[data-testid="stChatInput"] textarea:focus {
-    border: 1px solid #e53935 !important;
+    border: 1px solid #2fa36b !important;
     box-shadow: none !important;
+    outline: none !important;
+}
+div[data-testid="stChatInput"] textarea:focus-visible {
+    box-shadow: 0 0 0 2px #2fa36b !important;
     outline: none !important;
 }
 .stButton>button {
@@ -100,8 +106,14 @@ div[data-testid="stChatInput"] textarea:focus {
     background-color: #2fa36b;
     color: white;
     border: none;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
 }
 .stButton>button:hover { background-color: #248a59; }
+.stButton>button:active { transform: scale(0.98); }
+.stButton>button:focus-visible {
+    box-shadow: 0 0 0 2px white, 0 0 0 4px #2fa36b !important;
+    outline: none !important;
+}
 .streamlit-expanderHeader { font-weight: 600; }
 [data-testid="stChatMessage"] { border-radius: 12px; padding: 10px; }
 textarea {
@@ -111,10 +123,15 @@ textarea {
     color: #1f2a44 !important;
     padding: 10px !important;
     box-shadow: none !important;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 textarea:focus {
-    border: 1px solid #e53935 !important;
+    border: 1px solid #2fa36b !important;
     box-shadow: none !important;
+    outline: none !important;
+}
+textarea:focus-visible {
+    box-shadow: 0 0 0 2px #2fa36b !important;
     outline: none !important;
 }
 textarea::placeholder { color: #7a8a9a !important; }
@@ -228,7 +245,7 @@ def render_followup_buttons(followups: list[str], turn_key: str):
     for i, (col, question) in enumerate(zip(cols, followups)):
         with col:
             key = f"fup_{turn_key}_{i}_{abs(hash(question)) % 999983}"
-            if st.button(f"Q. {question}", key=key, use_container_width=True):
+            if st.button(f"Q. {question}", key=key, use_container_width=True, help="Click to ask this follow-up question"):
                 st.session_state["triggered_followup"] = question
 
 
@@ -324,8 +341,8 @@ def _run_auto_analysis(
                 )
 
             except Exception as e:
-                st.error(f"Analysis error: {e}")
-                st.exception(e)
+                logging.error(f"Analysis error: {e}", exc_info=True)
+                st.error("We encountered an issue analyzing the report. Please try again or rephrase your request.")
 
 # =============================================================================
 # SESSION STATE INITIALISATION
@@ -465,9 +482,17 @@ tab_chat, tab_upload = st.tabs(["Chat", "Upload Report"])
 with tab_upload:
     st.subheader("Upload Patient Report")
     uploaded_file = st.file_uploader(
-        "Upload report (.txt or .pdf)", type=["txt", "pdf"]
+        "Upload report (.txt or .pdf)",
+        type=["txt", "pdf"],
+        help="Upload your clinical report to get personalized insights."
     )
-    pasted_report = st.text_area("Or paste report text here:", height=200)
+    pasted_report = st.text_area(
+        "Or paste report text here:",
+        height=200,
+        max_chars=10000,
+        placeholder="Paste the contents of your clinical report here...",
+        help="Paste text if you don't have a file to upload."
+    )
 
     patient_context = ""
     upload_source   = ""
@@ -486,6 +511,8 @@ with tab_upload:
             if len(patient_context) > 800:
                 preview += f"\n\n... ({len(patient_context) - 800} more characters)"
             st.text(preview)
+    else:
+        st.info("💡 **No report loaded yet.** Upload a file or paste text above to receive a personalized clinical and nutritional analysis.")
 
 # =============================================================================
 # CHAT TAB
@@ -500,7 +527,8 @@ with tab_chat:
 
     chat_container = st.container()
     typed_query    = st.chat_input(
-        "E.g., What foods should I avoid while on cisplatin?"
+        "E.g., What foods should I avoid while on cisplatin?",
+        max_chars=1000
     )
     user_query = triggered_followup or typed_query
 
@@ -588,8 +616,8 @@ with tab_chat:
                         del st.session_state["followups"][oldest]
 
                 except Exception as e:
-                    st.error(f"Pipeline error: {e}")
-                    st.exception(e)
+                    logging.error(f"Pipeline error: {e}", exc_info=True)
+                    st.error("We encountered an issue processing your request. Please try again or rephrase your query.")
                     followups    = []
                     new_turn_idx = len(st.session_state.messages) - 1
 

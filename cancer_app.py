@@ -422,7 +422,7 @@ with st.sidebar:
     # Visual mode indicator
     icon, colour = _MODE_BADGE[query_mode]
     st.markdown(
-        f"<div style='padding:6px 10px; border-radius:6px; "
+        f"<div role='status' aria-live='polite' style='padding:6px 10px; border-radius:6px; "
         f"background:#f0f4f8; font-size:13px; margin-top:6px;'>"
         f"{icon} <strong>Active:</strong> {QUERY_MODE_LABELS[query_mode]}"
         f"</div>",
@@ -454,11 +454,11 @@ with st.sidebar:
 # =============================================================================
 
 st.markdown("""
-<div class="medchat-title">
+<div class="medchat-title" role="heading" aria-level="1">
     <span class="medchat-dark">MedChat – </span>
     <span class="medchat-green">Graph RAG Healthcare Assistant</span>
 </div>
-<div class="medchat-subtext">
+<div class="medchat-subtext" role="doc-subtitle">
 AI-powered system using medical knowledge graphs and peer-reviewed literature
 to help cancer patients understand treatments, nutrition, and clinical guidance.
 </div>

@@ -20,3 +20,6 @@
 ## 2025-03-01 - Avoid Raw Exceptions in UI
 **Learning:** Using `st.exception()` leaks internal stack traces to the UI, creating a confusing and alarming user experience during errors.
 **Action:** Instead, log detailed errors safely to the server console using `logging.error(..., exc_info=True)` and provide clear, actionable fallback messages (e.g., 'Please try again') via `st.error()`.
+## 2025-03-01 - Add Semantic Roles to Streamlit Custom HTML
+**Learning:** Streamlit `st.markdown(..., unsafe_allow_html=True)` renders custom HTML blocks without semantic meaning, making them invisible to screen readers as headings or status updates.
+**Action:** Always manually add explicit `role` and `aria-*` attributes (e.g., `role="heading" aria-level="1"`, `role="status" aria-live="polite"`) when using custom HTML for structural or dynamic UI elements.

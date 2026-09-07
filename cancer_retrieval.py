@@ -167,7 +167,8 @@ def reciprocal_rank_fusion(dense_docs: List[Document], sparse_docs: List[Documen
 
 def mmr_rerank(query: str, candidates: List[Document], embed_model: HuggingFaceEmbeddings, k: int = K_MMR_FINAL, lambda_mult: float = MMR_LAMBDA) -> List[Document]:
     if not candidates or len(candidates) <= k: return candidates
-    # Bolt: Vectorized MMR calculation. Pre-calculate all pair-wise similarities and relevance scores at once.
+    # ⚡ Bolt: Memory-efficient Vectorized MMR calculation.
+    # Avoids O(N^2) full similarity matrix by only computing similarities against already selected documents.
     # Embeddings from HuggingFaceEmbeddings(normalize_embeddings=True) are already L2 normalized.
     query_vec = np.array(embed_model.embed_query(query))
     doc_mat = np.array(embed_model.embed_documents([d.page_content for d in candidates]))
@@ -175,19 +176,29 @@ def mmr_rerank(query: str, candidates: List[Document], embed_model: HuggingFaceE
     if doc_mat.size == 0: return []
 
     relevance = np.dot(doc_mat, query_vec).flatten()
-    sim_matrix = np.dot(doc_mat, doc_mat.T)
+    n_candidates = len(candidates)
 
-    selected, remaining = [], list(range(len(candidates)))
-    for _ in range(min(k, len(candidates))):
-        if not selected:
-            best = max(remaining, key=lambda i: relevance[i])
+    selected_idx = []
+    is_selected = np.zeros(n_candidates, dtype=bool)
+
+    for i in range(min(k, n_candidates)):
+        if i == 0:
+            best_idx = np.argmax(relevance)
         else:
-            max_sims = np.max(sim_matrix[np.ix_(remaining, selected)], axis=1)
-            scores = lambda_mult * relevance[remaining] - (1 - lambda_mult) * max_sims
-            best = remaining[np.argmax(scores)]
-        selected.append(best)
-        remaining.remove(best)
-    return [candidates[i] for i in selected]
+            sel_vecs = doc_mat[selected_idx]
+            sims = np.dot(doc_mat, sel_vecs.T)
+            max_sims = np.max(sims, axis=1)
+
+            scores = lambda_mult * relevance - (1 - lambda_mult) * max_sims
+            scores[is_selected] = -np.inf
+            best_idx = np.argmax(scores)
+
+        # Force conversion to native Python int for indexing
+        best_idx_int = int(best_idx)
+        selected_idx.append(best_idx_int)
+        is_selected[best_idx_int] = True
+
+    return [candidates[i] for i in selected_idx]
 
 class HybridMMRRetriever(BaseRetriever):
     dense_ret:   Any = None

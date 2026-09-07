@@ -7,3 +7,6 @@
 ## 2024-11-20 - Removed Redundant Vector Normalizations
 **Learning:** When using `HuggingFaceEmbeddings` initialized with `normalize_embeddings=True`, the `embed_query` and `embed_documents` functions natively return L2-normalized vectors. Redundantly calculating and applying `np.linalg.norm` over the vectors manually wastes CPU cycles. Also, `embed_documents` returns a list of lists which can be passed directly to `np.array()` instead of using a slow list comprehension. Furthermore, using `np.argpartition` for top-k selection is significantly faster than sorting the entire list of similarities.
 **Action:** Always verify if the underlying embedding model already performs normalization before adding mathematical overhead. Use `np.array()` directly on the batch output instead of iterating over individual items. Use `np.argpartition` when only the top `k` elements are needed.
+## 2024-05-15 - Optimizing MMR memory and speed
+**Learning:** Pre-calculating a full `n_docs x n_docs` similarity matrix for MMR calculation is an O(n^2) bottleneck in both memory and compute.
+**Action:** Instead of building the full matrix, only compute similarities between all candidates and the *already selected* documents iteratively. This reduces memory complexity to O(n * k) and halves execution time.

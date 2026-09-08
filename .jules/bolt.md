@@ -10,3 +10,11 @@
 ## 2024-05-15 - Optimizing MMR memory and speed
 **Learning:** Pre-calculating a full `n_docs x n_docs` similarity matrix for MMR calculation is an O(n^2) bottleneck in both memory and compute.
 **Action:** Instead of building the full matrix, only compute similarities between all candidates and the *already selected* documents iteratively. This reduces memory complexity to O(n * k) and halves execution time.
+
+## 2024-06-25 - Avoid artificial constraints as optimizations
+**Learning:** Adding hard constraints on user input (like `max_chars` limits on Streamlit text areas) might theoretically reduce server load, but it breaks legitimate functionality (like pasting full medical reports) and degrades UX. Arbitrary limits are not true performance optimizations.
+**Action:** Always focus on true performance improvements (like caching, algorithmic efficiency, or pre-compilation) that speed up the system while strictly preserving exact existing functionality.
+
+## 2024-06-25 - Module-level Regex Compilation overhead
+**Learning:** Python caches compiled regex patterns internally (`re._cache`), so calling `re.search()` repeatedly inside a loop isn't as expensive as full recompilation. However, moving `re.compile()` outside the function entirely to a module-level constant (e.g., `IMAGE_TAG_RE = re.compile(...)`) avoids even the internal dictionary cache lookup, providing a cleaner and fully optimized approach.
+**Action:** When optimizing regex in loops or frequently called functions, define the compiled regex as a constant at the top of the file rather than just moving `re.compile` outside the loop within the function.

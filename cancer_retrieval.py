@@ -69,6 +69,9 @@ from config import (
 
 load_dotenv()
 
+# ⚡ Bolt: Module-level compiled regex for performance
+IMAGE_TAG_RE = re.compile(IMAGE_TAG_PATTERN, flags=re.IGNORECASE)
+
 # =============================================================================
 # EMBEDDINGS & CONNECTION CACHING
 # =============================================================================
@@ -239,7 +242,7 @@ def _retrieve_image_chunks(query: str) -> List[Document]:
         seen_filenames = set()
         unique_candidates = []
         for doc in bm25_results:
-            match = re.search(IMAGE_TAG_PATTERN, doc.page_content, flags=re.IGNORECASE)
+            match = IMAGE_TAG_RE.search(doc.page_content)
             filename = match.group(1).strip() if match else None
             if filename and filename not in seen_filenames:
                 seen_filenames.add(filename)

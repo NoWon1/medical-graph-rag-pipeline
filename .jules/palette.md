@@ -26,3 +26,6 @@
 ## 2025-03-01 - Add Icebreaker Questions for Empty Chat States
 **Learning:** Users often face "blank canvas paralysis" when opening a new chat interface. Providing initial suggested questions helps them understand what the system can do and lowers the barrier to interaction.
 **Action:** Always provide 3-4 contextual "icebreaker" questions in the initial empty chat state to guide new users.
+## 2025-03-01 - Add Cross-Tab Directional CTAs
+**Learning:** When an action in one tab (like uploading a file) triggers a state change or analysis in a different tab, users often don't know where to look next without explicit guidance.
+**Action:** Always provide an explicit directional CTA (e.g., using `st.info`) guiding the user to the destination tab immediately after the triggering action completes.

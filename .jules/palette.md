@@ -23,3 +23,6 @@
 ## 2025-03-01 - Add Semantic Roles to Streamlit Custom HTML
 **Learning:** Streamlit `st.markdown(..., unsafe_allow_html=True)` renders custom HTML blocks without semantic meaning, making them invisible to screen readers as headings or status updates.
 **Action:** Always manually add explicit `role` and `aria-*` attributes (e.g., `role="heading" aria-level="1"`, `role="status" aria-live="polite"`) when using custom HTML for structural or dynamic UI elements.
+## 2025-03-01 - Add Icebreaker Questions for Empty Chat States
+**Learning:** Users often face "blank canvas paralysis" when opening a new chat interface. Providing initial suggested questions helps them understand what the system can do and lowers the barrier to interaction.
+**Action:** Always provide 3-4 contextual "icebreaker" questions in the initial empty chat state to guide new users.

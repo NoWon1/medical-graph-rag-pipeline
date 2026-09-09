@@ -240,7 +240,8 @@ def render_followup_buttons(followups: list[str], turn_key: str):
     """Render suggested follow-up question buttons. Unchanged from v4."""
     if not followups:
         return
-    st.markdown("**Suggested follow-ups:**")
+    title = "**Suggested questions:**" if turn_key == "init" else "**Suggested follow-ups:**"
+    st.markdown(title)
     cols = st.columns(len(followups))
     for i, (col, question) in enumerate(zip(cols, followups)):
         with col:
@@ -563,8 +564,16 @@ with tab_chat:
                 _run_auto_analysis(patient_context, cancer_filter)
 
         # ── Show follow-ups when idle ─────────────────────────────────────
-        if not user_query and last_followups:
-            render_followup_buttons(last_followups, turn_key=str(last_turn_idx))
+        if not user_query:
+            if last_followups:
+                render_followup_buttons(last_followups, turn_key=str(last_turn_idx))
+            elif len(st.session_state.messages) == 1:
+                icebreakers = [
+                    "What cancer types do you know about?",
+                    "Can you explain TNM staging?",
+                    "How do I upload a patient report?"
+                ]
+                render_followup_buttons(icebreakers, turn_key="init")
 
         # ── Handle new query ──────────────────────────────────────────────
         if user_query:

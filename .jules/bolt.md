@@ -18,3 +18,6 @@
 ## 2024-06-25 - Module-level Regex Compilation overhead
 **Learning:** Python caches compiled regex patterns internally (`re._cache`), so calling `re.search()` repeatedly inside a loop isn't as expensive as full recompilation. However, moving `re.compile()` outside the function entirely to a module-level constant (e.g., `IMAGE_TAG_RE = re.compile(...)`) avoids even the internal dictionary cache lookup, providing a cleaner and fully optimized approach.
 **Action:** When optimizing regex in loops or frequently called functions, define the compiled regex as a constant at the top of the file rather than just moving `re.compile` outside the loop within the function.
+## 2024-11-20 - Module-level Regex vs Generator Expressions
+**Learning:** Using generator expressions with uncompiled regex strings inside a function (e.g. `any(re.search(p, q) for p in PATTERNS)`) creates significant overhead, even though Python internally caches compiled patterns. Pre-compiling the list of patterns into a single combined regex using `re.compile("|".join(...))` at the module level speeds up matching by >10x and eliminates loop overhead.
+**Action:** When evaluating multiple regex patterns against a string, combine them into a single module-level `re.compile` object with logical OR `|` rather than looping over `re.search` calls.

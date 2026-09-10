@@ -193,6 +193,8 @@ def load_report_from_upload(uploaded_file) -> str:
             text = raw_bytes.decode("latin-1", errors="replace")
 
     # 🛡️ Sentinel: Enforce max length on uploaded files to prevent DoS/token exhaustion
+    if len(text) > 10000:
+        st.warning("Uploaded report exceeds the 10,000 character limit. It has been truncated, which may omit critical clinical information.", icon="⚠️")
     return text[:10000]
 
 

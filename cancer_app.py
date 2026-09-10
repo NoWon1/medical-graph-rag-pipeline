@@ -134,7 +134,7 @@ textarea:focus-visible {
     box-shadow: 0 0 0 2px #2fa36b !important;
     outline: none !important;
 }
-textarea::placeholder { color: #7a8a9a !important; }
+textarea::placeholder { color: #5f6c7b !important; }
 ::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-thumb { background: #c5d1dc; border-radius: 10px; }
 </style>
@@ -424,7 +424,7 @@ with st.sidebar:
     icon, colour = _MODE_BADGE[query_mode]
     st.markdown(
         f"<div role='status' aria-live='polite' style='padding:6px 10px; border-radius:6px; "
-        f"background:#f0f4f8; font-size:13px; margin-top:6px;'>"
+        f"background:#f0f4f8; border-left: 4px solid {colour}; font-size:13px; margin-top:6px;'>"
         f"{icon} <strong>Active:</strong> {QUERY_MODE_LABELS[query_mode]}"
         f"</div>",
         unsafe_allow_html=True,
@@ -507,6 +507,7 @@ with tab_upload:
 
     if patient_context:
         st.success(f"Report loaded ({upload_source})")
+        st.info("💡 **Report analyzed!** Switch to the **Chat** tab to see your personalized clinical and nutritional analysis.")
         with st.expander("Preview loaded report"):
             preview = patient_context[:800]
             if len(patient_context) > 800:

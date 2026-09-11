@@ -194,10 +194,14 @@ def clean_text(text: str) -> str:
 # CONTENT TYPE DETECTION
 # =============================================================================
 
+# ⚡ Bolt: Pre-compiled regex for content type detection
+_FIG_CAP_RE = re.compile(r'\bfig(?:ure)?\.?\s*\d+')
+_TAB_CAP_RE = re.compile(r'\btable\s*\d+')
+
 def detect_content_type(text: str) -> str:
     t = text.lower()
-    if re.search(r'\bfig(?:ure)?\.?\s*\d+', t):  return "figure_caption"
-    if re.search(r'\btable\s*\d+', t):            return "table_caption"
+    if _FIG_CAP_RE.search(t):  return "figure_caption"
+    if _TAB_CAP_RE.search(t):  return "table_caption"
     if any(w in t for w in [
         "p-value", "p < 0.", "confidence interval", "mann-whitney",
         "chi-square", "statistical analysis", "multivariate", "hazard ratio",
@@ -265,6 +269,10 @@ NOISE_FIGURE_OVERRIDE_PATTERNS = [
     r'\bscale\s+bar\b', r'\bmagnification\b',
     r'\bstaining\b', r'\bmicroscopy\b',
 ]
+
+# ⚡ Bolt: Pre-compiled combined regex to eliminate generator expression overhead in hot loops
+_NOISE_PUBLISHER_RE = re.compile("|".join(f"(?:{p})" for p in NOISE_PUBLISHER_PATTERNS))
+_NOISE_FIGURE_OVERRIDE_RE = re.compile("|".join(f"(?:{p})" for p in NOISE_FIGURE_OVERRIDE_PATTERNS))
 
 def _compute_phash(img: Image.Image, hash_size: int = 8) -> int:
     grey   = img.convert("L").resize((hash_size + 1, hash_size), Image.LANCZOS)
@@ -352,9 +360,9 @@ def _classify_by_context(context_text: str) -> str:
     if not context_text:
         return "unknown"
     t = context_text.lower()
-    if any(re.search(p, t) for p in NOISE_FIGURE_OVERRIDE_PATTERNS):
+    if _NOISE_FIGURE_OVERRIDE_RE.search(t):
         return "figure"
-    if any(re.search(p, t) for p in NOISE_PUBLISHER_PATTERNS):
+    if _NOISE_PUBLISHER_RE.search(t):
         return "noise"
     return "unknown"
 

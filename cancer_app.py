@@ -507,7 +507,7 @@ with tab_upload:
 
     if patient_context:
         st.success(f"Report loaded ({upload_source})")
-        st.info("💡 **Report analyzed!** Switch to the **Chat** tab to see your personalized clinical and nutritional analysis.")
+        st.toast("💡 **Report analyzed!** Switch to the **Chat** tab to see your personalized clinical and nutritional analysis.", icon="✨")
         with st.expander("Preview loaded report"):
             preview = patient_context[:800]
             if len(patient_context) > 800:

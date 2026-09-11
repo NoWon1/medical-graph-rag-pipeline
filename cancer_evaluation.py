@@ -2392,6 +2392,10 @@ import math
 import time
 import warnings
 import argparse
+import re
+
+# ⚡ Bolt: Pre-compiled regex for [IMAGE:] tag detection during evaluation to avoid loop overhead
+_EVAL_IMAGE_TAG_RE = re.compile(r'\[IMAGE:\s*[^\]]+\]', flags=re.IGNORECASE)
 import traceback
 from datetime import datetime
 from pathlib import Path
@@ -2561,8 +2565,7 @@ def _get_contexts(q: str, mode: str) -> list[str]:
 
 def _image_score(ans: str, cat: str) -> Optional[float]:
     if cat != "image": return None
-    import re
-    if re.search(r'\[IMAGE:\s*[^\]]+\]', ans, re.IGNORECASE): return 1.0
+    if _EVAL_IMAGE_TAG_RE.search(ans): return 1.0
     if any(k in ans.lower() for k in ["figure","table","chart","flowchart","diagram"]): return 0.5
     return 0.0
 

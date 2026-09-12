@@ -40,6 +40,9 @@
 import re
 import hashlib
 import logging
+
+# ⚡ Bolt: Pre-compiled regex for [IMAGE:] tag extraction to eliminate generator and compilation overhead in hot UI loops
+IMAGE_TAG_RE = re.compile(r'\[IMAGE:\s*([^\]]+)\]', flags=re.IGNORECASE)
 from pathlib import Path
 
 import streamlit as st
@@ -222,7 +225,7 @@ def render_message_with_images(text: str):
     for wrap in ["**", "*", "`"]:
         clean = clean.replace(f"{wrap}[", "[").replace(f"]{wrap}", "]")
 
-    parts = re.split(r'\[IMAGE:\s*([^\]]+)\]', clean, flags=re.IGNORECASE)
+    parts = IMAGE_TAG_RE.split(clean)
 
     for i, part in enumerate(parts):
         if i % 2 == 0:

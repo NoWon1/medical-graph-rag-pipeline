@@ -198,23 +198,27 @@ def clean_text(text: str) -> str:
 _FIG_CAP_RE = re.compile(r'\bfig(?:ure)?\.?\s*\d+')
 _TAB_CAP_RE = re.compile(r'\btable\s*\d+')
 
+_STAT_METHODS_RE = re.compile("|".join(re.escape(w) for w in [
+    "p-value", "p < 0.", "confidence interval", "mann-whitney",
+    "chi-square", "statistical analysis", "multivariate", "hazard ratio",
+]))
+_CLINICAL_REC_RE = re.compile("|".join(re.escape(w) for w in [
+    "recommend", "guideline", "should be", "must be", "standard of care",
+    "first-line", "indicated", "contraindicated", "treatment plan",
+    "protocol", "regimen", "adjuvant", "neo-adjuvant",
+]))
+_PROGNOSIS_DATA_RE = re.compile("|".join(re.escape(w) for w in [
+    "survival", "prognosis", "outcome", "recurrence", "5-year",
+    "overall survival", "disease-free", "mortality", "remission", "relapse",
+]))
+
 def detect_content_type(text: str) -> str:
     t = text.lower()
     if _FIG_CAP_RE.search(t):  return "figure_caption"
     if _TAB_CAP_RE.search(t):  return "table_caption"
-    if any(w in t for w in [
-        "p-value", "p < 0.", "confidence interval", "mann-whitney",
-        "chi-square", "statistical analysis", "multivariate", "hazard ratio",
-    ]):                                            return "statistical_methods"
-    if any(w in t for w in [
-        "recommend", "guideline", "should be", "must be", "standard of care",
-        "first-line", "indicated", "contraindicated", "treatment plan",
-        "protocol", "regimen", "adjuvant", "neo-adjuvant",
-    ]):                                            return "clinical_recommendation"
-    if any(w in t for w in [
-        "survival", "prognosis", "outcome", "recurrence", "5-year",
-        "overall survival", "disease-free", "mortality", "remission", "relapse",
-    ]):                                            return "prognosis_data"
+    if _STAT_METHODS_RE.search(t): return "statistical_methods"
+    if _CLINICAL_REC_RE.search(t): return "clinical_recommendation"
+    if _PROGNOSIS_DATA_RE.search(t): return "prognosis_data"
     return "clinical_text"
 
 # =============================================================================

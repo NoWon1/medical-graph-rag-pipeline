@@ -29,3 +29,6 @@
 ## 2025-03-01 - Add Cross-Tab Directional CTAs
 **Learning:** When an action in one tab (like uploading a file) triggers a state change or analysis in a different tab, users often don't know where to look next without explicit guidance.
 **Action:** Always provide an explicit directional CTA (e.g., using `st.info`) guiding the user to the destination tab immediately after the triggering action completes.
+## 2024-05-24 - Guard Transient Notifications in Streamlit
+**Learning:** Because Streamlit reruns top-to-bottom on every interaction, unguarded transient notifications (like `st.toast`) will re-fire continuously, spamming the user on every subsequent action.
+**Action:** Always wrap transient notifications triggered by persistent state (like a loaded file) with a session state guard (e.g., checking a hash) so they only fire once.

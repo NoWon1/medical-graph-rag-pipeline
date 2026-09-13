@@ -23,3 +23,7 @@
 **Vulnerability:** Medical applications silently truncating patient reports to prevent DoS without alerting the user.
 **Learning:** Silently truncating medical data can cause vital context to be lost, which may lead to incorrect answers or misdiagnosis. This represents a clinical safety risk disguised as a performance optimization.
 **Prevention:** Always explicitly warn the user if clinical data is truncated or reject the input entirely, providing clear UI feedback.
+## 2024-05-18 - Client-Side Truncation Vulnerability
+**Vulnerability:** The application used a client-side `max_chars` limit on a Streamlit `st.text_area` for pasting patient reports.
+**Learning:** Client-side truncation of clinical reports can silently drop critical information (like diagnoses at the end of a report), leading to incomplete context for the LLM without warning the user.
+**Prevention:** Remove `max_chars` from UI inputs handling critical data and implement explicit server-side validation that alerts the user when truncation occurs.

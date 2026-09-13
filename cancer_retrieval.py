@@ -72,6 +72,11 @@ load_dotenv()
 # ⚡ Bolt: Module-level compiled regex for performance
 IMAGE_TAG_RE = re.compile(IMAGE_TAG_PATTERN, flags=re.IGNORECASE)
 
+_FOOD_KEYWORDS_RE = re.compile("|".join(re.escape(kw) for kw in FOOD_KEYWORDS))
+_INTERACTION_KEYWORDS_RE = re.compile("|".join(re.escape(kw) for kw in INTERACTION_KEYWORDS))
+_ALL_GRAPH_KEYWORDS_RE = re.compile("|".join(re.escape(kw) for kw in (FOOD_KEYWORDS | INTERACTION_KEYWORDS | KNOWN_CANCERS | KNOWN_CHEMO_DRUGS | KNOWN_NON_CHEMO_DRUGS)))
+_MEDICAL_TERMS_RE = re.compile("|".join(re.escape(kw) for kw in {"cancer", "oncology", "tumor", "chemotherapy", "treatment"}))
+
 # =============================================================================
 # EMBEDDINGS & CONNECTION CACHING
 # =============================================================================
@@ -294,8 +299,8 @@ def detect_query_intent(query: str, patient_report: str = "") -> dict:
     protocol      = next((p for p in KNOWN_PROTOCOLS       if p in combined), None)
     eating_effect = next((e for e in KNOWN_EATING_EFFECTS  if e in combined), None)
 
-    has_food        = any(kw in combined for kw in FOOD_KEYWORDS)
-    has_interaction = any(kw in combined for kw in INTERACTION_KEYWORDS)
+    has_food        = bool(_FOOD_KEYWORDS_RE.search(combined))
+    has_interaction = bool(_INTERACTION_KEYWORDS_RE.search(combined))
 
     if non_chemo and (chemo_drug or has_interaction): intent = INTENT_NON_CHEMO_INTERACTION
     elif protocol:                                    intent = INTENT_PROTOCOL_DETAIL
@@ -554,9 +559,8 @@ def _duckduckgo_search(query: str, max_results: int = 5) -> list[dict]:
     """
     if not _DDG_AVAILABLE: return []
 
-    medical_terms = {"cancer", "oncology", "tumor", "chemotherapy", "treatment"}
     query_lower = query.lower()
-    already_medical = any(t in query_lower for t in medical_terms)
+    already_medical = bool(_MEDICAL_TERMS_RE.search(query_lower))
     
     primary_query = query if already_medical else f"{query} cancer oncology"
     fallback_query = query # If the suffix breaks the search
@@ -684,7 +688,7 @@ def _run_graph_mode(query: str, patient_report: str, chat_history: list, cancer_
 
 def _run_auto_mode(query: str, patient_report: str, chat_history: list, cancer_filter: str) -> tuple[str, list, list, str]:
     combined = f"{query} {patient_report[:200]}".lower()
-    use_graph = any(kw in combined for kw in FOOD_KEYWORDS | INTERACTION_KEYWORDS | KNOWN_CANCERS | KNOWN_CHEMO_DRUGS | KNOWN_NON_CHEMO_DRUGS)
+    use_graph = bool(_ALL_GRAPH_KEYWORDS_RE.search(combined))
     graph_context, intent_used = "", ""
     if use_graph:
         graph_context, graph_path = get_graph_retriever().retrieve(query, patient_report, cancer_filter)

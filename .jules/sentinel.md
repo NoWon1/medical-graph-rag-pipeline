@@ -27,3 +27,7 @@
 **Vulnerability:** Application parsed untrusted external text (DuckDuckGo results) and user-supplied medical reports directly into the LLM context without clear boundaries, allowing for indirect prompt injection.
 **Learning:** An attacker or malicious file could contain instructions like "Ignore previous instructions" which the LLM might execute because it cannot distinguish between system instructions and user data.
 **Prevention:** Always implement clear instruction boundaries (e.g., using XML tags like `<clinical_report>` and `</clinical_report>`) in the system prompt and explicitly instruct the LLM to treat anything inside those boundaries strictly as data to be analyzed, not as instructions to be executed.
+## 2024-05-18 - Use SHA256 instead of MD5
+**Vulnerability:** Weak MD5 hash used for generating image hashes.
+**Learning:** Using MD5 is generally insecure and is flagged by linters like bandit. SHA256 should be preferred, especially for hashes that might be used for validation.
+**Prevention:** Always use SHA256 or a stronger hashing algorithm instead of MD5 when hashing any arbitrary data, even if it's currently only used for internal caching.

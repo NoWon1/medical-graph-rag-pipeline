@@ -23,3 +23,7 @@
 **Vulnerability:** Medical applications silently truncating patient reports to prevent DoS without alerting the user.
 **Learning:** Silently truncating medical data can cause vital context to be lost, which may lead to incorrect answers or misdiagnosis. This represents a clinical safety risk disguised as a performance optimization.
 **Prevention:** Always explicitly warn the user if clinical data is truncated or reject the input entirely, providing clear UI feedback.
+## 2025-02-09 - Indirect Prompt Injection via Clinical Data
+**Vulnerability:** Application parsed untrusted external text (DuckDuckGo results) and user-supplied medical reports directly into the LLM context without clear boundaries, allowing for indirect prompt injection.
+**Learning:** An attacker or malicious file could contain instructions like "Ignore previous instructions" which the LLM might execute because it cannot distinguish between system instructions and user data.
+**Prevention:** Always implement clear instruction boundaries (e.g., using XML tags like `<clinical_report>` and `</clinical_report>`) in the system prompt and explicitly instruct the LLM to treat anything inside those boundaries strictly as data to be analyzed, not as instructions to be executed.

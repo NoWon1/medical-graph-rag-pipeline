@@ -92,7 +92,8 @@ REDIS_PORT = int(os.getenv("REDIS_PORT", "6379"))
 REDIS_DB = int(os.getenv("REDIS_DB", "0"))
 REDIS_USERNAME = os.getenv("REDIS_USERNAME", "")
 REDIS_PASSWORD = os.getenv("REDIS_PASSWORD", "")
-REDIS_SSL = os.getenv("REDIS_SSL", "false").lower() in {"1", "true", "yes", "on"}
+_redis_ssl_env = os.getenv("REDIS_SSL", "false").lower() in {"1", "true", "yes", "on"}
+REDIS_SSL = True if REDIS_PASSWORD else _redis_ssl_env
 
 # 2. Pipeline "Student" Config (The model answering the questions)
 PIPELINE_LLM_PROVIDER = os.getenv("PIPELINE_LLM_PROVIDER", "groq")

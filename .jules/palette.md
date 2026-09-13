@@ -32,3 +32,7 @@
 ## 2024-05-24 - Guard Transient Notifications in Streamlit
 **Learning:** Because Streamlit reruns top-to-bottom on every interaction, unguarded transient notifications (like `st.toast`) will re-fire continuously, spamming the user on every subsequent action.
 **Action:** Always wrap transient notifications triggered by persistent state (like a loaded file) with a session state guard (e.g., checking a hash) so they only fire once.
+
+## 2024-05-24 - Prevent Silent Text Truncation
+**Learning:** Silent truncation via max_chars in Streamlit text inputs is dangerous for clinical data as users may not notice missing information.
+**Action:** Always handle bulk text length validation and warnings explicitly in Python rather than using max_chars.

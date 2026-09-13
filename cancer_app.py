@@ -490,7 +490,6 @@ with tab_upload:
     pasted_report = st.text_area(
         "Or paste report text here:",
         height=200,
-        max_chars=10000,
         placeholder="Paste the contents of your clinical report here...",
         help="Paste text if you don't have a file to upload."
     )
@@ -504,6 +503,10 @@ with tab_upload:
     elif pasted_report.strip():
         patient_context = pasted_report.strip()
         upload_source   = "pasted text"
+
+    if patient_context and len(patient_context) > 10000:
+        st.warning("⚠️ **Report truncated:** The provided report exceeds the 10,000 character limit. Some clinical information may have been omitted.")
+        patient_context = patient_context[:10000]
 
     if patient_context:
         current_hash = _report_hash(patient_context)

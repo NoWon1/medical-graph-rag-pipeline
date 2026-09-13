@@ -113,80 +113,101 @@ class PageProfile:
 # TEXT CLEANING — 12-step medical PDF cleaner
 # =============================================================================
 
+
+_MATH_DIGITS = {
+    '\U0001D7CE': '0', '\U0001D7CF': '1', '\U0001D7D0': '2',
+    '\U0001D7D1': '3', '\U0001D7D2': '4', '\U0001D7D3': '5',
+    '\U0001D7D4': '6', '\U0001D7D5': '7', '\U0001D7D6': '8',
+    '\U0001D7D7': '9', '\U0001D7EC': '0', '\U0001D7ED': '1',
+    '\U0001D7EE': '2', '\U0001D7EF': '3', '\U0001D7F0': '4',
+    '\U0001D7F1': '5', '\U0001D7F2': '6', '\U0001D7F3': '7',
+    '\U0001D7F4': '8', '\U0001D7F5': '9',
+}
+
+_GLYPH_CODES = [
+    (re.compile(r'\s*/uniFB01\s*'), 'fi'),
+    (re.compile(r'\s*/uniFB02\s*'), 'fl'),
+    (re.compile(r'\s*/uniFB00\s*'), 'ff'),
+    (re.compile(r'\s*/uniFB03\s*'), 'ffi'),
+    (re.compile(r'\s*/uniFB04\s*'), 'ffl'),
+    (re.compile(r'\s*/uniF642\s*'), '%'),
+    (re.compile(r'\s*/C15\s*'), '-'),
+    (re.compile(r'\s*/C19\s*'), 'e'),
+    (re.compile(r'\s*/C20\s*'), 'c'),
+    (re.compile(r'\s*/C211\s*'), ' '),
+]
+
+_UNICODE_LIGATURES = {
+    '\ufb01': 'fi', '\ufb02': 'fl', '\ufb00': 'ff',
+    '\ufb03': 'ffi', '\ufb04': 'ffl', '\ufb05': 'st',
+}
+
+_BROKEN_WORD_1_RE = re.compile(r'([a-zA-Z]+)\s+(fi|fl|ff|ffi|ffl)\s+([a-zA-Z]+)')
+_BROKEN_WORD_2_RE = re.compile(r'([a-zA-Z]+)\s+(fi|fl|ff|ffi|ffl)(?=[a-zA-Z])')
+_BROKEN_WORD_3_RE = re.compile(r'(?<=[a-zA-Z])(fi|fl|ff|ffi|ffl)\s+([a-zA-Z]+)')
+_DOCLING_RE = re.compile(r'', flags=re.IGNORECASE)
+_JOURNAL_HEADER_RE = re.compile(
+    r'(?m)^.{0,80}(?:guidelines?\s+version|©\s*\d{4}|page\s+\d+\s+of\s+\d+).{0,80}$\n?',
+    flags=re.IGNORECASE
+)
+_AUTHOR_ET_AL_RE = re.compile(r'(?m)^[A-Z][a-z]+\s+et al\..{0,120}$\n?')
+_URL_RE = re.compile(r'(?m)^(?:https?://|doi:\s*|www\.)\S+\s*$\n?')
+_REF_CUTOFF_RE = re.compile(
+    r'^#{0,3}\s*\*{0,2}(references?|bibliography|works cited|literature cited)\*{0,2}\s*$',
+    re.IGNORECASE | re.MULTILINE
+)
+_EXCESS_WS_1_RE = re.compile(r'[ \t]{2,}')
+_EXCESS_WS_2_RE = re.compile(r'\n{3,}')
+_ISOLATED_PAGE_RE = re.compile(r'(?m)^\s*\d{1,3}\s*$\n?')
+
+
 def clean_text(text: str) -> str:
     if not text or not text.strip():
         return ""
 
     # 1. Mathematical bold digit repair
-    math_digits = {
-        '\U0001D7CE': '0', '\U0001D7CF': '1', '\U0001D7D0': '2',
-        '\U0001D7D1': '3', '\U0001D7D2': '4', '\U0001D7D3': '5',
-        '\U0001D7D4': '6', '\U0001D7D5': '7', '\U0001D7D6': '8',
-        '\U0001D7D7': '9', '\U0001D7EC': '0', '\U0001D7ED': '1',
-        '\U0001D7EE': '2', '\U0001D7EF': '3', '\U0001D7F0': '4',
-        '\U0001D7F1': '5', '\U0001D7F2': '6', '\U0001D7F3': '7',
-        '\U0001D7F4': '8', '\U0001D7F5': '9',
-    }
-    for weird, normal in math_digits.items():
+    for weird, normal in _MATH_DIGITS.items():
         text = text.replace(weird, normal)
 
     # 2. Unicode normalization
     text = unicodedata.normalize("NFKC", text)
 
     # 3. Raw glyph codes
-    glyph_codes = {
-        r'\s*/uniFB01\s*': 'fi', r'\s*/uniFB02\s*': 'fl',
-        r'\s*/uniFB00\s*': 'ff', r'\s*/uniFB03\s*': 'ffi',
-        r'\s*/uniFB04\s*': 'ffl', r'\s*/uniF642\s*': '%',
-        r'\s*/C15\s*': '-', r'\s*/C19\s*': 'e',
-        r'\s*/C20\s*': 'c', r'\s*/C211\s*': ' ',
-    }
-    for pattern, fixed in glyph_codes.items():
-        text = re.sub(pattern, fixed, text)
+    for pattern, fixed in _GLYPH_CODES:
+        text = pattern.sub(fixed, text)
 
     # 4. Unicode ligatures
-    for bad, good in {
-        '\ufb01': 'fi', '\ufb02': 'fl', '\ufb00': 'ff',
-        '\ufb03': 'ffi', '\ufb04': 'ffl', '\ufb05': 'st',
-    }.items():
+    for bad, good in _UNICODE_LIGATURES.items():
         text = text.replace(bad, good)
 
     # 5. Broken word stitching
-    text = re.sub(r'([a-zA-Z]+)\s+(fi|fl|ff|ffi|ffl)\s+([a-zA-Z]+)', r'\1\2\3', text)
-    text = re.sub(r'([a-zA-Z]+)\s+(fi|fl|ff|ffi|ffl)(?=[a-zA-Z])',    r'\1\2',   text)
-    text = re.sub(r'(?<=[a-zA-Z])(fi|fl|ff|ffi|ffl)\s+([a-zA-Z]+)',   r'\1\2',   text)
+    text = _BROKEN_WORD_1_RE.sub(r'\1\2\3', text)
+    text = _BROKEN_WORD_2_RE.sub(r'\1\2', text)
+    text = _BROKEN_WORD_3_RE.sub(r'\1\2', text)
 
     # 6. Docling placeholder tokens
-    text = re.sub(r'', '', text, flags=re.IGNORECASE)
+    text = _DOCLING_RE.sub('', text)
 
     # 7. Running journal headers/footers
-    text = re.sub(
-        r'(?m)^.{0,80}(?:guidelines?\s+version|©\s*\d{4}|page\s+\d+\s+of\s+\d+).{0,80}$\n?',
-        '', text, flags=re.IGNORECASE
-    )
+    text = _JOURNAL_HEADER_RE.sub('', text)
 
     # 8. "Author et al." running headers
-    text = re.sub(r'(?m)^[A-Z][a-z]+\s+et al\..{0,120}$\n?', '', text)
+    text = _AUTHOR_ET_AL_RE.sub('', text)
 
     # 9. DOI / URL lines
-    text = re.sub(r'(?m)^(?:https?://|doi:\s*|www\.)\S+\s*$\n?', '', text)
+    text = _URL_RE.sub('', text)
 
     # 10. References section cutoff
-    ref_match = re.compile(
-        r'^#{0,3}\s*\*{0,2}'
-        r'(references?|bibliography|works cited|literature cited)'
-        r'\*{0,2}\s*$',
-        re.IGNORECASE | re.MULTILINE,
-    ).search(text)
+    ref_match = _REF_CUTOFF_RE.search(text)
     if ref_match:
         text = text[: ref_match.start()]
 
     # 11. Excess whitespace
-    text = re.sub(r'[ \t]{2,}', ' ', text)
-    text = re.sub(r'\n{3,}', '\n\n', text)
+    text = _EXCESS_WS_1_RE.sub(' ', text)
+    text = _EXCESS_WS_2_RE.sub('\n\n', text)
 
     # 12. Isolated page numbers
-    text = re.sub(r'(?m)^\s*\d{1,3}\s*$\n?', '', text)
+    text = _ISOLATED_PAGE_RE.sub('', text)
 
     return text.strip()
 

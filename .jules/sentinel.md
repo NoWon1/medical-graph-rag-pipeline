@@ -1,4 +1,4 @@
-## 2024-05-18 - Path Traversal in Image Retrieval
-**Vulnerability:** Path Traversal via `Path.relative_to`
-**Learning:** `Path.relative_to` fails with ValueError when a path is not relative to the base directory, causing the application to fallback to using the absolute path string. This exposes absolute system paths or enables directory traversal (e.g., `../../etc/passwd`).
-**Prevention:** Resolve both the file path and base directory using `.resolve()`. Validate that the resolved file path strictly belongs to the resolved base directory using `.is_relative_to()`. If an invalid path or traversal is detected, gracefully fail securely by falling back to the filename component using `.name`.
+## 2024-09-13 - Code Health Improvement in `cancer_ingestion.py`
+**Vulnerability:** The `clean_text` function in `cancer_ingestion.py` was initializing large dictionaries and compiling regexes on every call.
+**Learning:** This approach causes performance overhead and makes the code harder to read. Extracting dictionaries and pre-compiling regexes at the module level solves this. Ensure exact patterns are preserved (e.g., `_DOCLING_RE = re.compile(r'', flags=re.IGNORECASE)` which matches the previously empty pattern `r''`).
+**Prevention:** Always define constants and compile regex expressions outside of frequently called functions to optimize execution time and memory.

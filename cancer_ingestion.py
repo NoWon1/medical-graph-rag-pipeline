@@ -331,20 +331,30 @@ def _color_analysis(img: Image.Image) -> dict:
                                 "dominant_hue_frac","edge_ratio"]}
     pixels = list(rgb.getdata())
     BW_THRESH   = 30
-    bw_count = green_count = 0
+    bw_count = green_count = teal_count = orange_count = sepia_count = 0
     hue_buckets = [0] * 36
 
     for r, g, b in pixels:
         lo, hi = min(r, g, b), max(r, g, b)
+
+        # ⚡ Bolt: Consolidated pixel evaluations into a single pass
         if (hi - lo) < BW_THRESH and (hi < 50 or lo > 205):
             bw_count += 1
+
         if r < 120 and 160 <= g <= 230 and b < 120:
             green_count += 1
-        delta = max(r, g, b) - min(r, g, b)
-        if delta > 40 and max(r, g, b) > 0:
-            mc = max(r, g, b)
-            if mc == r:   hue = (60 * ((g - b) / delta)) % 360
-            elif mc == g: hue = 60 * ((b - r) / delta) + 120
+
+        if r < 100 and g > 150 and b > 150 and abs(g - b) < 40:
+            teal_count += 1
+        elif r > 180 and 80 <= g <= 160 and b < 80:
+            orange_count += 1
+        elif 100 <= r <= 210 and 60 <= g <= 150 and 20 <= b <= 110 and r > g > b and (r - b) > 40:
+            sepia_count += 1
+
+        delta = hi - lo
+        if delta > 40 and hi > 0:
+            if hi == r:   hue = (60 * ((g - b) / delta)) % 360
+            elif hi == g: hue = 60 * ((b - r) / delta) + 120
             else:         hue = 60 * ((r - g) / delta) + 240
             hue_buckets[int(hue / 10) % 36] += 1
 
@@ -366,10 +376,6 @@ def _color_analysis(img: Image.Image) -> dict:
                     abs(int(gpix[idx]) - int(gpix[idx + gw])) > ET):
                 ec += 1
     edge_ratio = ec / (gw * gh)
-
-    teal_count   = sum(1 for r,g,b in pixels if r<100 and g>150 and b>150 and abs(int(g)-int(b))<40)
-    orange_count = sum(1 for r,g,b in pixels if r>180 and 80<=g<=160 and b<80)
-    sepia_count  = sum(1 for r,g,b in pixels if 100<=r<=210 and 60<=g<=150 and 20<=b<=110 and r>g>b and (r-b)>40)
 
     return {
         "bw_ratio":          bw_count     / total,

@@ -36,3 +36,6 @@
 ## 2024-05-24 - Prevent Silent Text Truncation
 **Learning:** Silent truncation via max_chars in Streamlit text inputs is dangerous for clinical data as users may not notice missing information.
 **Action:** Always handle bulk text length validation and warnings explicitly in Python rather than using max_chars.
+## 2025-03-01 - Add Explicit Visual Character Limits to Clinical Text Inputs
+**Learning:** For clinical or medical applications, `max_chars` cannot be used for large text fields (like `st.text_area`) because it silently truncates critical data, causing potential misdiagnoses. However, omitting visual limits leaves users unsure of bounds.
+**Action:** Always handle bulk text length validation explicitly in Python and provide a clear, custom HTML character counter below the input to guide users without relying on HTML truncation.

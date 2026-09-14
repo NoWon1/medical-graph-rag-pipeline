@@ -494,6 +494,16 @@ with tab_upload:
         help="Paste text if you don't have a file to upload."
     )
 
+    if pasted_report:
+        char_count = len(pasted_report)
+        limit_color = "#dc3545" if char_count > 10000 else "#6c757d"
+        st.markdown(
+            f"<div style='text-align: right; color: {limit_color}; font-size: 13px; margin-top: -10px; margin-bottom: 10px;'>"
+            f"{char_count:,} / 10,000 characters"
+            f"</div>",
+            unsafe_allow_html=True
+        )
+
     patient_context = ""
     upload_source   = ""
 

@@ -31,3 +31,12 @@
 **Vulnerability:** Weak MD5 hash used for generating image hashes.
 **Learning:** Using MD5 is generally insecure and is flagged by linters like bandit. SHA256 should be preferred, especially for hashes that might be used for validation.
 **Prevention:** Always use SHA256 or a stronger hashing algorithm instead of MD5 when hashing any arbitrary data, even if it's currently only used for internal caching.
+## 2024-05-18 - XSS via Unsafe HTML Rendering
+**Vulnerability:** Use of `st.markdown(..., unsafe_allow_html=True)` without sanitizing dynamic content allows for Cross-Site Scripting (XSS).
+**Learning:** Never pass raw, untrusted user or LLM data into functions that render raw HTML, as it can be used to execute malicious JavaScript.
+**Prevention:** If `unsafe_allow_html=True` is required, strictly hardcode the HTML template and only interpolate pre-sanitized or known-safe values.
+
+## 2024-05-18 - Missing Semantic Attributes in Custom HTML
+**Vulnerability:** Streamlit components overridden with raw HTML (`unsafe_allow_html=True`) lacked proper ARIA attributes, causing accessibility issues.
+**Learning:** When bypassing Streamlit's built-in components to use custom HTML, semantic meaning is lost. This can break screen readers and other assistive technologies.
+**Prevention:** Always manually add explicit semantic `role` and `aria-*` attributes (e.g., `role="heading" aria-level="1"`) to any custom structural or dynamic HTML blocks rendered in Streamlit.

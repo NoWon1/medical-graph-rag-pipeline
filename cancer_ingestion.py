@@ -220,7 +220,7 @@ def detect_content_type(text: str) -> str:
 _img_hashes: set = set()
 
 def _is_duplicate_image(b: bytes) -> bool:
-    h = hashlib.md5(b).hexdigest()
+    h = hashlib.sha256(b).hexdigest()
     if h in _img_hashes:
         return True
     _img_hashes.add(h)

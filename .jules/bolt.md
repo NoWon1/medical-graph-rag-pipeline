@@ -27,3 +27,6 @@
 ## 2024-05-18 - Module-level Regex Compilation in Streamlit
 **Learning:** Because Streamlit re-runs the entire application script top-to-bottom on every user interaction, defining `re.compile` inside a rendering function (or relying on inline `re.search`/`re.split` which invokes the engine's cache lookup mechanism) introduces unnecessary overhead in hot paths like chat rendering loops or iterative scoring logic.
 **Action:** Always extract regex compilation into a module-level constant (e.g., `IMAGE_TAG_RE = re.compile(...)`) so it is parsed exactly once at script load time, avoiding repeated cache checks or generator overhead during rendering.
+## 2024-09-14 - Redundant Pixel Loop Optimization
+**Learning:** Extracting multiple `sum(1 for ...)` generator expressions into a single integrated `for` loop over `pixels` inside image processing (`cancer_ingestion.py:_color_analysis`) yields significant execution time improvements by preventing redundant traversals of large image arrays.
+**Action:** Always watch for multiple consecutive list comprehensions or generator expressions that iterate over the exact same underlying large collection, and merge them into a single-pass loop.

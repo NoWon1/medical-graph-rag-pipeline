@@ -39,3 +39,6 @@
 ## 2025-03-01 - Add Explicit Visual Character Limits to Clinical Text Inputs
 **Learning:** For clinical or medical applications, `max_chars` cannot be used for large text fields (like `st.text_area`) because it silently truncates critical data, causing potential misdiagnoses. However, omitting visual limits leaves users unsure of bounds.
 **Action:** Always handle bulk text length validation explicitly in Python and provide a clear, custom HTML character counter below the input to guide users without relying on HTML truncation.
+## 2024-05-20 - ARIA Live Region for Dynamic Text
+**Learning:** For dynamic updates in UI, like a character counter, wrapping the content in a div with `role='status'` and `aria-live='polite'` ensures screen readers announce the changes to visually impaired users automatically, providing continuous accessibility feedback without requiring focus.
+**Action:** Always add ARIA live regions to any dynamic count or progress tracking texts in custom components.

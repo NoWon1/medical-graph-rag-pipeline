@@ -39,3 +39,6 @@
 ## 2025-03-01 - Add Explicit Visual Character Limits to Clinical Text Inputs
 **Learning:** For clinical or medical applications, `max_chars` cannot be used for large text fields (like `st.text_area`) because it silently truncates critical data, causing potential misdiagnoses. However, omitting visual limits leaves users unsure of bounds.
 **Action:** Always handle bulk text length validation explicitly in Python and provide a clear, custom HTML character counter below the input to guide users without relying on HTML truncation.
+## 2025-03-03 - Add Clear Chat capability
+**Learning:** In chat interfaces, users often want a quick way to reset the context and start fresh, especially when exploring different topics.
+**Action:** Always provide an explicit "Clear Chat" or "Reset" action in conversational UIs.

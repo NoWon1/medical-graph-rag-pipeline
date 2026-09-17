@@ -437,12 +437,23 @@ with st.sidebar:
     cancer_filter_raw = st.selectbox(
         "Filter by cancer type",
         options=CANCER_TYPE_OPTIONS,
+        format_func=lambda x: x.capitalize(),
         index=0,
         help="Narrow retrieval to one cancer type. 'All' searches across all types.",
     )
     cancer_filter = "" if cancer_filter_raw == "All" else cancer_filter_raw
     if cancer_filter:
         st.info(f"Active filter: **{cancer_filter}** cancer")
+
+    st.divider()
+
+    # ── Actions ───────────────────────────────────────────────────────────────
+    if st.button("🗑️ Clear Chat", use_container_width=True, help="Reset the conversation history"):
+        for key in ["messages", "followups", "last_reasoning", "turn_modes", "triggered_followup", "stream_buffer", "stream_sources", "stream_followups", "stream_reasoning"]:
+            if key in st.session_state:
+                del st.session_state[key]
+        _init_session_state()
+        st.rerun()
 
     st.divider()
 

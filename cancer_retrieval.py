@@ -24,6 +24,7 @@
 
 from __future__ import annotations
 
+import collections
 import re
 import json
 import math
@@ -90,6 +91,43 @@ _KNOWN_EATING_EFFECTS_RE = re.compile("|".join(re.escape(kw) for kw in sorted(KN
 # EMBEDDINGS & CONNECTION CACHING
 # =============================================================================
 
+class LRUCacheDict(collections.OrderedDict):
+    """⚡ Bolt: Fast O(1) bounded LRU cache for memory safety"""
+    def __init__(self, maxsize=1024, *args, **kwargs):
+        self.maxsize = maxsize
+        super().__init__(*args, **kwargs)
+
+    def __setitem__(self, key, value):
+        super().__setitem__(key, value)
+        if len(self) > self.maxsize:
+            oldest = next(iter(self))
+            del self[oldest]
+
+    def __getitem__(self, key):
+        value = super().__getitem__(key)
+        self.move_to_end(key)
+        return value
+
+class CachedHuggingFaceEmbeddings(HuggingFaceEmbeddings):
+    """⚡ Bolt: Cached embeddings to prevent redundant local model execution"""
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self._query_cache = LRUCacheDict(maxsize=1024)
+        self._doc_cache = LRUCacheDict(maxsize=4096)
+
+    def embed_query(self, text: str) -> list[float]:
+        if text not in self._query_cache:
+            self._query_cache[text] = super().embed_query(text)
+        return self._query_cache[text]
+
+    def embed_documents(self, texts: list[str]) -> list[list[float]]:
+        uncached = [t for t in texts if t not in self._doc_cache]
+        if uncached:
+            embs = super().embed_documents(uncached)
+            for t, e in zip(uncached, embs):
+                self._doc_cache[t] = e
+        return [self._doc_cache[t] for t in texts]
+
 _embed_model: Optional[HuggingFaceEmbeddings] = None
 _VECTOR_STORE_CACHE = {} 
 
@@ -97,7 +135,7 @@ def get_embeddings() -> HuggingFaceEmbeddings:
     global _embed_model
     if _embed_model is None:
         print("   🔢 Loading embedding model (once)...")
-        _embed_model = HuggingFaceEmbeddings(
+        _embed_model = CachedHuggingFaceEmbeddings(
             model_name=EMBEDDING_MODEL,
             model_kwargs={"device": "cpu"},
             encode_kwargs={"normalize_embeddings": True},

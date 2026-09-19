@@ -42,3 +42,6 @@
 ## 2025-03-03 - Add Clear Chat capability
 **Learning:** In chat interfaces, users often want a quick way to reset the context and start fresh, especially when exploring different topics.
 **Action:** Always provide an explicit "Clear Chat" or "Reset" action in conversational UIs.
+## 2026-09-18 - Added confirmation dialog for clear chat
+**Learning:** Destructive actions (like clearing a chat with long contextual history in a medical context) require a confirmation dialog to prevent accidental data loss.
+**Action:** Implemented a `@st.dialog` to explicitly confirm the destructive action of clearing the chat before executing it.

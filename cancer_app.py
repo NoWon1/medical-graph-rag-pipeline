@@ -383,6 +383,25 @@ def _init_session_state():
             st.session_state[key] = val
 
 # =============================================================================
+# DIALOGS
+# =============================================================================
+
+@st.dialog("Confirm Clear Chat")
+def confirm_clear_chat():
+    st.write("Are you sure you want to clear the conversation history? This action cannot be undone.")
+    col1, col2 = st.columns(2)
+    with col1:
+        if st.button("Cancel", use_container_width=True):
+            st.rerun()
+    with col2:
+        if st.button("Yes, Clear Chat", type="primary", use_container_width=True):
+            for key in ["messages", "followups", "last_reasoning", "turn_modes", "triggered_followup", "stream_buffer", "stream_sources", "stream_followups", "stream_reasoning"]:
+                if key in st.session_state:
+                    del st.session_state[key]
+            _init_session_state()
+            st.rerun()
+
+# =============================================================================
 # INIT
 # =============================================================================
 
@@ -449,11 +468,7 @@ with st.sidebar:
 
     # ── Actions ───────────────────────────────────────────────────────────────
     if st.button("🗑️ Clear Chat", use_container_width=True, help="Reset the conversation history"):
-        for key in ["messages", "followups", "last_reasoning", "turn_modes", "triggered_followup", "stream_buffer", "stream_sources", "stream_followups", "stream_reasoning"]:
-            if key in st.session_state:
-                del st.session_state[key]
-        _init_session_state()
-        st.rerun()
+        confirm_clear_chat()
 
     st.divider()
 

@@ -325,11 +325,11 @@ def _run_auto_analysis(
 
                 if sources:
                     with st.expander("Sources used in analysis"):
-                        for s in sources:
-                            if s.get("url"):
-                                st.markdown(f"[{s['label']}]({s['url']})")
-                            else:
-                                st.markdown(f"`{s['label']}`")
+                        source_list = [
+                            f"- [{s['label']}]({s['url']})" if s.get("url") else f"- `{s['label']}`"
+                            for s in sources
+                        ]
+                        st.markdown("\n".join(source_list))
 
                 st.session_state.messages.append({
                     "role": "assistant", "content": answer,
@@ -645,11 +645,11 @@ with tab_chat:
                     # ── Sources expander ──────────────────────────────────
                     if sources:
                         with st.expander("Sources"):
-                            for s in sources:
-                                if s.get("url"):
-                                    st.markdown(f"[{s['label']}]({s['url']})")
-                                else:
-                                    st.markdown(f"`{s['label']}`")
+                            source_list = [
+                                f"- [{s['label']}]({s['url']})" if s.get("url") else f"- `{s['label']}`"
+                                for s in sources
+                            ]
+                            st.markdown("\n".join(source_list))
 
                     # ── Store in session state ────────────────────────────
                     st.session_state.messages.append({

@@ -36,3 +36,6 @@
 ## 2024-11-20 - Markdown List Aggregation in Streamlit
 **Learning:** Rendering items sequentially using individual `st.markdown()` calls inside a `for` loop produces separate, disconnected DOM nodes. This generates unnecessary container elements, degrades screen reader accessibility, and causes significant re-render latency in Streamlit when the list is long.
 **Action:** When displaying lists of strings, URLs, or references, map them into a single formatted Markdown string using bullet points (`- `) and render them with exactly one `st.markdown()` invocation.
+## 2026-09-21 - [HTTP Connection Pooling]
+**Learning:** Re-instantiating HTTP-based API clients (like the Groq Python SDK) on every request causes significant latency due to repeated TCP connection setups and TLS handshakes.
+**Action:** Use a thread-safe singleton (e.g., using double-checked locking with `threading.Lock`) to cache a single instance of the client. This allows the underlying HTTP client (`httpx` in this case) to reuse its connection pool, improving performance for consecutive calls.

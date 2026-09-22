@@ -329,34 +329,56 @@ def _color_analysis(img: Image.Image) -> dict:
         return {k: 0 for k in ["bw_ratio","green_ratio","teal_ratio",
                                 "orange_ratio","sepia_ratio",
                                 "dominant_hue_frac","edge_ratio"]}
-    pixels = list(rgb.getdata())
-    BW_THRESH   = 30
-    bw_count = green_count = teal_count = orange_count = sepia_count = 0
-    hue_buckets = [0] * 36
 
-    for r, g, b in pixels:
-        lo, hi = min(r, g, b), max(r, g, b)
+    # ⚡ Bolt: Vectorized pixel loops using NumPy
+    arr = np.asarray(rgb)
+    r, g, b = arr[:, :, 0].astype(np.int32), arr[:, :, 1].astype(np.int32), arr[:, :, 2].astype(np.int32)
+    lo = np.minimum(np.minimum(r, g), b)
+    hi = np.maximum(np.maximum(r, g), b)
+    delta = hi - lo
 
-        # ⚡ Bolt: Consolidated pixel evaluations into a single pass
-        if (hi - lo) < BW_THRESH and (hi < 50 or lo > 205):
-            bw_count += 1
+    BW_THRESH = 30
+    bw_mask = (delta < BW_THRESH) & ((hi < 50) | (lo > 205))
+    bw_count = int(np.count_nonzero(bw_mask))
 
-        if r < 120 and 160 <= g <= 230 and b < 120:
-            green_count += 1
+    green_mask = (r < 120) & (g >= 160) & (g <= 230) & (b < 120)
+    green_count = int(np.count_nonzero(green_mask))
 
-        if r < 100 and g > 150 and b > 150 and abs(g - b) < 40:
-            teal_count += 1
-        elif r > 180 and 80 <= g <= 160 and b < 80:
-            orange_count += 1
-        elif 100 <= r <= 210 and 60 <= g <= 150 and 20 <= b <= 110 and r > g > b and (r - b) > 40:
-            sepia_count += 1
+    teal_mask = (r < 100) & (g > 150) & (b > 150) & (np.abs(g - b) < 40)
+    teal_count = int(np.count_nonzero(teal_mask))
 
-        delta = hi - lo
-        if delta > 40 and hi > 0:
-            if hi == r:   hue = (60 * ((g - b) / delta)) % 360
-            elif hi == g: hue = 60 * ((b - r) / delta) + 120
-            else:         hue = 60 * ((r - g) / delta) + 240
-            hue_buckets[int(hue / 10) % 36] += 1
+    orange_mask = (~teal_mask) & (r > 180) & (g >= 80) & (g <= 160) & (b < 80)
+    orange_count = int(np.count_nonzero(orange_mask))
+
+    sepia_mask = (~teal_mask) & (~orange_mask) & (r >= 100) & (r <= 210) & (g >= 60) & (g <= 150) & (b >= 20) & (b <= 110) & (r > g) & (g > b) & ((r - b) > 40)
+    sepia_count = int(np.count_nonzero(sepia_mask))
+
+    hue_mask = (delta > 40) & (hi > 0)
+
+    r_h = r[hue_mask]
+    g_h = g[hue_mask]
+    b_h = b[hue_mask]
+    hi_h = hi[hue_mask]
+    delta_h = delta[hue_mask]
+
+    hues = np.zeros_like(r_h, dtype=np.float32)
+
+    r_eq = hi_h == r_h
+    g_eq = (~r_eq) & (hi_h == g_h)
+    b_eq = (~r_eq) & (~g_eq)
+
+    hues[r_eq] = (60 * ((g_h[r_eq] - b_h[r_eq]) / delta_h[r_eq])) % 360
+    hues[g_eq] = 60 * ((b_h[g_eq] - r_h[g_eq]) / delta_h[g_eq]) + 120
+    hues[b_eq] = 60 * ((r_h[b_eq] - g_h[b_eq]) / delta_h[b_eq]) + 240
+
+    hue_indices = (hues / 10).astype(np.int32) % 36
+    hue_buckets = np.bincount(hue_indices, minlength=36).tolist()
+
+    # Ensure hue_buckets is exactly 36 elements
+    if len(hue_buckets) < 36:
+        hue_buckets.extend([0] * (36 - len(hue_buckets)))
+    elif len(hue_buckets) > 36:
+        hue_buckets = hue_buckets[:36]
 
     sat_total = sum(hue_buckets)
     if sat_total > total * 0.10:
@@ -367,14 +389,16 @@ def _color_analysis(img: Image.Image) -> dict:
         dhf = 0.0
 
     grey  = img.convert("L").resize((64, 64), Image.LANCZOS)
-    gpix  = list(grey.getdata())
-    gw = gh = 64; ec = 0; ET = 30
-    for row in range(gh - 1):
-        for col in range(gw - 1):
-            idx = row * gw + col
-            if (abs(int(gpix[idx]) - int(gpix[idx + 1])) > ET or
-                    abs(int(gpix[idx]) - int(gpix[idx + gw])) > ET):
-                ec += 1
+    grey_arr = np.asarray(grey).astype(np.int32)
+    gw = gh = 64
+    ET = 30
+
+    diff_x = np.abs(grey_arr[:, :-1] - grey_arr[:, 1:])
+    diff_y = np.abs(grey_arr[:-1, :] - grey_arr[1:, :])
+
+    ec_mask = (diff_x[:-1, :] > ET) | (diff_y[:, :-1] > ET)
+    ec = int(np.count_nonzero(ec_mask))
+
     edge_ratio = ec / (gw * gh)
 
     return {

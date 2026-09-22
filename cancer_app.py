@@ -476,7 +476,7 @@ with tab_upload:
     uploaded_file = st.file_uploader(
         "Upload report (.txt or .pdf)", type=["txt", "pdf"]
     )
-    pasted_report = st.text_area("Or paste report text here:", height=200)
+    pasted_report = st.text_area("Or paste report text here:", height=200, max_chars=10000)
 
     patient_context = ""
     upload_source   = ""

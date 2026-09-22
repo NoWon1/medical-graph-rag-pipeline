@@ -567,6 +567,12 @@ with tab_upload:
 
 with tab_chat:
 
+    col1, col2 = st.columns([0.85, 0.15])
+    with col2:
+        if len(st.session_state.messages) > 1:
+            if st.button("🗑️ Clear", key="top_clear_chat", help="Reset the conversation history", use_container_width=True):
+                confirm_clear_chat()
+
     # Read and clear any triggered follow-up before rendering inputs
     triggered_followup = st.session_state.get("triggered_followup", "")
     if triggered_followup:

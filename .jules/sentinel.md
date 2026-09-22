@@ -40,3 +40,6 @@
 **Vulnerability:** Streamlit components overridden with raw HTML (`unsafe_allow_html=True`) lacked proper ARIA attributes, causing accessibility issues.
 **Learning:** When bypassing Streamlit's built-in components to use custom HTML, semantic meaning is lost. This can break screen readers and other assistive technologies.
 **Prevention:** Always manually add explicit semantic `role` and `aria-*` attributes (e.g., `role="heading" aria-level="1"`) to any custom structural or dynamic HTML blocks rendered in Streamlit.
+## 2025-02-09 - Accessibility vs Security Enhancements
+**Learning:** Accessibility (a11y) improvements, such as adding ARIA attributes to custom Streamlit HTML (`role`, `aria-live`), do not qualify as security enhancements and will be rejected in strict security-focused code reviews.
+**Prevention:** When instructed to provide a security fix or enhancement, focus exclusively on mitigations against vulnerabilities like Prompt Injections, Path Traversals, or Insecure Configurations.

@@ -40,3 +40,7 @@
 **Vulnerability:** Streamlit components overridden with raw HTML (`unsafe_allow_html=True`) lacked proper ARIA attributes, causing accessibility issues.
 **Learning:** When bypassing Streamlit's built-in components to use custom HTML, semantic meaning is lost. This can break screen readers and other assistive technologies.
 **Prevention:** Always manually add explicit semantic `role` and `aria-*` attributes (e.g., `role="heading" aria-level="1"`) to any custom structural or dynamic HTML blocks rendered in Streamlit.
+## 2025-02-18 - Prevent PHI Egress in MedChat Prompts
+**Vulnerability:** The application was vulnerable to HIPAA/GDPR violations because it sent raw patient reports directly to external LLM providers (Groq) without masking PHI/PII.
+**Learning:** Sending raw clinical text out of the network boundary to public or external LLM providers introduces a high risk of PHI egress.
+**Prevention:** Implement a standard-library regex-based Data Loss Prevention (DLP) layer to redact sensitive identifiers (MRN, SSN, Phone, Email, Dates, Names, ZIP) immediately before the payload is embedded into outbound API calls. Using regex over heavy NLP packages prevents CI/CD fragility and model bloat while sufficiently neutralizing egress risks.

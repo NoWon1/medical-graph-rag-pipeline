@@ -452,7 +452,10 @@ def build_context(vector_docs: List[Document], graph_context: str = "", image_do
 
     return "\n\n".join(parts)
 
+from dlp import redact_phi
+
 def _build_prompt(query: str, patient_report: str, context_text: str, history_text: str, query_mode: str, reasoning_path: str = "") -> str:
+    patient_report = redact_phi(patient_report)
     mode_instruction = {
         QUERY_MODE_RESEARCH: "You are answering from peer-reviewed clinical literature. Cite source numbers [1], [2] etc.",
         QUERY_MODE_GRAPH: "You are answering primarily from a structured medical knowledge graph ([G1], [G2] etc.).",
@@ -545,6 +548,7 @@ def _duckduckgo_search(query: str, max_results: int = 5) -> list[dict]:
 
 def _web_search_fallback(rag_answer: str, query: str, patient_report: str, rag_is_empty: bool = False) -> tuple[str, list]:
     print("   🌐 Running web search fallback...")
+    patient_report = redact_phi(patient_report)
     client = Groq(api_key=GROQ_API_KEY)
     web_results = _duckduckgo_search(query)
     web_sources = [{"label": r["url"], "url": r["url"]} for r in web_results if r.get("url")]

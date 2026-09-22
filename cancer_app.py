@@ -469,7 +469,9 @@ with st.sidebar:
     st.divider()
 
     # ── Actions ───────────────────────────────────────────────────────────────
-    if st.button("🗑️ Clear Chat", use_container_width=True, help="Reset the conversation history"):
+    chat_is_empty = len(st.session_state.get("messages", [])) <= 1
+    clear_help = "Chat is already empty" if chat_is_empty else "Reset the conversation history"
+    if st.button("🗑️ Clear Chat", use_container_width=True, help=clear_help, disabled=chat_is_empty):
         confirm_clear_chat()
 
     st.divider()
@@ -569,9 +571,10 @@ with tab_chat:
 
     col1, col2 = st.columns([0.85, 0.15])
     with col2:
-        if len(st.session_state.messages) > 1:
-            if st.button("🗑️ Clear", key="top_clear_chat", help="Reset the conversation history", use_container_width=True):
-                confirm_clear_chat()
+        chat_is_empty = len(st.session_state.messages) <= 1
+        clear_help = "Chat is already empty" if chat_is_empty else "Reset the conversation history"
+        if st.button("🗑️ Clear", key="top_clear_chat", help=clear_help, use_container_width=True, disabled=chat_is_empty):
+            confirm_clear_chat()
 
     # Read and clear any triggered follow-up before rendering inputs
     triggered_followup = st.session_state.get("triggered_followup", "")

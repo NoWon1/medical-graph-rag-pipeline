@@ -1,5 +1,7 @@
 import pytest
-from cancer_ingestion import detect_content_type
+from unittest.mock import patch, MagicMock
+from pathlib import Path
+from cancer_ingestion import detect_content_type, process_single_pdf
 
 def test_detect_content_type():
     # 1. Figure captions
@@ -42,3 +44,31 @@ def test_detect_content_type():
     assert detect_content_type("P-VALUE IS 0.05") == "statistical_methods"
     assert detect_content_type("STANDARD OF CARE") == "clinical_recommendation"
     assert detect_content_type("OVERALL SURVIVAL") == "prognosis_data"
+
+@patch('cancer_ingestion.fitz.open')
+@patch('cancer_ingestion.Path.stat')
+@patch('cancer_ingestion.detect_cancer_type')
+def test_process_single_pdf_error_path(mock_detect, mock_stat, mock_fitz_open):
+    # Setup mocks
+    mock_detect.return_value = "breast"
+
+    mock_stat_result = MagicMock()
+    mock_stat_result.st_size = 1024 * 1024 # 1MB
+    mock_stat.return_value = mock_stat_result
+
+    # Simulate fitz.open raising an exception
+    mock_fitz_open.side_effect = Exception("Simulated PyMuPDF open failure")
+
+    # Call function
+    pdf_path = Path("mock_document.pdf")
+    result = process_single_pdf(pdf_path)
+
+    # Assertions
+    assert result["file"] == "mock_document"
+    assert result["status"] == "failed"
+    assert result["error"] == "Simulated PyMuPDF open failure"
+
+    # Verify the mock calls
+    mock_detect.assert_called_once_with("mock_document")
+    mock_stat.assert_called_once()
+    mock_fitz_open.assert_called_once_with(pdf_path)

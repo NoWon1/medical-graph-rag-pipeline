@@ -40,3 +40,11 @@
 **Vulnerability:** Streamlit components overridden with raw HTML (`unsafe_allow_html=True`) lacked proper ARIA attributes, causing accessibility issues.
 **Learning:** When bypassing Streamlit's built-in components to use custom HTML, semantic meaning is lost. This can break screen readers and other assistive technologies.
 **Prevention:** Always manually add explicit semantic `role` and `aria-*` attributes (e.g., `role="heading" aria-level="1"`) to any custom structural or dynamic HTML blocks rendered in Streamlit.
+## 2025-02-09 - Missing length limits on manual UI inputs (DoS)
+**Vulnerability:** Streamlit `st.text_area` lacked a `max_chars` limit on the frontend, and the corresponding backend truncation was conditionally bypassed if the string length wasn't checked, exposing the application to potential Denial of Service (DoS) attacks and excessive backend API costs.
+**Learning:** Default Streamlit text components do not restrict input size natively. Frontend limits (like `max_chars`) are easily bypassed by direct API calls or modified clients.
+**Prevention:** Always pair frontend `max_chars` limits on Streamlit components with explicit backend truncation (e.g., `text[:limit]`) applied unconditionally before dispatching requests to downstream models or tokenizers to ensure defense-in-depth and avoid 'client-side security theater'.
+## 2026-09-22 - Missing length limits on manual UI inputs (DoS)
+**Vulnerability:** Streamlit `st.text_area` lacked a `max_chars` limit on the frontend, and the corresponding backend truncation was conditionally bypassed if the string length wasn't checked, exposing the application to potential Denial of Service (DoS) attacks and excessive backend API costs.
+**Learning:** Default Streamlit text components do not restrict input size natively. Frontend limits (like `max_chars`) are easily bypassed by direct API calls or modified clients.
+**Prevention:** Always pair frontend `max_chars` limits on Streamlit components with explicit backend truncation (e.g., `text[:limit]`) applied unconditionally before dispatching requests to downstream models or tokenizers to ensure defense-in-depth and avoid 'client-side security theater'.

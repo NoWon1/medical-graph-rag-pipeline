@@ -476,7 +476,12 @@ with tab_upload:
     uploaded_file = st.file_uploader(
         "Upload report (.txt or .pdf)", type=["txt", "pdf"]
     )
-    pasted_report = st.text_area("Or paste report text here:", height=200)
+    pasted_report = st.text_area(
+        "Or paste report text here:",
+        height=200,
+        max_chars=10000,
+        help="Input is limited to 10,000 characters to prevent API rate exhaustion."
+    )
 
     patient_context = ""
     upload_source   = ""
@@ -488,7 +493,7 @@ with tab_upload:
         patient_context = pasted_report.strip()
         if len(patient_context) > 10000:
             st.warning("Pasted report exceeds the 10,000 character limit. It has been truncated, which may omit critical clinical information.", icon="⚠️")
-            patient_context = patient_context[:10000]
+        patient_context = patient_context[:10000]
         upload_source   = "pasted text"
 
     if patient_context:

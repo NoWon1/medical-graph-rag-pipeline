@@ -40,3 +40,7 @@
 **Vulnerability:** Streamlit components overridden with raw HTML (`unsafe_allow_html=True`) lacked proper ARIA attributes, causing accessibility issues.
 **Learning:** When bypassing Streamlit's built-in components to use custom HTML, semantic meaning is lost. This can break screen readers and other assistive technologies.
 **Prevention:** Always manually add explicit semantic `role` and `aria-*` attributes (e.g., `role="heading" aria-level="1"`) to any custom structural or dynamic HTML blocks rendered in Streamlit.
+## 2025-02-12 - PHI Leakage via LLM Egress
+**Vulnerability:** Untrusted clinical reports were sent to external LLMs (Groq) without being sanitized, creating a risk of PHI/PII data leakage.
+**Learning:** Using heavy dependencies (like Microsoft Presidio) to fix this can cause build failures in CI environments and add unnecessary bloat. It's often safer and sufficient to implement a lightweight regex-based Data Loss Prevention (DLP) solution for standard PHI formats.
+**Prevention:** Ensure untrusted clinical data is processed by a DLP/redaction mechanism prior to egress to external LLM providers.

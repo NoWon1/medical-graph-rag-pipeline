@@ -30,3 +30,6 @@
 ## 2024-09-14 - Redundant Pixel Loop Optimization
 **Learning:** Extracting multiple `sum(1 for ...)` generator expressions into a single integrated `for` loop over `pixels` inside image processing (`cancer_ingestion.py:_color_analysis`) yields significant execution time improvements by preventing redundant traversals of large image arrays.
 **Action:** Always watch for multiple consecutive list comprehensions or generator expressions that iterate over the exact same underlying large collection, and merge them into a single-pass loop.
+## 2024-11-20 - Vectorize Image Analysis
+**Learning:** Even after consolidating multiple generator expressions into a single pixel loop, traversing millions of pixels in Python with `for r, g, b in pixels` remains a massive O(N) bottleneck due to interpreter overhead.
+**Action:** When performing pixel-level calculations (like color masking or hue binning), convert the image to a NumPy array (`np.asarray`) and use vectorized boolean masks (e.g. `(r > 150) & (g < 100)`) and `np.count_nonzero()`. This offloads the loop to C and is orders of magnitude faster.

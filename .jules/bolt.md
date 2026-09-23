@@ -39,3 +39,6 @@
 ## 2026-09-21 - [HTTP Connection Pooling]
 **Learning:** Re-instantiating HTTP-based API clients (like the Groq Python SDK) on every request causes significant latency due to repeated TCP connection setups and TLS handshakes.
 **Action:** Use a thread-safe singleton (e.g., using double-checked locking with `threading.Lock`) to cache a single instance of the client. This allows the underlying HTTP client (`httpx` in this case) to reuse its connection pool, improving performance for consecutive calls.
+## 2024-05-30 - Pixel Math Vectorization Underflow
+**Learning:** When performing pixel-level image analysis by vectorizing PIL images into numpy arrays (e.g. `np.asarray(img)`), the default type is often `uint8`. Subtracting these arrays to find deltas (e.g., `hi - lo`) silently underflows and wraps around (e.g., `10 - 200 = 66`), causing massive logic bugs.
+**Action:** Always cast the numpy array to a signed integer type (like `dtype=np.int16`) when creating it from the image before performing any mathematical delta operations. Additionally, ensure final counts returned by `np.count_nonzero` are cast to Python `int()` and floats are cast to `float()` to avoid downstream JSON serialization crashes when these values are returned via the API.

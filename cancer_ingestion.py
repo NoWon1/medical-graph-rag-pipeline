@@ -326,65 +326,83 @@ def _color_analysis(img: Image.Image) -> dict:
     w, h  = rgb.size
     total = w * h
     if total == 0:
-        return {k: 0 for k in ["bw_ratio","green_ratio","teal_ratio",
-                                "orange_ratio","sepia_ratio",
-                                "dominant_hue_frac","edge_ratio"]}
-    pixels = list(rgb.getdata())
-    BW_THRESH   = 30
-    bw_count = green_count = teal_count = orange_count = sepia_count = 0
-    hue_buckets = [0] * 36
+        return {k: 0.0 for k in ["bw_ratio","green_ratio","teal_ratio",
+                                 "orange_ratio","sepia_ratio",
+                                 "dominant_hue_frac","edge_ratio"]}
 
-    for r, g, b in pixels:
-        lo, hi = min(r, g, b), max(r, g, b)
+    arr = np.asarray(rgb, dtype=np.int16)
+    r, g, b = arr[:,:,0], arr[:,:,1], arr[:,:,2]
 
-        # ⚡ Bolt: Consolidated pixel evaluations into a single pass
-        if (hi - lo) < BW_THRESH and (hi < 50 or lo > 205):
-            bw_count += 1
+    lo = np.minimum.reduce([r, g, b])
+    hi = np.maximum.reduce([r, g, b])
+    delta = hi - lo
 
-        if r < 120 and 160 <= g <= 230 and b < 120:
-            green_count += 1
+    bw_mask = (delta < 30) & ((hi < 50) | (lo > 205))
+    bw_count = int(np.count_nonzero(bw_mask))
 
-        if r < 100 and g > 150 and b > 150 and abs(g - b) < 40:
-            teal_count += 1
-        elif r > 180 and 80 <= g <= 160 and b < 80:
-            orange_count += 1
-        elif 100 <= r <= 210 and 60 <= g <= 150 and 20 <= b <= 110 and r > g > b and (r - b) > 40:
-            sepia_count += 1
+    green_mask = (r < 120) & (g >= 160) & (g <= 230) & (b < 120)
+    green_count = int(np.count_nonzero(green_mask))
 
-        delta = hi - lo
-        if delta > 40 and hi > 0:
-            if hi == r:   hue = (60 * ((g - b) / delta)) % 360
-            elif hi == g: hue = 60 * ((b - r) / delta) + 120
-            else:         hue = 60 * ((r - g) / delta) + 240
-            hue_buckets[int(hue / 10) % 36] += 1
+    teal_mask = (r < 100) & (g > 150) & (b > 150) & (np.abs(g - b) < 40)
+    teal_count = int(np.count_nonzero(teal_mask))
+
+    orange_mask = ~teal_mask & (r > 180) & (g >= 80) & (g <= 160) & (b < 80)
+    orange_count = int(np.count_nonzero(orange_mask))
+
+    sepia_mask = ~teal_mask & ~orange_mask & (r >= 100) & (r <= 210) & (g >= 60) & (g <= 150) & (b >= 20) & (b <= 110) & (r > g) & (g > b) & (r - b > 40)
+    sepia_count = int(np.count_nonzero(sepia_mask))
+
+    valid_mask = (delta > 40) & (hi > 0)
+    if not np.any(valid_mask):
+        hue_buckets = [0] * 36
+    else:
+        v_r, v_g, v_b = r[valid_mask], g[valid_mask], b[valid_mask]
+        v_hi, v_delta = hi[valid_mask], delta[valid_mask]
+
+        hue = np.zeros_like(v_hi, dtype=np.float32)
+
+        r_mask = (v_hi == v_r)
+        hue[r_mask] = (60.0 * ((v_g[r_mask] - v_b[r_mask]) / v_delta[r_mask])) % 360.0
+
+        g_mask = ~r_mask & (v_hi == v_g)
+        hue[g_mask] = 60.0 * ((v_b[g_mask] - v_r[g_mask]) / v_delta[g_mask]) + 120.0
+
+        b_mask = ~r_mask & ~g_mask
+        hue[b_mask] = 60.0 * ((v_r[b_mask] - v_g[b_mask]) / v_delta[b_mask]) + 240.0
+
+        hue_indices = (hue / 10.0).astype(np.int32) % 36
+
+        hue_buckets = np.bincount(hue_indices, minlength=36).tolist()
 
     sat_total = sum(hue_buckets)
     if sat_total > total * 0.10:
         tb  = max(range(36), key=lambda i: hue_buckets[i])
         tc  = sum(hue_buckets[(tb + d) % 36] for d in [-1, 0, 1])
-        dhf = tc / sat_total
+        dhf = float(tc) / sat_total
     else:
         dhf = 0.0
 
     grey  = img.convert("L").resize((64, 64), Image.LANCZOS)
-    gpix  = list(grey.getdata())
-    gw = gh = 64; ec = 0; ET = 30
-    for row in range(gh - 1):
-        for col in range(gw - 1):
-            idx = row * gw + col
-            if (abs(int(gpix[idx]) - int(gpix[idx + 1])) > ET or
-                    abs(int(gpix[idx]) - int(gpix[idx + gw])) > ET):
-                ec += 1
-    edge_ratio = ec / (gw * gh)
+    gpix = np.asarray(grey, dtype=np.int16)
+
+    ET = 30
+    gw = gh = 64
+
+    diff_right = np.abs(gpix[:-1, :-1] - gpix[:-1, 1:]) > ET
+    diff_down = np.abs(gpix[:-1, :-1] - gpix[1:, :-1]) > ET
+
+    ec = np.count_nonzero(diff_right | diff_down)
+
+    edge_ratio = float(ec) / (gw * gh)
 
     return {
-        "bw_ratio":          bw_count     / total,
-        "green_ratio":       green_count  / total,
-        "teal_ratio":        teal_count   / total,
-        "orange_ratio":      orange_count / total,
-        "sepia_ratio":       sepia_count  / total,
-        "dominant_hue_frac": dhf,
-        "edge_ratio":        edge_ratio,
+        "bw_ratio":          float(bw_count)     / total,
+        "green_ratio":       float(green_count)  / total,
+        "teal_ratio":        float(teal_count)   / total,
+        "orange_ratio":      float(orange_count) / total,
+        "sepia_ratio":       float(sepia_count)  / total,
+        "dominant_hue_frac": float(dhf),
+        "edge_ratio":        float(edge_ratio),
     }
 
 def _classify_by_context(context_text: str) -> str:

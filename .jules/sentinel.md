@@ -43,3 +43,7 @@
 ## 2025-02-09 - Accessibility vs Security Enhancements
 **Learning:** Accessibility (a11y) improvements, such as adding ARIA attributes to custom Streamlit HTML (`role`, `aria-live`), do not qualify as security enhancements and will be rejected in strict security-focused code reviews.
 **Prevention:** When instructed to provide a security fix or enhancement, focus exclusively on mitigations against vulnerabilities like Prompt Injections, Path Traversals, or Insecure Configurations.
+## 2025-02-09 - Missing input length limits on UI inputs
+**Vulnerability:** Streamlit `st.text_area` lacked character limits (`max_chars`), exposing the application to potential Denial of Service (DoS) attacks and excessive backend API costs if users pasted massive amounts of text.
+**Learning:** Default Streamlit text components do not restrict input size natively. Any UI component that feeds into an LLM or database must have explicit length bounds to prevent resource exhaustion and unbounded API charges.
+**Prevention:** Always explicitly define the `max_chars` parameter on Streamlit text inputs (e.g., `st.text_area`, `st.text_input`, `st.chat_input`) when building user-facing interfaces.

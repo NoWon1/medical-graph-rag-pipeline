@@ -13,3 +13,6 @@
 ## 2024-05-21 - Mutually Exclusive Inputs
 **Learning:** When multiple input methods exist for the same data (e.g., file upload vs. text paste), leaving both active while silently preferring one leads to user confusion and data loss if they spend time filling the ignored input.
 **Action:** Always use disabled states (`disabled=True`) on secondary inputs when a primary input is satisfied, paired with dynamic tooltips explaining exactly how to re-enable them (e.g., "Clear the uploaded file to paste text").
+## 2024-05-22 - Bidirectional Mutually Exclusive Inputs
+**Learning:** In top-down frameworks like Streamlit, implementing mutually exclusive inputs (e.g., file upload vs. text paste) requires checking the session state of the second input *before* rendering the first one. Otherwise, the exclusion only works in one direction.
+**Action:** When creating mutually exclusive inputs, always ensure both inputs check the other's state (using `st.session_state` keys if necessary) to disable themselves and update their help tooltips appropriately.

@@ -10,3 +10,6 @@
 ## 2024-05-20 - Disabled states vs Disappearing UI elements
 **Learning:** Hiding UI elements like a "Clear Chat" button completely when they are not applicable (e.g., when the chat is already empty) causes unnecessary layout shifts and hides the feature's existence from new users.
 **Action:** Instead of conditionally hiding the element, keep it visible but disable it (`disabled=True`) and provide a dynamic tooltip explaining why it is currently unavailable to improve discoverability and provide clear feedback.
+## 2024-05-21 - Mutually Exclusive Inputs
+**Learning:** When multiple input methods exist for the same data (e.g., file upload vs. text paste), leaving both active while silently preferring one leads to user confusion and data loss if they spend time filling the ignored input.
+**Action:** Always use disabled states (`disabled=True`) on secondary inputs when a primary input is satisfied, paired with dynamic tooltips explaining exactly how to re-enable them (e.g., "Clear the uploaded file to paste text").

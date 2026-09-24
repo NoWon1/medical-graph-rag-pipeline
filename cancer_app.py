@@ -517,22 +517,26 @@ with tab_upload:
         type=["txt", "pdf"],
         help="Upload your clinical report to get personalized insights."
     )
+
+    paste_disabled = uploaded_file is not None
+    paste_help = "Clear the uploaded file to paste text instead." if paste_disabled else "Paste text if you don't have a file to upload."
+
     pasted_report = st.text_area(
         "Or paste report text here:",
         height=200,
         placeholder="Paste the contents of your clinical report here...",
-        help="Paste text if you don't have a file to upload."
+        help=paste_help,
+        disabled=paste_disabled
     )
 
-    if pasted_report:
-        char_count = len(pasted_report)
-        limit_color = "#dc3545" if char_count > 10000 else "#6c757d"
-        st.markdown(
-            f"<div role='status' aria-live='polite' style='text-align: right; color: {limit_color}; font-size: 13px; margin-top: -10px; margin-bottom: 10px;'>"
-            f"{char_count:,} / 10,000 characters"
-            f"</div>",
-            unsafe_allow_html=True
-        )
+    char_count = len(pasted_report) if pasted_report else 0
+    limit_color = "#dc3545" if char_count > 10000 else "#6c757d"
+    st.markdown(
+        f"<div role='status' aria-live='polite' style='text-align: right; color: {limit_color}; font-size: 13px; margin-top: -10px; margin-bottom: 10px;'>"
+        f"{char_count:,} / 10,000 characters"
+        f"</div>",
+        unsafe_allow_html=True
+    )
 
     patient_context = ""
     upload_source   = ""

@@ -47,3 +47,7 @@
 **Vulnerability:** Streamlit `st.text_area` lacked character limits (`max_chars`), exposing the application to potential Denial of Service (DoS) attacks and excessive backend API costs if users pasted massive amounts of text.
 **Learning:** Default Streamlit text components do not restrict input size natively. Any UI component that feeds into an LLM or database must have explicit length bounds to prevent resource exhaustion and unbounded API charges.
 **Prevention:** Always explicitly define the `max_chars` parameter on Streamlit text inputs (e.g., `st.text_area`, `st.text_input`, `st.chat_input`) when building user-facing interfaces.
+## 2024-05-18 - PHI/PII Leakage to External LLMs
+**Vulnerability:** The application was passing untrusted, raw user input (such as `patient_report` and `query`) directly to external API endpoints (like DuckDuckGo search or Groq LLM API), exposing sensitive PHI/PII data.
+**Learning:** To prevent PHI/PII leakage (HIPAA/GDPR violations) when sending user inputs to external LLM providers, the pipeline must implement a local Data Loss Prevention (DLP) layer to mask identifiers before prompts leave the network boundary.
+**Prevention:** Strictly use lightweight, standard-library regex implementations (e.g., Python's `re` module) rather than heavy NLP dependencies to redact sensitive patterns (like MRN, DOB, Phone, SSN, and Email) via semantic placeholders (e.g. `[REDACTED_MRN]`) before transmission. Ensure clinical metrics are not inadvertently captured by the regex.

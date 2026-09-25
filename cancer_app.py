@@ -512,10 +512,15 @@ tab_chat, tab_upload = st.tabs(["Chat", "Upload Report"])
 
 with tab_upload:
     st.subheader("Upload Patient Report")
+
+    pasted_text_exists = bool(st.session_state.get("pasted_report_input", "").strip())
+    upload_help = "Clear the pasted text to upload a file instead." if pasted_text_exists else "Upload your clinical report to get personalized insights."
+
     uploaded_file = st.file_uploader(
         "Upload report (.txt or .pdf)",
         type=["txt", "pdf"],
-        help="Upload your clinical report to get personalized insights."
+        help=upload_help,
+        disabled=pasted_text_exists
     )
 
     paste_disabled = uploaded_file is not None
@@ -526,7 +531,8 @@ with tab_upload:
         height=200,
         placeholder="Paste the contents of your clinical report here...",
         help=paste_help,
-        disabled=paste_disabled
+        disabled=paste_disabled,
+        key="pasted_report_input"
     )
 
     char_count = len(pasted_report) if pasted_report else 0

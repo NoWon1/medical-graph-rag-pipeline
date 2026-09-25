@@ -432,6 +432,35 @@ def _format_graph_context(rows: list[dict], intent: str) -> str:
     return "\n".join(lines)
 
 # =============================================================================
+# DATA LOSS PREVENTION (DLP)
+# =============================================================================
+
+def _redact_phi(text: str) -> str:
+    """
+    Redacts basic PHI/PII elements (Email, SSN, US Phone, DOB, MRN)
+    using regex before they are sent to the external LLM provider.
+    """
+    if not text:
+        return text
+
+    # Email
+    text = re.sub(r'[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+', '[REDACTED_EMAIL]', text)
+
+    # SSN (AAA-GG-SSSS)
+    text = re.sub(r'\b\d{3}-\d{2}-\d{4}\b', '[REDACTED_SSN]', text)
+
+    # US Phone Numbers
+    text = re.sub(r'\b(?:\(\d{3}\)\s*|\d{3}[-.\s]?)\d{3}[-.\s]?\d{4}\b', '[REDACTED_PHONE]', text)
+
+    # DOB: mm/dd/yyyy or yyyy-mm-dd following 'DOB'
+    text = re.sub(r'(?i)\bdob\s*[:=]?\s*\d{1,4}[-/]\d{1,2}[-/]\d{1,4}\b', '[REDACTED_DOB]', text)
+
+    # MRN: alphanumeric string following 'MRN'
+    text = re.sub(r'(?i)\bmrn\s*[:=]?\s*[A-Z0-9-]+\b', '[REDACTED_MRN]', text)
+
+    return text
+
+# =============================================================================
 # CONTEXT BUILDER & LLM PROMPT
 # =============================================================================
 
@@ -456,6 +485,11 @@ def _build_prompt(query: str, patient_report: str, context_text: str, history_te
     # 🛡️ Sentinel: Sanitize inputs to prevent XML boundary escape (Indirect Prompt Injection)
     safe_patient_report = patient_report.replace("</clinical_report>", "")
     safe_context_text = context_text.replace("</clinical_context>", "")
+
+    # 🛡️ Sentinel: Redact PHI/PII before sending to LLM
+    query = _redact_phi(query)
+    safe_patient_report = _redact_phi(safe_patient_report)
+    history_text = _redact_phi(history_text)
 
     mode_instruction = {
         QUERY_MODE_RESEARCH: "You are answering from peer-reviewed clinical literature. Cite source numbers [1], [2] etc.",
@@ -550,7 +584,10 @@ def _duckduckgo_search(query: str, max_results: int = 5) -> list[dict]:
 def _web_search_fallback(rag_answer: str, query: str, patient_report: str, rag_is_empty: bool = False) -> tuple[str, list]:
     print("   🌐 Running web search fallback...")
     client = Groq(api_key=GROQ_API_KEY)
-    web_results = _duckduckgo_search(query)
+
+    # 🛡️ Sentinel: Redact PHI/PII before DDG query to avoid logging PII in search engines
+    safe_query = _redact_phi(query)
+    web_results = _duckduckgo_search(safe_query)
     web_sources = [{"label": r["url"], "url": r["url"]} for r in web_results if r.get("url")]
 
     if web_results:
@@ -558,6 +595,9 @@ def _web_search_fallback(rag_answer: str, query: str, patient_report: str, rag_i
         # 🛡️ Sentinel: Sanitize inputs to prevent XML boundary escape (Indirect Prompt Injection)
         safe_patient_report = patient_report.replace("</clinical_report>", "")
         safe_web_context = web_context.replace("</web_results>", "")
+
+        # 🛡️ Sentinel: Redact PHI/PII before sending to LLM
+        safe_patient_report = _redact_phi(safe_patient_report)
 
         # FIX 4: Explicit instruction to write Markdown links
         web_prompt = (
@@ -680,7 +720,9 @@ def _generate_followups(answer: str, query: str, query_mode: str) -> list[str]:
     }.get(query_mode, "")
     try:
         client = Groq(api_key=GROQ_API_KEY)
-        prompt = f"Based on this medical question and answer, generate exactly 3 short follow-up questions a cancer patient might ask next. {mode_hint} Each question on its own line, no numbering.\n\nQuestion: {query}\n\nAnswer excerpt: {answer[:400]}"
+        # 🛡️ Sentinel: Redact PHI/PII before sending to LLM
+        safe_query = _redact_phi(query)
+        prompt = f"Based on this medical question and answer, generate exactly 3 short follow-up questions a cancer patient might ask next. {mode_hint} Each question on its own line, no numbering.\n\nQuestion: {safe_query}\n\nAnswer excerpt: {answer[:400]}"
         resp = client.chat.completions.create(model=GROQ_MODEL_QUERY, temperature=0.3, messages=[{"role": "user", "content": prompt}])
         lines = (resp.choices[0].message.content or "").strip().split("\n")
         return [l.strip() for l in lines if l.strip() and len(l.strip()) > 10][:3]

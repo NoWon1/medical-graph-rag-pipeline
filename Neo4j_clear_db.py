@@ -176,23 +176,46 @@ def option2_full_wipe(driver):
 
         # Drop all vector indexes first
         try:
-            indexes = session.run("SHOW INDEXES WHERE type = 'VECTOR'")
-            for idx in indexes:
-                idx_name = idx.get("name", "")
-                if idx_name:
-                    session.run(f"DROP INDEX {idx_name} IF EXISTS")
-                    print(f"   ✅ Dropped vector index: {idx_name}")
+            # Try optimized batch drop via APOC first
+            try:
+                result = session.run("""
+                    SHOW INDEXES YIELD name, type
+                    WHERE type = 'VECTOR'
+                    CALL apoc.cypher.doIt("DROP INDEX " + name + " IF EXISTS", {}) YIELD value
+                    RETURN name
+                """)
+                dropped_indexes = [row["name"] for row in result]
+                for name in dropped_indexes:
+                    print(f"   ✅ Dropped vector index: {name}")
+            except Exception:
+                # Fallback to N+1 queries if APOC is not available
+                indexes = session.run("SHOW INDEXES WHERE type = 'VECTOR'")
+                for idx in indexes:
+                    idx_name = idx.get("name", "")
+                    if idx_name:
+                        session.run(f"DROP INDEX {idx_name} IF EXISTS")
+                        print(f"   ✅ Dropped vector index: {idx_name}")
         except Exception as e:
             print(f"   ℹ️  Index drop note: {e}")
 
         # Drop all constraints
         try:
-            constraints = session.run("SHOW CONSTRAINTS")
-            for c in constraints:
-                c_name = c.get("name", "")
-                if c_name:
-                    session.run(f"DROP CONSTRAINT {c_name} IF EXISTS")
-                    print(f"   ✅ Dropped constraint: {c_name}")
+            try:
+                result = session.run("""
+                    SHOW CONSTRAINTS YIELD name
+                    CALL apoc.cypher.doIt("DROP CONSTRAINT " + name + " IF EXISTS", {}) YIELD value
+                    RETURN name
+                """)
+                dropped_constraints = [row["name"] for row in result]
+                for name in dropped_constraints:
+                    print(f"   ✅ Dropped constraint: {name}")
+            except Exception:
+                constraints = session.run("SHOW CONSTRAINTS")
+                for c in constraints:
+                    c_name = c.get("name", "")
+                    if c_name:
+                        session.run(f"DROP CONSTRAINT {c_name} IF EXISTS")
+                        print(f"   ✅ Dropped constraint: {c_name}")
         except Exception as e:
             print(f"   ℹ️  Constraint drop note: {e}")
 

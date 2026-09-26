@@ -39,3 +39,6 @@
 ## 2026-09-21 - [HTTP Connection Pooling]
 **Learning:** Re-instantiating HTTP-based API clients (like the Groq Python SDK) on every request causes significant latency due to repeated TCP connection setups and TLS handshakes.
 **Action:** Use a thread-safe singleton (e.g., using double-checked locking with `threading.Lock`) to cache a single instance of the client. This allows the underlying HTTP client (`httpx` in this case) to reuse its connection pool, improving performance for consecutive calls.
+## 2023-10-26 - Test Image Recall Function
+**Learning:** Testing string-matching NLP metrics often requires generating isolated edge case fixtures rather than depending solely on full model responses.
+**Action:** Always create isolated module-level unit tests for NLP metrics before integrating them into a full end-to-end framework like RAGAS.

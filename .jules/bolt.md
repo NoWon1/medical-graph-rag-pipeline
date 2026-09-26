@@ -39,3 +39,6 @@
 ## 2026-09-21 - [HTTP Connection Pooling]
 **Learning:** Re-instantiating HTTP-based API clients (like the Groq Python SDK) on every request causes significant latency due to repeated TCP connection setups and TLS handshakes.
 **Action:** Use a thread-safe singleton (e.g., using double-checked locking with `threading.Lock`) to cache a single instance of the client. This allows the underlying HTTP client (`httpx` in this case) to reuse its connection pool, improving performance for consecutive calls.
+## 2023-10-25 - Concurrency implementation for file loading in python
+**Learning:** For IO-bound tasks like repeatedly reading files and parsing JSON data from disk, using `concurrent.futures.ThreadPoolExecutor` provides substantial speedups over iterative synchronous loops, particularly when scaling to large document counts. For even more concurrent loads in python, `multiprocessing` can be faster when CPU bound, but ThreadPoolExecutor is best suited for IO-bound loading operations and uses fewer memory resources.
+**Action:** Identify list-building synchronous IO blocks (like `for file in glob(): text_docs.append(...)`) and wrap them in an `executor.map` with `ThreadPoolExecutor` and a small helper method.

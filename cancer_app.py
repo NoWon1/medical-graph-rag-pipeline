@@ -101,6 +101,11 @@ div[data-testid="stChatInput"] textarea:focus-visible {
     box-shadow: 0 0 0 2px #2fa36b !important;
     outline: none !important;
 }
+div[data-testid="stChatInput"] textarea:disabled {
+    background-color: #eef2f7 !important;
+    color: #5f6c7b !important;
+    cursor: not-allowed !important;
+}
 .stButton>button {
     border-radius: 10px;
     background-color: #2fa36b;
@@ -113,6 +118,11 @@ div[data-testid="stChatInput"] textarea:focus-visible {
 .stButton>button:focus-visible {
     box-shadow: 0 0 0 2px white, 0 0 0 4px #2fa36b !important;
     outline: none !important;
+}
+.stButton>button:disabled {
+    background-color: #c5d1dc !important;
+    color: #5f6c7b !important;
+    cursor: not-allowed !important;
 }
 .streamlit-expanderHeader { font-weight: 600; }
 [data-testid="stChatMessage"] { border-radius: 12px; padding: 10px; }
@@ -133,6 +143,11 @@ textarea:focus {
 textarea:focus-visible {
     box-shadow: 0 0 0 2px #2fa36b !important;
     outline: none !important;
+}
+textarea:disabled {
+    background-color: #eef2f7 !important;
+    color: #5f6c7b !important;
+    cursor: not-allowed !important;
 }
 textarea::placeholder { color: #5f6c7b !important; }
 ::-webkit-scrollbar { width: 8px; }

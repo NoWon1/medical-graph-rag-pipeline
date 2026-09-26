@@ -36,6 +36,17 @@
 from __future__ import annotations
 
 import re
+
+# ⚡ Bolt: Module-level pre-compiled regex objects for faster string matching
+_VISUAL_KEYWORDS_RE = re.compile("|".join(["figure", r"fig\\.", "fig ", "table", "chart", "flowchart", "diagram", "image", "shown in", "illustrated", "depicted", "as shown", "kaplan", "prisma", "survival curve"]))
+_WEB_SIGNALS_RE = re.compile("|".join([re.escape("🌐"), re.escape("[W1]"), re.escape("[W2]"), re.escape("[W3]"), "web search", "sourced from web", "additional web sources", "according to recent"]))
+_DRUG_SIGNALS_RE = re.compile("|".join(["cisplatin", "carboplatin", "paclitaxel", "docetaxel", "pemetrexed", "vincristine", "doxorubicin", "cyclophosphamide", "methotrexate", "capecitabine", "gemcitabine", "nivolumab", "pembrolizumab"]))
+_SEVERITY_SIGNALS_RE = re.compile("|".join(["high severity", "moderate severity", "low severity", "severity: high", "severity: moderate"]))
+_GUIDELINE_SIGNALS_RE = re.compile("|".join(["mandatory", "required supplement", "folic acid", "vitamin b12", "b12", "supplementation is"]))
+_FOOD_SIGNALS_RE = re.compile("|".join(["grapefruit", "alcohol", "milk", "fatty food", "spicy food", "bland", "small frequent", "foods to avoid", "foods to eat"]))
+_SUB_Q_SIGNALS_RE = re.compile("|".join([" and ", " how ", " why ", " when ", " what else "]))
+
+
 import json
 import math
 import time
@@ -362,12 +373,7 @@ def metric_image_recall(answer: str, category: str) -> Optional[float]:
         return 1.0
 
     # Check for visual reference keywords (partial credit)
-    visual_keywords = {
-        "figure", "fig.", "fig ", "table", "chart", "flowchart",
-        "diagram", "image", "shown in", "illustrated", "depicted",
-        "as shown", "kaplan", "prisma", "survival curve",
-    }
-    has_visual_ref = any(kw in answer.lower() for kw in visual_keywords)
+    has_visual_ref = bool(_VISUAL_KEYWORDS_RE.search(answer.lower()))
     if has_visual_ref:
         return 0.5
 
@@ -405,15 +411,7 @@ def metric_web_fallback(answer: str, category: str) -> Optional[float]:
     if category != "edge":
         return None
 
-    web_signals = [
-        "🌐",
-        "[W1]", "[W2]", "[W3]",
-        "web search",
-        "sourced from web",
-        "additional web sources",
-        "according to recent",
-    ]
-    fired = any(sig in answer for sig in web_signals)
+    fired = bool(_WEB_SIGNALS_RE.search(answer))
     return 1.0 if fired else 0.0
 
 
@@ -454,7 +452,8 @@ def metric_keyword_coverage(answer: str, keywords: list[str]) -> float:
         return 0.0
 
     answer_lower = answer.lower()
-    hits = sum(1 for kw in keywords if kw.lower() in answer_lower)
+    pattern = re.compile("|".join(re.escape(kw.lower()) for kw in keywords))
+    hits = len(set(pattern.findall(answer_lower)))
     return round(hits / len(keywords), 4)
 
 
@@ -555,8 +554,7 @@ def metric_answer_completeness(question: str, answer: str) -> float:
     """
     # Count implied sub-questions in the question
     q_lower = question.lower()
-    sub_q_signals = [" and ", " how ", " why ", " when ", " what else "]
-    sub_q_count = 1 + sum(1 for s in sub_q_signals if s in q_lower)
+    sub_q_count = 1 + len(_SUB_Q_SIGNALS_RE.findall(q_lower))
 
     # Expected minimum answer length
     expected_min = 150 * (1 + 0.5 * (sub_q_count - 1))
@@ -608,27 +606,16 @@ def metric_graph_grounding(answer: str, query_mode: str) -> Optional[float]:
     has_g_citation = bool(re.search(r'\[G\d+\]', answer))
 
     # Drug names from KNOWN_CHEMO_DRUGS in config.py
-    drug_signals = {
-        "cisplatin", "carboplatin", "paclitaxel", "docetaxel", "pemetrexed",
-        "vincristine", "doxorubicin", "cyclophosphamide", "methotrexate",
-        "capecitabine", "gemcitabine", "nivolumab", "pembrolizumab",
-    }
-    has_drug = any(d in answer_lower for d in drug_signals)
+    has_drug = bool(_DRUG_SIGNALS_RE.search(answer_lower))
 
     # Severity markers from DrugInteraction.severity property
-    severity_signals = {"high severity", "moderate severity", "low severity",
-                        "severity: high", "severity: moderate"}
-    has_severity = any(s in answer_lower for s in severity_signals)
+    has_severity = bool(_SEVERITY_SIGNALS_RE.search(answer_lower))
 
     # Nutrition guideline signals from NutritionGuideline nodes
-    guideline_signals = {"mandatory", "required supplement", "folic acid",
-                         "vitamin b12", "b12", "supplementation is"}
-    has_guideline = any(s in answer_lower for s in guideline_signals)
+    has_guideline = bool(_GUIDELINE_SIGNALS_RE.search(answer_lower))
 
     # Food-drug specific signals (foods from FoodItem nodes)
-    food_signals = {"grapefruit", "alcohol", "milk", "fatty food", "spicy food",
-                    "bland", "small frequent", "foods to avoid", "foods to eat"}
-    has_food = any(s in answer_lower for s in food_signals)
+    has_food = bool(_FOOD_SIGNALS_RE.search(answer_lower))
 
     # Grounded if ANY graph signal present
     grounded = any([has_g_citation, has_drug, has_severity, has_guideline, has_food])

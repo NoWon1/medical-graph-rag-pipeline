@@ -661,9 +661,11 @@ _PARTIAL_NO_ANSWER_PATTERNS = [
 ]
 _PARTIAL_NO_ANSWER_RE = re.compile("|".join(f"(?:{p})" for p in _PARTIAL_NO_ANSWER_PATTERNS))
 
+_NO_ANSWER_RE = re.compile("|".join(f"(?:{p})" for p in NO_ANSWER_PHRASES))
+
 def _rag_has_no_answer(answer: str) -> bool:
     answer_lower  = answer.lower()
-    phrase_hits = sum(1 for p in NO_ANSWER_PHRASES if p in answer_lower)
+    phrase_hits = len(_NO_ANSWER_RE.findall(answer_lower))
     if len(answer.strip()) < 300 and phrase_hits >= 1: return True
     if phrase_hits >= 2: return True
     return bool(_PARTIAL_NO_ANSWER_RE.search(answer_lower))

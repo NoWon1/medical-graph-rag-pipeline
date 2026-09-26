@@ -30,6 +30,7 @@ import json
 import math
 import uuid
 import hashlib
+import concurrent.futures
 import unicodedata
 from pathlib import Path
 from typing import Optional
@@ -919,23 +920,35 @@ def build_neo4j_vector_store(force_rebuild: bool = False) -> None:
     print(f"🗄️   NEO4J VECTOR STORE BUILD")
     print(f"    URI: {NEO4J_URI}")
 
-    # 1 — Load text docs
-    text_docs: list[LCDoc] = []
-    for jp in sorted(CHUNK_DIR.glob("*_chunks.json")):
+    def _load_text_docs(jp: Path) -> list[LCDoc]:
+        docs = []
         with open(jp, encoding="utf-8") as f:
             for c in json.load(f):
-                text_docs.append(LCDoc(
+                docs.append(LCDoc(
                     page_content=c["content"],
                     metadata={k: v for k, v in c.items() if k != "content"}
                 ))
+        return docs
 
-    # 2 — Load caption docs
-    caption_docs: list[LCDoc] = []
-    for jp in sorted(CAP_DIR.glob("*_caption_chunks.json")):
+    def _load_caption_docs(jp: Path) -> list[LCDoc]:
+        docs = []
         with open(jp, encoding="utf-8") as f:
             for c in json.load(f):
                 content = c.pop("content", "")
-                caption_docs.append(LCDoc(page_content=content, metadata=c))
+                docs.append(LCDoc(page_content=content, metadata=c))
+        return docs
+
+    # 1 — Load text docs
+    text_docs: list[LCDoc] = []
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        for docs in executor.map(_load_text_docs, sorted(CHUNK_DIR.glob("*_chunks.json"))):
+            text_docs.extend(docs)
+
+    # 2 — Load caption docs
+    caption_docs: list[LCDoc] = []
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        for docs in executor.map(_load_caption_docs, sorted(CAP_DIR.glob("*_caption_chunks.json"))):
+            caption_docs.extend(docs)
 
     all_docs = text_docs + caption_docs
     img_tag_count = sum(1 for d in text_docs if d.metadata.get("has_image_tags"))

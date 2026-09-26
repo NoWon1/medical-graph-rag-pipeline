@@ -38,6 +38,9 @@ import fitz
 from PIL import Image
 from tqdm import tqdm
 
+# 🛡️ Sentinel: Mitigate CWE-409 (Image Decompression Bombs)
+Image.MAX_IMAGE_PIXELS = 4096 * 4096  # Restrict to 16 MP max
+
 from langchain_text_splitters import (
     MarkdownHeaderTextSplitter,
     RecursiveCharacterTextSplitter,

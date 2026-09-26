@@ -51,3 +51,12 @@
 **Vulnerability:** The application was passing untrusted, raw user input (such as `patient_report` and `query`) directly to external API endpoints (like DuckDuckGo search or Groq LLM API), exposing sensitive PHI/PII data.
 **Learning:** To prevent PHI/PII leakage (HIPAA/GDPR violations) when sending user inputs to external LLM providers, the pipeline must implement a local Data Loss Prevention (DLP) layer to mask identifiers before prompts leave the network boundary.
 **Prevention:** Strictly use lightweight, standard-library regex implementations (e.g., Python's `re` module) rather than heavy NLP dependencies to redact sensitive patterns (like MRN, DOB, Phone, SSN, and Email) via semantic placeholders (e.g. `[REDACTED_MRN]`) before transmission. Ensure clinical metrics are not inadvertently captured by the regex.
+## 2025-02-09 - Missing Request Timeouts on LLM Client
+**Vulnerability:** The Streamlit application used a singleton `Groq` client without specifying request timeouts (CWE-400), making the app susceptible to thread starvation and Denial of Service if the upstream API stalls.
+**Learning:** External API calls in a fixed thread pool environment (like Streamlit) must have explicit timeouts. Otherwise, slow responses hold worker threads open, starving legitimate clinical queries.
+**Prevention:** Always enforce strict request and connection timeouts when initializing external HTTP or LLM clients (e.g., `client = Groq(timeout=15.0)`).
+
+## 2025-02-09 - Image Decompression Bomb Risk
+**Vulnerability:** Untrusted image files processed in `cancer_ingestion.py` via `PIL.Image.open()` lacked decompression limits (CWE-409). A malicious "pixel bomb" could decompress into gigabytes of RAM, causing an OOM crash.
+**Learning:** Image ingestion pipelines are vulnerable to resource exhaustion. The Pillow library has native safety features that need to be explicitly configured or tightened for untrusted inputs.
+**Prevention:** Set `Image.MAX_IMAGE_PIXELS` to a reasonable maximum bound (e.g., `4096 * 4096`) prior to opening untrusted images.

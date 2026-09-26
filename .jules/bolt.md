@@ -39,3 +39,6 @@
 ## 2026-09-21 - [HTTP Connection Pooling]
 **Learning:** Re-instantiating HTTP-based API clients (like the Groq Python SDK) on every request causes significant latency due to repeated TCP connection setups and TLS handshakes.
 **Action:** Use a thread-safe singleton (e.g., using double-checked locking with `threading.Lock`) to cache a single instance of the client. This allows the underlying HTTP client (`httpx` in this case) to reuse its connection pool, improving performance for consecutive calls.
+## 2024-09-26 - Security Fix without Performance Degradation
+**Learning:** Fixing the XSS vulnerability by applying `html.escape()` requires minimal processing overhead and significantly hardens the application. It runs fast since it's just a simple string replacement function provided by the C-backed standard library module.
+**Action:** Always prefer standard library security functions like `html.escape()` over custom regex or string replacements for sanitization to ensure fast and compliant code.

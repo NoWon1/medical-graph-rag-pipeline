@@ -39,3 +39,6 @@
 ## 2026-09-21 - [HTTP Connection Pooling]
 **Learning:** Re-instantiating HTTP-based API clients (like the Groq Python SDK) on every request causes significant latency due to repeated TCP connection setups and TLS handshakes.
 **Action:** Use a thread-safe singleton (e.g., using double-checked locking with `threading.Lock`) to cache a single instance of the client. This allows the underlying HTTP client (`httpx` in this case) to reuse its connection pool, improving performance for consecutive calls.
+## 2026-09-26 - Vectorize pixel computations avoiding loops
+**Learning:** Re-iterating over large image pixel collections via pure Python generators (like `list(img.getdata())` or loops over tuples) incurs significant interpreter overhead. Replacing those paths with `np.asarray` and utilizing NumPy's vectorized C-based instructions (e.g. `np.count_nonzero`, boolean indexing) reduces the time to evaluate metrics dramatically.
+**Action:** When inspecting pixel data for analysis (e.g. edge-ratio, colors), cast the image directly to NumPy format initially (taking care of types, e.g. `dtype=np.int16` for safe delta tracking), construct logic with NumPy vector functions, and convert outputs back to scalar Python primitives (`int()` / `float()`) for serializability downstream.

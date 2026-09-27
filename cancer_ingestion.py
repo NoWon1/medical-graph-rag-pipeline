@@ -301,14 +301,22 @@ _NOISE_FIGURE_OVERRIDE_RE = re.compile("|".join(f"(?:{p})" for p in NOISE_FIGURE
 
 def _compute_phash(img: Image.Image, hash_size: int = 8) -> int:
     grey   = img.convert("L").resize((hash_size + 1, hash_size), Image.LANCZOS)
-    pixels = list(grey.getdata())
-    bits   = 0
-    for row in range(hash_size):
-        for col in range(hash_size):
-            left  = pixels[row * (hash_size + 1) + col]
-            right = pixels[row * (hash_size + 1) + col + 1]
-            bits  = (bits << 1) | (1 if left > right else 0)
-    return bits
+    if _NUMPY:
+        pixels = np.asarray(grey, dtype=np.int16)
+        diff = pixels[:, :-1] > pixels[:, 1:]
+        bits = 0
+        for val in diff.flatten():
+            bits = (bits << 1) | (1 if val else 0)
+        return bits
+    else:
+        pixels = list(grey.getdata())
+        bits   = 0
+        for row in range(hash_size):
+            for col in range(hash_size):
+                left  = pixels[row * (hash_size + 1) + col]
+                right = pixels[row * (hash_size + 1) + col + 1]
+                bits  = (bits << 1) | (1 if left > right else 0)
+        return bits
 
 def _phash_hamming(h1: int, h2: int) -> int:
     x = h1 ^ h2; count = 0
@@ -322,60 +330,123 @@ def _log_rejection(filename: str, reason: str, detail: str) -> None:
     _rejected_log.append({"filename": filename, "reason": reason, "detail": detail})
 
 def _color_analysis(img: Image.Image) -> dict:
-    rgb   = img.convert("RGB")
-    w, h  = rgb.size
+    w, h  = img.size
     total = w * h
     if total == 0:
         return {k: 0 for k in ["bw_ratio","green_ratio","teal_ratio",
                                 "orange_ratio","sepia_ratio",
                                 "dominant_hue_frac","edge_ratio"]}
-    pixels = list(rgb.getdata())
-    BW_THRESH   = 30
-    bw_count = green_count = teal_count = orange_count = sepia_count = 0
-    hue_buckets = [0] * 36
 
-    for r, g, b in pixels:
-        lo, hi = min(r, g, b), max(r, g, b)
+    if _NUMPY:
+        # ⚡ Bolt: Vectorize pixel counting with NumPy to avoid slow Python bytecode loops
+        pixels = np.asarray(img.convert("RGB"), dtype=np.int16)
+        r = pixels[:, :, 0]
+        g = pixels[:, :, 1]
+        b = pixels[:, :, 2]
 
-        # ⚡ Bolt: Consolidated pixel evaluations into a single pass
-        if (hi - lo) < BW_THRESH and (hi < 50 or lo > 205):
-            bw_count += 1
-
-        if r < 120 and 160 <= g <= 230 and b < 120:
-            green_count += 1
-
-        if r < 100 and g > 150 and b > 150 and abs(g - b) < 40:
-            teal_count += 1
-        elif r > 180 and 80 <= g <= 160 and b < 80:
-            orange_count += 1
-        elif 100 <= r <= 210 and 60 <= g <= 150 and 20 <= b <= 110 and r > g > b and (r - b) > 40:
-            sepia_count += 1
-
+        lo = np.minimum(np.minimum(r, g), b)
+        hi = np.maximum(np.maximum(r, g), b)
         delta = hi - lo
-        if delta > 40 and hi > 0:
-            if hi == r:   hue = (60 * ((g - b) / delta)) % 360
-            elif hi == g: hue = 60 * ((b - r) / delta) + 120
-            else:         hue = 60 * ((r - g) / delta) + 240
-            hue_buckets[int(hue / 10) % 36] += 1
 
-    sat_total = sum(hue_buckets)
-    if sat_total > total * 0.10:
-        tb  = max(range(36), key=lambda i: hue_buckets[i])
-        tc  = sum(hue_buckets[(tb + d) % 36] for d in [-1, 0, 1])
-        dhf = tc / sat_total
+        BW_THRESH = 30
+        bw_count = int(np.count_nonzero((delta < BW_THRESH) & ((hi < 50) | (lo > 205))))
+        green_count = int(np.count_nonzero((r < 120) & (g >= 160) & (g <= 230) & (b < 120)))
+        teal_mask = (r < 100) & (g > 150) & (b > 150) & (np.abs(g - b) < 40)
+        teal_count = int(np.count_nonzero(teal_mask))
+
+        orange_mask = ~teal_mask & (r > 180) & (g >= 80) & (g <= 160) & (b < 80)
+        orange_count = int(np.count_nonzero(orange_mask))
+
+        sepia_mask = ~teal_mask & ~orange_mask & (r >= 100) & (r <= 210) & (g >= 60) & (g <= 150) & (b >= 20) & (b <= 110) & (r > g) & (g > b) & ((r - b) > 40)
+        sepia_count = int(np.count_nonzero(sepia_mask))
+
+        hue_mask = (delta > 40) & (hi > 0)
+        r_h = r[hue_mask]
+        g_h = g[hue_mask]
+        b_h = b[hue_mask]
+        hi_h = hi[hue_mask]
+        delta_h = delta[hue_mask].astype(np.float64)
+
+        hue = np.zeros_like(r_h, dtype=np.float64)
+        m1 = hi_h == r_h
+        hue[m1] = (60.0 * ((g_h[m1] - b_h[m1]) / delta_h[m1])) % 360.0
+        m2 = (hi_h == g_h) & ~m1
+        hue[m2] = 60.0 * ((b_h[m2] - r_h[m2]) / delta_h[m2]) + 120.0
+        m3 = (hi_h == b_h) & ~m1 & ~m2
+        hue[m3] = 60.0 * ((r_h[m3] - g_h[m3]) / delta_h[m3]) + 240.0
+
+        hue_idx = (hue / 10).astype(int) % 36
+        counts = np.bincount(hue_idx, minlength=36)
+        hue_buckets = counts.tolist()
+
+        sat_total = sum(hue_buckets)
+        if sat_total > total * 0.10:
+            tb  = max(range(36), key=lambda i: hue_buckets[i])
+            tc  = sum(hue_buckets[(tb + d) % 36] for d in [-1, 0, 1])
+            dhf = tc / sat_total
+        else:
+            dhf = 0.0
+
+        grey  = img.convert("L").resize((64, 64), Image.LANCZOS)
+        gpix  = np.asarray(grey, dtype=np.int16)
+        gw = gh = 64; ET = 30
+
+        diff_h = np.abs(gpix[:, :-1] - gpix[:, 1:])
+        diff_v = np.abs(gpix[:-1, :] - gpix[1:, :])
+
+        edge_mask = (diff_h[:-1, :] > ET) | (diff_v[:, :-1] > ET)
+        ec = int(np.count_nonzero(edge_mask))
+        edge_ratio = ec / (gw * gh)
+
     else:
-        dhf = 0.0
+        rgb   = img.convert("RGB")
+        pixels = list(rgb.getdata())
+        BW_THRESH   = 30
+        bw_count = green_count = teal_count = orange_count = sepia_count = 0
+        hue_buckets = [0] * 36
 
-    grey  = img.convert("L").resize((64, 64), Image.LANCZOS)
-    gpix  = list(grey.getdata())
-    gw = gh = 64; ec = 0; ET = 30
-    for row in range(gh - 1):
-        for col in range(gw - 1):
-            idx = row * gw + col
-            if (abs(int(gpix[idx]) - int(gpix[idx + 1])) > ET or
-                    abs(int(gpix[idx]) - int(gpix[idx + gw])) > ET):
-                ec += 1
-    edge_ratio = ec / (gw * gh)
+        for r, g, b in pixels:
+            lo, hi = min(r, g, b), max(r, g, b)
+
+            # ⚡ Bolt: Consolidated pixel evaluations into a single pass
+            if (hi - lo) < BW_THRESH and (hi < 50 or lo > 205):
+                bw_count += 1
+
+            if r < 120 and 160 <= g <= 230 and b < 120:
+                green_count += 1
+
+            if r < 100 and g > 150 and b > 150 and abs(g - b) < 40:
+                teal_count += 1
+            elif r > 180 and 80 <= g <= 160 and b < 80:
+                orange_count += 1
+            elif 100 <= r <= 210 and 60 <= g <= 150 and 20 <= b <= 110 and r > g > b and (r - b) > 40:
+                sepia_count += 1
+
+            delta = hi - lo
+            if delta > 40 and hi > 0:
+                if hi == r:   hue = (60 * ((g - b) / delta)) % 360
+                elif hi == g: hue = 60 * ((b - r) / delta) + 120
+                else:         hue = 60 * ((r - g) / delta) + 240
+                hue_buckets[int(hue / 10) % 36] += 1
+
+        sat_total = sum(hue_buckets)
+        if sat_total > total * 0.10:
+            tb  = max(range(36), key=lambda i: hue_buckets[i])
+            tc  = sum(hue_buckets[(tb + d) % 36] for d in [-1, 0, 1])
+            dhf = tc / sat_total
+        else:
+            dhf = 0.0
+
+        grey  = img.convert("L").resize((64, 64), Image.LANCZOS)
+        gpix  = list(grey.getdata())
+        gw = gh = 64; ec = 0; ET = 30
+        for row in range(gh - 1):
+            for col in range(gw - 1):
+                idx = row * gw + col
+                if (abs(int(gpix[idx]) - int(gpix[idx + 1])) > ET or
+                        abs(int(gpix[idx]) - int(gpix[idx + gw])) > ET):
+                    ec += 1
+        edge_ratio = ec / (gw * gh)
 
     return {
         "bw_ratio":          bw_count     / total,

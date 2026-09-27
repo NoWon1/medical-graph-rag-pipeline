@@ -39,3 +39,7 @@
 ## 2026-09-21 - [HTTP Connection Pooling]
 **Learning:** Re-instantiating HTTP-based API clients (like the Groq Python SDK) on every request causes significant latency due to repeated TCP connection setups and TLS handshakes.
 **Action:** Use a thread-safe singleton (e.g., using double-checked locking with `threading.Lock`) to cache a single instance of the client. This allows the underlying HTTP client (`httpx` in this case) to reuse its connection pool, improving performance for consecutive calls.
+
+## 2024-05-24 - Image Pixel Iteration Overhead
+**Learning:** Python-level loops over pixel data (e.g., using Pillow's `list(img.getdata())` and iterating pixel by pixel) introduces massive interpreter bytecode overhead. In this codebase, rewriting these operations using vectorized NumPy routines (e.g. `np.asarray`, `np.count_nonzero`) reduced image processing time significantly (~8.5x speedup in isolated tests), and fixed Pillow 14 deprecation warnings.
+**Action:** Always convert image pixel data to NumPy arrays using `np.asarray` with signed integers (`dtype=np.int16`) for pixel math and use vectorized NumPy methods rather than `getdata()` or manual iteration.

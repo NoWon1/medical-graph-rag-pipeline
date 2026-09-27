@@ -16,3 +16,6 @@
 ## 2024-05-22 - Bidirectional Mutually Exclusive Inputs
 **Learning:** In top-down frameworks like Streamlit, implementing mutually exclusive inputs (e.g., file upload vs. text paste) requires checking the session state of the second input *before* rendering the first one. Otherwise, the exclusion only works in one direction.
 **Action:** When creating mutually exclusive inputs, always ensure both inputs check the other's state (using `st.session_state` keys if necessary) to disable themselves and update their help tooltips appropriately.
+## 2024-05-24 - Streamlit Custom CSS and Disabled States
+**Learning:** When applying custom CSS to Streamlit components (e.g., `.stButton>button`, `textarea`), explicitly including `:disabled` pseudo-class overrides is necessary. Failing to do so overrides Streamlit's native disabled visual affordances, causing disabled elements to improperly inherit active styles.
+**Action:** Always explicitly include `:disabled` pseudo-class overrides when applying custom CSS to interactive components in Streamlit to preserve accessibility and proper visual cues.

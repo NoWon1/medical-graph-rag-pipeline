@@ -27,6 +27,7 @@ from __future__ import annotations
 import re
 import json
 import math
+import heapq
 import numpy as np
 from pathlib import Path
 from typing import Any, List, Optional, Union
@@ -198,8 +199,9 @@ def reciprocal_rank_fusion(dense_docs: List[Document], sparse_docs: List[Documen
         did = doc.metadata.get("chunk_id", str(id(doc)))
         scores[did]  = scores.get(did, 0.0) + 1.0 / (k + rank + 1)
         doc_map[did] = doc
-    sorted_ids = sorted(scores, key=lambda x: scores[x], reverse=True)
-    return [doc_map[i] for i in sorted_ids[:top_n]]
+    # ⚡ Bolt: Use heapq.nlargest for O(N log K) top-k selection instead of O(N log N) sorted()
+    sorted_ids = heapq.nlargest(top_n, scores, key=scores.get)
+    return [doc_map[i] for i in sorted_ids]
 
 def mmr_rerank(query: str, candidates: List[Document], embed_model: HuggingFaceEmbeddings, k: int = K_MMR_FINAL, lambda_mult: float = MMR_LAMBDA) -> List[Document]:
     if not candidates or len(candidates) <= k: return candidates

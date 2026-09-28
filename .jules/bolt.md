@@ -43,3 +43,10 @@
 ## 2024-05-24 - Image Pixel Iteration Overhead
 **Learning:** Python-level loops over pixel data (e.g., using Pillow's `list(img.getdata())` and iterating pixel by pixel) introduces massive interpreter bytecode overhead. In this codebase, rewriting these operations using vectorized NumPy routines (e.g. `np.asarray`, `np.count_nonzero`) reduced image processing time significantly (~8.5x speedup in isolated tests), and fixed Pillow 14 deprecation warnings.
 **Action:** Always convert image pixel data to NumPy arrays using `np.asarray` with signed integers (`dtype=np.int16`) for pixel math and use vectorized NumPy methods rather than `getdata()` or manual iteration.
+## 2026-09-28 - Optimize Top-K Selection with Heap Queue
+**Learning:** When optimizing top-K selection from a scoring dictionary (e.g., in ranking algorithms like reciprocal_rank_fusion), avoid the O(N log N) anti-pattern of sorting the entire collection `sorted(...)[:k]`. Instead, use `heapq.nlargest(k, ..., key=...)` to achieve O(N log K) time complexity.
+**Action:** Use `heapq.nlargest(k, collection, key=...)` for top-K extraction instead of sorting the whole list.
+
+## 2026-09-28 - Regex findall Semantic Overlap Warning
+**Learning:** When refactoring substring presence checks or hit counters, do not naively replace Python generator loops (`sum(1 for p in phrases if p in text)`) with vectorized `re.findall()` alternating regexes if the phrases can overlap. `re.findall` consumes characters upon matching, which misses overlapping substrings and introduces silent logic bugs.
+**Action:** Stick to Python's `in` operator (which uses fast C-based Boyer-Moore string searching) for simple, precise substring hit counting rather than overly clever regex alternations that break semantic intent.

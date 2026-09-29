@@ -583,7 +583,8 @@ def _duckduckgo_search(query: str, max_results: int = 5) -> list[dict]:
 
 def _web_search_fallback(rag_answer: str, query: str, patient_report: str, rag_is_empty: bool = False) -> tuple[str, list]:
     print("   🌐 Running web search fallback...")
-    client = Groq(api_key=GROQ_API_KEY)
+    # 🛡️ Sentinel: explicitly set request timeout to prevent worker thread starvation and DoS vulnerabilities (CWE-400)
+    client = Groq(api_key=GROQ_API_KEY, timeout=15.0)
 
     # 🛡️ Sentinel: Redact PHI/PII before DDG query to avoid logging PII in search engines
     safe_query = _redact_phi(query)
@@ -719,7 +720,8 @@ def _generate_followups(answer: str, query: str, query_mode: str) -> list[str]:
         QUERY_MODE_AUTO: "Mix of practical patient questions and clinical questions.",
     }.get(query_mode, "")
     try:
-        client = Groq(api_key=GROQ_API_KEY)
+        # 🛡️ Sentinel: explicitly set request timeout to prevent worker thread starvation and DoS vulnerabilities (CWE-400)
+        client = Groq(api_key=GROQ_API_KEY, timeout=15.0)
         # 🛡️ Sentinel: Redact PHI/PII before sending to LLM
         safe_query = _redact_phi(query)
         prompt = f"Based on this medical question and answer, generate exactly 3 short follow-up questions a cancer patient might ask next. {mode_hint} Each question on its own line, no numbering.\n\nQuestion: {safe_query}\n\nAnswer excerpt: {answer[:400]}"
@@ -748,7 +750,8 @@ def generate_answer(query: str, patient_report: str = "", chat_history: list = N
 
         history_text = "\n".join([f"{m['role'].upper()}: {m['content'][:300]}" for m in chat_history[-4:]]) if chat_history else ""
         prompt = _build_prompt(query, patient_report, ctx, history_text, query_mode, path)
-        response = Groq(api_key=GROQ_API_KEY).chat.completions.create(model=GROQ_MODEL_QUERY, temperature=GROQ_TEMP_QUERY, messages=[{"role": "user", "content": prompt}])
+        # 🛡️ Sentinel: explicitly set request timeout to prevent worker thread starvation and DoS vulnerabilities (CWE-400)
+        response = Groq(api_key=GROQ_API_KEY, timeout=15.0).chat.completions.create(model=GROQ_MODEL_QUERY, temperature=GROQ_TEMP_QUERY, messages=[{"role": "user", "content": prompt}])
         answer = response.choices[0].message.content or ""
 
         if _rag_has_no_answer(answer):
@@ -794,7 +797,8 @@ def generate_answer_stream(query: str, patient_report: str = "", chat_history: l
 
         history_text = "\n".join([f"{m['role'].upper()}: {m['content'][:300]}" for m in chat_history[-4:]]) if chat_history else ""
         prompt = _build_prompt(query, patient_report, ctx, history_text, query_mode, path)
-        stream = Groq(api_key=GROQ_API_KEY).chat.completions.create(model=GROQ_MODEL_QUERY, temperature=GROQ_TEMP_QUERY, messages=[{"role": "user", "content": prompt}], stream=True)
+        # 🛡️ Sentinel: explicitly set request timeout to prevent worker thread starvation and DoS vulnerabilities (CWE-400)
+        stream = Groq(api_key=GROQ_API_KEY, timeout=15.0).chat.completions.create(model=GROQ_MODEL_QUERY, temperature=GROQ_TEMP_QUERY, messages=[{"role": "user", "content": prompt}], stream=True)
 
         full_answer = ""
         for chunk in stream:

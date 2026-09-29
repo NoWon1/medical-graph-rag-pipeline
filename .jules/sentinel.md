@@ -51,3 +51,7 @@
 **Vulnerability:** The application was passing untrusted, raw user input (such as `patient_report` and `query`) directly to external API endpoints (like DuckDuckGo search or Groq LLM API), exposing sensitive PHI/PII data.
 **Learning:** To prevent PHI/PII leakage (HIPAA/GDPR violations) when sending user inputs to external LLM providers, the pipeline must implement a local Data Loss Prevention (DLP) layer to mask identifiers before prompts leave the network boundary.
 **Prevention:** Strictly use lightweight, standard-library regex implementations (e.g., Python's `re` module) rather than heavy NLP dependencies to redact sensitive patterns (like MRN, DOB, Phone, SSN, and Email) via semantic placeholders (e.g. `[REDACTED_MRN]`) before transmission. Ensure clinical metrics are not inadvertently captured by the regex.
+## 2025-02-09 - Missing Timeout Configurations on LLM APIs
+**Vulnerability:** External LLM clients (like `Groq`) were instantiated without request timeouts, exposing the application to thread starvation and Denial of Service (DoS, CWE-400) if the external API hangs.
+**Learning:** Default API client instantiations typically lack timeouts or rely on excessively long defaults, making backend services fragile when upstream endpoints experience latency or outages.
+**Prevention:** Always explicitly set request timeouts (e.g., `timeout=15.0`) when initializing external HTTP or LLM clients in synchronous environments like Streamlit to maintain responsiveness and prevent exhaustion.

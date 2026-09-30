@@ -22,3 +22,6 @@
 ## 2024-05-25 - Visibility of System Status
 **Learning:** When configuration controls (like search modes) are inside a collapsible sidebar, users lose context of the active state when it is collapsed.
 **Action:** Always surface the active configuration state in the main view.
+## 2024-05-26 - Streamlit Chat Input CSS Specificity
+**Learning:** Streamlit's chat input `textarea` requires higher specificity (`div[data-testid="stChatInput"] textarea:disabled`) to correctly style disabled states. Without this, standard `textarea:disabled` styles are overridden by Streamlit's more specific base styling for the chat input element. In addition, providing `cursor: not-allowed !important;` is crucial for accessibility.
+**Action:** Always ensure high CSS specificity when styling disabled states for `stChatInput`, and remember to include the `cursor: not-allowed` indicator.

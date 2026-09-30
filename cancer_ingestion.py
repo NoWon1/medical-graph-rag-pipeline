@@ -324,7 +324,12 @@ def _phash_hamming(h1: int, h2: int) -> int:
     return count
 
 def _is_in_phash_blocklist(ph: int) -> bool:
-    return any(_phash_hamming(ph, k) <= PHASH_HAMMING_THRESH for k in _phash_blocklist)
+    # ⚡ Bolt: Replaced generator inside any() with a for loop and early return
+    # to eliminate generator creation overhead in hot image processing path.
+    for k in _phash_blocklist:
+        if _phash_hamming(ph, k) <= PHASH_HAMMING_THRESH:
+            return True
+    return False
 
 def _log_rejection(filename: str, reason: str, detail: str) -> None:
     _rejected_log.append({"filename": filename, "reason": reason, "detail": detail})

@@ -46,3 +46,6 @@
 ## 2025-05-18 - Optimized Top-K Selection with Heapq
 **Learning:** In top-K retrieval algorithms like Reciprocal Rank Fusion, sorting the entire combined scoring dictionary using `sorted(...)[:top_n]` is an O(N log N) operation, which causes unnecessary performance overhead when `N` is large and we only need the top `K` items.
 **Action:** Always use `heapq.nlargest(top_n, iterable, key)` for top-K selection instead of full sorts to improve algorithmic complexity from O(N log N) to O(N log K).
+## 2024-11-20 - Removed generator expression in any()
+**Learning:** Using a generator expression inside `any()` (e.g. `any(func() for x in list)`) creates significant overhead in hot paths because of generator creation.
+**Action:** Replace `any(...)` with a standard `for` loop and an early return `True` when the function is called frequently (e.g. per-image processing) to avoid generator overhead.

@@ -25,3 +25,6 @@
 ## 2024-05-26 - Streamlit Chat Input CSS Specificity
 **Learning:** Streamlit's chat input `textarea` requires higher specificity (`div[data-testid="stChatInput"] textarea:disabled`) to correctly style disabled states. Without this, standard `textarea:disabled` styles are overridden by Streamlit's more specific base styling for the chat input element. In addition, providing `cursor: not-allowed !important;` is crucial for accessibility.
 **Action:** Always ensure high CSS specificity when styling disabled states for `stChatInput`, and remember to include the `cursor: not-allowed` indicator.
+## 2024-10-02 - Visual Hierarchy for Destructive Dialog Actions
+**Learning:** Applying a global custom CSS style (like `.stButton>button`) overrides Streamlit's native button type variations (like primary vs. secondary). This can result in destructive actions (like "Clear Chat") looking visually identical to safe, alternative actions (like "Cancel"), violating UX principles of visual hierarchy.
+**Action:** Always map custom CSS explicitly to Streamlit's `[kind="primary"]` (destructive/core), `[kind="secondary"]` (default), and `[kind="tertiary"]` (cancel/subtle) attributes when overriding button styles, and ensure UI dialogs utilize these types appropriately (e.g., `st.button("Cancel", type="tertiary")`).

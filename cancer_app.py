@@ -101,21 +101,65 @@ div[data-testid="stChatInput"] textarea:focus-visible {
     box-shadow: 0 0 0 2px #2fa36b !important;
     outline: none !important;
 }
-.stButton>button {
+/* Secondary buttons (Default action) */
+.stButton>button[kind="secondary"] {
     border-radius: 10px;
     background-color: #2fa36b;
     color: white;
     border: none;
     transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
 }
-.stButton>button:hover { background-color: #248a59; }
-.stButton>button:active { transform: scale(0.98); }
-.stButton>button:focus-visible {
+.stButton>button[kind="secondary"]:hover { background-color: #248a59; }
+.stButton>button[kind="secondary"]:active { transform: scale(0.98); }
+.stButton>button[kind="secondary"]:focus-visible {
     box-shadow: 0 0 0 2px white, 0 0 0 4px #2fa36b !important;
     outline: none !important;
 }
-.stButton>button:disabled {
+.stButton>button[kind="secondary"]:disabled {
     background-color: #e0e6ed !important;
+    color: #a0aab5 !important;
+    cursor: not-allowed !important;
+}
+
+/* Primary buttons (Destructive action) */
+.stButton>button[kind="primary"] {
+    border-radius: 10px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
+}
+.stButton>button[kind="primary"]:hover { background-color: #c82333; }
+.stButton>button[kind="primary"]:active { transform: scale(0.98); }
+.stButton>button[kind="primary"]:focus-visible {
+    box-shadow: 0 0 0 2px white, 0 0 0 4px #dc3545 !important;
+    outline: none !important;
+}
+.stButton>button[kind="primary"]:disabled {
+    background-color: #e0e6ed !important;
+    color: #a0aab5 !important;
+    cursor: not-allowed !important;
+}
+
+/* Tertiary buttons (Cancel/Subtle) */
+.stButton>button[kind="tertiary"] {
+    border-radius: 10px;
+    background-color: transparent !important;
+    color: #5f6c7b !important;
+    border: 1px solid #d0d7de !important;
+    transition: all 0.2s ease;
+}
+.stButton>button[kind="tertiary"]:hover {
+    background-color: #f0f4f8 !important;
+    color: #1f2a44 !important;
+}
+.stButton>button[kind="tertiary"]:active { transform: scale(0.98); }
+.stButton>button[kind="tertiary"]:focus-visible {
+    box-shadow: 0 0 0 2px white, 0 0 0 4px #5f6c7b !important;
+    outline: none !important;
+}
+.stButton>button[kind="tertiary"]:disabled {
+    background-color: #eef2f7 !important;
     color: #a0aab5 !important;
     cursor: not-allowed !important;
 }
@@ -403,7 +447,7 @@ def confirm_clear_chat():
     st.write("Are you sure you want to clear the conversation history? This action cannot be undone.")
     col1, col2 = st.columns(2)
     with col1:
-        if st.button("Cancel", use_container_width=True):
+        if st.button("Cancel", type="tertiary", use_container_width=True):
             st.rerun()
     with col2:
         if st.button("Yes, Clear Chat", type="primary", use_container_width=True):

@@ -319,9 +319,7 @@ def _compute_phash(img: Image.Image, hash_size: int = 8) -> int:
         return bits
 
 def _phash_hamming(h1: int, h2: int) -> int:
-    x = h1 ^ h2; count = 0
-    while x: count += x & 1; x >>= 1
-    return count
+    return (h1 ^ h2).bit_count()
 
 def _is_in_phash_blocklist(ph: int) -> bool:
     # ⚡ Bolt: Replaced generator inside any() with a for loop and early return

@@ -525,7 +525,7 @@ with st.sidebar:
     # ── Actions ───────────────────────────────────────────────────────────────
     chat_is_empty = len(st.session_state.get("messages", [])) <= 1
     clear_help = "Chat is already empty" if chat_is_empty else "Reset the conversation history"
-    if st.button("🗑️ Clear Chat", use_container_width=True, help=clear_help, disabled=chat_is_empty):
+    if st.button("🗑️ Clear Chat", type="tertiary", use_container_width=True, help=clear_help, disabled=chat_is_empty):
         confirm_clear_chat()
 
     st.divider()
@@ -619,6 +619,8 @@ with tab_upload:
             st.toast("💡 **Report analyzed!** Switch to the **Chat** tab to see your personalized clinical and nutritional analysis.", icon="✨")
             st.session_state["notified_report"] = current_hash
 
+        st.info("💡 **Report analyzed!** Switch to the **Chat** tab to see your personalized clinical and nutritional analysis.")
+
         with st.expander("Preview loaded report"):
             preview = patient_context[:800]
             if len(patient_context) > 800:
@@ -649,7 +651,7 @@ with tab_chat:
     with col2:
         chat_is_empty = len(st.session_state.messages) <= 1
         clear_help = "Chat is already empty" if chat_is_empty else "Reset the conversation history"
-        if st.button("🗑️ Clear", key="top_clear_chat", help=clear_help, use_container_width=True, disabled=chat_is_empty):
+        if st.button("🗑️ Clear", type="tertiary", key="top_clear_chat", help=clear_help, use_container_width=True, disabled=chat_is_empty):
             confirm_clear_chat()
 
     # Read and clear any triggered follow-up before rendering inputs

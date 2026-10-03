@@ -52,3 +52,6 @@
 ## 2024-05-24 - Optimized bitwise operations
 **Learning:** When calculating Hamming weight or population counts in Python 3.10+, manual bit-shifting `while` loops (e.g., `while x: count += x & 1; x >>= 1`) iterate through every set bit in Python bytecode and introduce heavy overhead in hot paths. The native `int.bit_count()` method is implemented in C and runs substantially faster (over 28x faster in benchmarking).
 **Action:** Always prefer `(h1 ^ h2).bit_count()` over manual bitwise loops when computing Hamming distance or population count in Python 3.10+ environments.
+## 2024-05-18 - Optimize MMR similarity calculation
+**Learning:** Calculating similarities against all selected vectors on every iteration (O(K² * N)) is redundant. Max similarities monotonically increase, so we can track `max_sims` incrementally by only comparing the newly selected vector against all candidates (O(K * N)).
+**Action:** When implementing MMR or similar greedy selection algorithms, use incremental max-tracking instead of recalculating full similarity matrices on each iteration to significantly improve execution time.

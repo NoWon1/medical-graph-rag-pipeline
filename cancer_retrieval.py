@@ -206,8 +206,9 @@ def reciprocal_rank_fusion(dense_docs: List[Document], sparse_docs: List[Documen
 
 def mmr_rerank(query: str, candidates: List[Document], embed_model: HuggingFaceEmbeddings, k: int = K_MMR_FINAL, lambda_mult: float = MMR_LAMBDA) -> List[Document]:
     if not candidates or len(candidates) <= k: return candidates
-    # ⚡ Bolt: Memory-efficient Vectorized MMR calculation.
+    # ⚡ Bolt: Memory-efficient Vectorized MMR calculation with Incremental tracking.
     # Avoids O(N^2) full similarity matrix by only computing similarities against already selected documents.
+    # Further optimized to O(K * N) by incrementally tracking max_sims instead of recalculating (O(K^2 * N)).
     # Embeddings from HuggingFaceEmbeddings(normalize_embeddings=True) are already L2 normalized.
     query_vec = np.array(embed_model.embed_query(query))
     doc_mat = np.array(embed_model.embed_documents([d.page_content for d in candidates]))
@@ -219,23 +220,23 @@ def mmr_rerank(query: str, candidates: List[Document], embed_model: HuggingFaceE
 
     selected_idx = []
     is_selected = np.zeros(n_candidates, dtype=bool)
+    max_sims = np.full(n_candidates, -np.inf)
 
     for i in range(min(k, n_candidates)):
         if i == 0:
             best_idx = np.argmax(relevance)
         else:
-            sel_vecs = doc_mat[selected_idx]
-            sims = np.dot(doc_mat, sel_vecs.T)
-            max_sims = np.max(sims, axis=1)
+            sims = np.dot(doc_mat, doc_mat[best_idx])
+            max_sims = np.maximum(max_sims, sims)
 
             scores = lambda_mult * relevance - (1 - lambda_mult) * max_sims
             scores[is_selected] = -np.inf
             best_idx = np.argmax(scores)
 
         # Force conversion to native Python int for indexing
-        best_idx_int = int(best_idx)
-        selected_idx.append(best_idx_int)
-        is_selected[best_idx_int] = True
+        best_idx = int(best_idx)
+        selected_idx.append(best_idx)
+        is_selected[best_idx] = True
 
     return [candidates[i] for i in selected_idx]
 

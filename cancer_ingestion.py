@@ -36,6 +36,8 @@ from typing import Optional
 
 import fitz
 from PIL import Image
+# 🛡️ Sentinel: Mitigate Image Decompression Bombs (CWE-409) by limiting max image pixels
+Image.MAX_IMAGE_PIXELS = 4096 * 4096
 from tqdm import tqdm
 
 from langchain_text_splitters import (

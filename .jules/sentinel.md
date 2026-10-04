@@ -55,3 +55,7 @@
 **Vulnerability:** External LLM clients (like `Groq`) were instantiated without request timeouts, exposing the application to thread starvation and Denial of Service (DoS, CWE-400) if the external API hangs.
 **Learning:** Default API client instantiations typically lack timeouts or rely on excessively long defaults, making backend services fragile when upstream endpoints experience latency or outages.
 **Prevention:** Always explicitly set request timeouts (e.g., `timeout=15.0`) when initializing external HTTP or LLM clients in synchronous environments like Streamlit to maintain responsiveness and prevent exhaustion.
+## 2025-02-09 - Image Decompression Bombs
+**Vulnerability:** The application was vulnerable to Image Decompression Bombs (CWE-409) due to loading untrusted images using Pillow without explicit dimension limits.
+**Learning:** Default Pillow behavior processes large images, which can lead to Out-Of-Memory (OOM) exceptions and Denial of Service (DoS) when untrusted files are uploaded or fetched.
+**Prevention:** Always mitigate Image Decompression Bombs by explicitly setting `Image.MAX_IMAGE_PIXELS` (e.g., to a 16 MP limit like 4096 * 4096) before executing `Image.open()` on untrusted images.

@@ -28,3 +28,6 @@
 ## 2024-10-02 - Visual Hierarchy for Destructive Dialog Actions
 **Learning:** Applying a global custom CSS style (like `.stButton>button`) overrides Streamlit's native button type variations (like primary vs. secondary). This can result in destructive actions (like "Clear Chat") looking visually identical to safe, alternative actions (like "Cancel"), violating UX principles of visual hierarchy.
 **Action:** Always map custom CSS explicitly to Streamlit's `[kind="primary"]` (destructive/core), `[kind="secondary"]` (default), and `[kind="tertiary"]` (cancel/subtle) attributes when overriding button styles, and ensure UI dialogs utilize these types appropriately (e.g., `st.button("Cancel", type="tertiary")`).
+## 2024-11-20 - Visual Hierarchy for Suggested Actions
+**Learning:** Using default primary/secondary button styles for contextual suggestions (like follow-up questions) creates visual noise and competes with the core interactive elements of the UI (like the chat input).
+**Action:** Always style contextual suggestion buttons as `tertiary` to maintain a clean visual hierarchy while keeping them discoverable.

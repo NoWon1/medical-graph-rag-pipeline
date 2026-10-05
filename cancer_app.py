@@ -300,7 +300,7 @@ def render_followup_buttons(followups: list[str], turn_key: str):
     for i, (col, question) in enumerate(zip(cols, followups)):
         with col:
             key = f"fup_{turn_key}_{i}_{abs(hash(question)) % 999983}"
-            if st.button(f"Q. {question}", key=key, use_container_width=True, help="Click to ask this follow-up question"):
+            if st.button(f"Q. {question}", type="tertiary", key=key, use_container_width=True, help="Click to ask this follow-up question"):
                 st.session_state["triggered_followup"] = question
 
 

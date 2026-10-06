@@ -55,3 +55,7 @@
 **Vulnerability:** External LLM clients (like `Groq`) were instantiated without request timeouts, exposing the application to thread starvation and Denial of Service (DoS, CWE-400) if the external API hangs.
 **Learning:** Default API client instantiations typically lack timeouts or rely on excessively long defaults, making backend services fragile when upstream endpoints experience latency or outages.
 **Prevention:** Always explicitly set request timeouts (e.g., `timeout=15.0`) when initializing external HTTP or LLM clients in synchronous environments like Streamlit to maintain responsiveness and prevent exhaustion.
+## 2024-10-26 - File Type Spoofing in PDF Uploads
+**Vulnerability:** File uploads relied solely on the `.pdf` file extension (CWE-434), allowing malicious files of any type to be ingested and processed if renamed.
+**Learning:** Checking file extensions is insufficient security theater. File type validation must inspect the actual file contents (magic bytes).
+**Prevention:** Implement pure-Python magic byte verification (e.g., `raw_bytes.startswith(b"%PDF-")`) before processing untrusted uploads.

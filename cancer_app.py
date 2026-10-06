@@ -38,6 +38,7 @@
 # =============================================================================
 
 import re
+import html
 import hashlib
 import logging
 from pathlib import Path
@@ -413,10 +414,11 @@ with st.sidebar:
 
     # Visual mode indicator
     icon, colour = _MODE_BADGE[query_mode]
+    safe_label = html.escape(str(QUERY_MODE_LABELS.get(query_mode, query_mode)))
     st.markdown(
         f"<div style='padding:6px 10px; border-radius:6px; "
         f"background:#f0f4f8; font-size:13px; margin-top:6px;'>"
-        f"{icon} <strong>Active:</strong> {QUERY_MODE_LABELS[query_mode]}"
+        f"{icon} <strong>Active:</strong> {safe_label}"
         f"</div>",
         unsafe_allow_html=True,
     )

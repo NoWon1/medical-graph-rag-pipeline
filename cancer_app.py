@@ -40,6 +40,7 @@
 import re
 import hashlib
 import logging
+import html
 from pathlib import Path
 
 import streamlit as st
@@ -416,7 +417,7 @@ with st.sidebar:
     st.markdown(
         f"<div style='padding:6px 10px; border-radius:6px; "
         f"background:#f0f4f8; font-size:13px; margin-top:6px;'>"
-        f"{icon} <strong>Active:</strong> {QUERY_MODE_LABELS[query_mode]}"
+        f"{html.escape(icon)} <strong>Active:</strong> {html.escape(QUERY_MODE_LABELS[query_mode])}"
         f"</div>",
         unsafe_allow_html=True,
     )

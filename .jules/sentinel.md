@@ -59,3 +59,7 @@
 **Vulnerability:** The application was vulnerable to Image Decompression Bombs (CWE-409) due to loading untrusted images using Pillow without explicit dimension limits.
 **Learning:** Default Pillow behavior processes large images, which can lead to Out-Of-Memory (OOM) exceptions and Denial of Service (DoS) when untrusted files are uploaded or fetched.
 **Prevention:** Always mitigate Image Decompression Bombs by explicitly setting `Image.MAX_IMAGE_PIXELS` (e.g., to a 16 MP limit like 4096 * 4096) before executing `Image.open()` on untrusted images.
+## 2025-02-09 - Unescaped Dynamic Interpolation in Raw HTML
+**Vulnerability:** Although inputs like `query_mode` originated from controlled UI states (like radio buttons or configuration dictionaries), directly interpolating them into `st.markdown(..., unsafe_allow_html=True)` without escaping violates secure coding practices and risks XSS if upstream sources are ever polluted or altered.
+**Learning:** Security linters and reviewers will flag any dynamic interpolation inside `unsafe_allow_html=True` that lacks explicit escaping, regardless of where the data originates. Relying on the origin of the data being "safe" is an anti-pattern.
+**Prevention:** Always apply `html.escape()` to any dynamic variable interpolated into raw HTML strings within Streamlit, even if the variable seems to come from a controlled or internal configuration map.

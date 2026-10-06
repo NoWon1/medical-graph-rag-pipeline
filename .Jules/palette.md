@@ -31,3 +31,6 @@
 ## 2024-11-20 - Visual Hierarchy for Suggested Actions
 **Learning:** Using default primary/secondary button styles for contextual suggestions (like follow-up questions) creates visual noise and competes with the core interactive elements of the UI (like the chat input).
 **Action:** Always style contextual suggestion buttons as `tertiary` to maintain a clean visual hierarchy while keeping them discoverable.
+## 2024-10-24 - Information Scent for Collapsed Lists
+**Learning:** When lists of information (like sources or references) are hidden inside collapsed UI elements (like expanders), users lack "information scent" and cannot tell if opening the element will be valuable or empty.
+**Action:** Always include the item count in the header of the collapsed element (e.g., "Sources (3)") to provide immediate context on the volume of information available without requiring interaction.

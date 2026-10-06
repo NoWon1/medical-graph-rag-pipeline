@@ -378,7 +378,7 @@ def _run_auto_analysis(
                 render_message_with_images(answer)
 
                 if sources:
-                    with st.expander("Sources used in analysis"):
+                    with st.expander(f"Sources used in analysis ({len(sources)})"):
                         source_lines = []
                         for s in sources:
                             if s.get("url"):
@@ -733,7 +733,7 @@ with tab_chat:
 
                     # ── Sources expander ──────────────────────────────────
                     if sources:
-                        with st.expander("Sources"):
+                        with st.expander(f"Sources ({len(sources)})"):
                             source_lines = []
                             for s in sources:
                                 if s.get("url"):

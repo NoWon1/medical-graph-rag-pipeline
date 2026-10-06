@@ -4,5 +4,3 @@ node_modules/
 package-lock.json
 package.json
 st_out.log
-__pycache__/
-__pycache__/

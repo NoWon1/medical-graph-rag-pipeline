@@ -34,3 +34,6 @@
 ## 2024-10-24 - Information Scent for Collapsed Lists
 **Learning:** When lists of information (like sources or references) are hidden inside collapsed UI elements (like expanders), users lack "information scent" and cannot tell if opening the element will be valuable or empty.
 **Action:** Always include the item count in the header of the collapsed element (e.g., "Sources (3)") to provide immediate context on the volume of information available without requiring interaction.
+## 2024-11-21 - Alt Text for Dynamically Loaded Images
+**Learning:** Streamlit's `st.image` does not enforce or default to providing `alt` text. Relying solely on `caption` for dynamically loaded images leaves screen readers without a proper description of the visual content.
+**Action:** Always explicitly provide an `alt` parameter (e.g., `alt="Clinical reference visual: filename"`) when using `st.image` to render dynamically generated or retrieved images.

@@ -287,7 +287,7 @@ def render_message_with_images(text: str):
             img_path = IMAGE_DIR / filename
             if img_path.exists():
                 st.markdown(f"**Reference Visual:** `{filename}`")
-                st.image(str(img_path), caption=filename, use_container_width=True)
+                st.image(str(img_path), caption=filename, use_container_width=True, alt=f"Clinical reference visual: {filename}")
 
 
 def render_followup_buttons(followups: list[str], turn_key: str):

@@ -186,6 +186,11 @@ def load_report_from_upload(uploaded_file) -> str:
     raw_bytes = uploaded_file.getvalue()
     name      = uploaded_file.name.lower()
     if name.endswith(".pdf"):
+        # 🛡️ Sentinel: Prevent File Type Spoofing (CWE-434) via magic-byte check
+        if not raw_bytes.startswith(b'%PDF-'):
+            logging.error(f"File Type Spoofing detected: {name} is not a valid PDF")
+            st.error("Invalid file format: Uploaded file is not a valid PDF.")
+            return ""
         text = extract_text_from_pdf(raw_bytes)
     else:
         try:

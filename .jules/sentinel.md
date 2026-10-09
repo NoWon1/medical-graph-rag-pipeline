@@ -63,3 +63,7 @@
 **Vulnerability:** Although inputs like `query_mode` originated from controlled UI states (like radio buttons or configuration dictionaries), directly interpolating them into `st.markdown(..., unsafe_allow_html=True)` without escaping violates secure coding practices and risks XSS if upstream sources are ever polluted or altered.
 **Learning:** Security linters and reviewers will flag any dynamic interpolation inside `unsafe_allow_html=True` that lacks explicit escaping, regardless of where the data originates. Relying on the origin of the data being "safe" is an anti-pattern.
 **Prevention:** Always apply `html.escape()` to any dynamic variable interpolated into raw HTML strings within Streamlit, even if the variable seems to come from a controlled or internal configuration map.
+## 2025-02-09 - File Type Spoofing via Extension (CWE-434)
+**Vulnerability:** The application was susceptible to File Type Spoofing (CWE-434) when verifying file types for upload by relying solely on the file extension (`.pdf`).
+**Learning:** Checking the file extension is a weak security control, as an attacker can easily rename a malicious file (e.g., an executable) to `.pdf` and bypass validation. The application should always validate the actual file content to confirm the file type.
+**Prevention:** To prevent File Type Spoofing (CWE-434), validate uploaded files using pure-Python magic-byte checks (e.g., `raw_bytes.startswith(b'%PDF-')`) rather than relying on client-provided MIME types or file extensions.

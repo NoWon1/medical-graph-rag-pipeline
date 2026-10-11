@@ -183,8 +183,24 @@ def extract_text_from_pdf(file_bytes: bytes) -> str:
 def load_report_from_upload(uploaded_file) -> str:
     if uploaded_file is None:
         return ""
-    raw_bytes = uploaded_file.getvalue()
-    name      = uploaded_file.name.lower()
+
+    # 🛡️ Sentinel: Enforce max-size limits via chunked reading to prevent DoS (CWE-400)
+    # Streamlit UploadedFile extends io.BytesIO, so we can use read()
+    MAX_FILE_SIZE = 5 * 1024 * 1024 # 5MB limit before extraction
+    CHUNK_SIZE = 1024 * 1024
+
+    raw_bytes = b""
+    while True:
+        chunk = uploaded_file.read(CHUNK_SIZE)
+        if not chunk:
+            break
+        raw_bytes += chunk
+        if len(raw_bytes) > MAX_FILE_SIZE:
+            logging.error(f"Denial of Service mitigation: file {uploaded_file.name} exceeded {MAX_FILE_SIZE} bytes")
+            st.error(f"File too large. Maximum allowed size is 5MB.")
+            return ""
+
+    name = uploaded_file.name.lower()
     if name.endswith(".pdf"):
         # 🛡️ Sentinel: Prevent File Type Spoofing (CWE-434) via magic-byte check
         if not raw_bytes.startswith(b'%PDF-'):
@@ -198,7 +214,7 @@ def load_report_from_upload(uploaded_file) -> str:
         except UnicodeDecodeError:
             text = raw_bytes.decode("latin-1", errors="replace")
 
-    # 🛡️ Sentinel: Enforce max length on uploaded files to prevent DoS/token exhaustion
+    # 🛡️ Sentinel: Enforce max length on uploaded files to prevent token exhaustion
     if len(text) > 10000:
         st.warning("Uploaded report exceeds the 10,000 character limit. It has been truncated, which may omit critical clinical information.", icon="⚠️")
     return text[:10000]

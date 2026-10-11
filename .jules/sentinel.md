@@ -67,3 +67,7 @@
 **Vulnerability:** The application was susceptible to File Type Spoofing (CWE-434) when verifying file types for upload by relying solely on the file extension (`.pdf`).
 **Learning:** Checking the file extension is a weak security control, as an attacker can easily rename a malicious file (e.g., an executable) to `.pdf` and bypass validation. The application should always validate the actual file content to confirm the file type.
 **Prevention:** To prevent File Type Spoofing (CWE-434), validate uploaded files using pure-Python magic-byte checks (e.g., `raw_bytes.startswith(b'%PDF-')`) rather than relying on client-provided MIME types or file extensions.
+## 2025-10-10 - Denial of Service via Large File Ingestion
+**Vulnerability:** Reading uploaded files directly into memory in `load_report_from_upload` could lead to Denial of Service (CWE-400) if a user uploads a massive file, as it consumes excessive RAM before truncation is applied.
+**Learning:** Checking file size or limiting character output *after* reading the entire file contents is insufficient to prevent resource exhaustion attacks.
+**Prevention:** Enforce max-size limits via chunked reading rather than calling `file.read()` or `file.getvalue()` directly into memory, discarding any excess before it can exhaust resources.

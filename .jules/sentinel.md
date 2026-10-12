@@ -71,3 +71,7 @@
 **Vulnerability:** Reading uploaded files directly into memory in `load_report_from_upload` could lead to Denial of Service (CWE-400) if a user uploads a massive file, as it consumes excessive RAM before truncation is applied.
 **Learning:** Checking file size or limiting character output *after* reading the entire file contents is insufficient to prevent resource exhaustion attacks.
 **Prevention:** Enforce max-size limits via chunked reading rather than calling `file.read()` or `file.getvalue()` directly into memory, discarding any excess before it can exhaust resources.
+## 2025-10-11 - Streamlit UploadedFile Size Check
+**Vulnerability:** Memory-inefficient chunked reading of Streamlit `UploadedFile` objects was used for DoS prevention.
+**Learning:** For Streamlit `UploadedFile` objects, the file is already loaded into server memory (as a BytesIO stream). Chunked reading is redundant and inefficient for these specific objects.
+**Prevention:** Rely on `server.maxUploadSize` in the Streamlit configuration or check the `.size` property directly on the `UploadedFile` object to prevent DoS via large file uploads.

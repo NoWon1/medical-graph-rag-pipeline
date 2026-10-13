@@ -617,10 +617,10 @@ with tab_upload:
         current_hash = _report_hash(patient_context)
         if st.session_state.get("notified_report") != current_hash:
             st.toast(f"Report loaded ({upload_source})", icon="✅")
-            st.toast("💡 **Report analyzed!** Switch to the **Chat** tab to see your personalized clinical and nutritional analysis.", icon="✨")
+            st.toast("💡 **Report loaded!** Switch to the **Chat** tab to see your personalized clinical and nutritional analysis.", icon="✨")
             st.session_state["notified_report"] = current_hash
 
-        st.info("💡 **Report analyzed!** Switch to the **Chat** tab to see your personalized clinical and nutritional analysis.")
+        st.info("💡 **Report loaded!** Switch to the **Chat** tab to see your personalized clinical and nutritional analysis.")
 
         with st.expander(f"Preview loaded report ({len(patient_context):,} characters)"):
             preview = patient_context[:800]
@@ -641,10 +641,11 @@ with tab_chat:
         # Surface current settings explicitly above chat input
         c_mode = QUERY_MODE_LABELS[query_mode]
         c_filter = f"{cancer_filter.capitalize()} cancer" if cancer_filter else "All cancers"
+        c_icon, c_colour = _MODE_BADGE[query_mode]
         st.markdown(
-            f"<div role='status' aria-live='polite' style='color: #6c757d; font-size: 13px; font-weight: 500;'>"
-            f"<span>🔍 Mode: {c_mode}</span>"
-            f"<span style='margin-left: 15px;'>🎯 Filter: {c_filter}</span>"
+            f"<div role='status' aria-live='polite' style='display:flex; align-items:center; gap: 15px; font-size: 13px; font-weight: 500; margin-bottom: 10px;'>"
+            f"<span style='padding:2px 8px; border-radius:4px; background:#f0f4f8; border-left: 3px solid {c_colour}; color: #1f2a44;'>{c_icon} <strong>Mode:</strong> {c_mode}</span>"
+            f"<span style='color: #6c757d;'>🎯 Filter: {c_filter}</span>"
             f"</div>",
             unsafe_allow_html=True
         )

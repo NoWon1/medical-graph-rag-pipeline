@@ -48,3 +48,6 @@
 ## 2025-03-03 - Do Not Rely Solely on Color for Error States
 **Learning:** Using only color (like turning text red) to indicate constraint violations (such as exceeding character limits) violates WCAG 1.4.1 (Use of Color). This leaves users with visual impairments or color blindness without a clear indicator of the error state.
 **Action:** Always pair color changes with a clear visual icon (e.g., `⚠️`) or textual explanation to ensure error states are accessible to all users.
+## 2025-03-03 - Consistent State Visualization
+**Learning:** Using generic text elements for system status instead of established visual tokens (like badges/icons) breaks visual consistency and makes state changes harder to notice.
+**Action:** Always reuse established visual design tokens (like icons and color coding) when surfacing active state configurations to maintain consistent 'Visibility of System Status'.

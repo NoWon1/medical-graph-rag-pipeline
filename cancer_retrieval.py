@@ -566,7 +566,7 @@ def _duckduckgo_search(query: str, max_results: int = 5) -> list[dict]:
     fallback_query = query # If the suffix breaks the search
 
     try:
-        with DDGS() as ddgs:
+        with DDGS(timeout=15) as ddgs:
             results = list(ddgs.text(primary_query, max_results=max_results))
             if not results: # Broaden search
                 results = list(ddgs.text(fallback_query, max_results=max_results))
@@ -574,7 +574,7 @@ def _duckduckgo_search(query: str, max_results: int = 5) -> list[dict]:
     except Exception as e:
         print(f"   ⚠️ DDGS context manager failed ({e}). Retrying direct object...")
         try:
-            ddgs = DDGS()
+            ddgs = DDGS(timeout=15)
             results = list(ddgs.text(primary_query, max_results=max_results))
             return [{"title": r.get("title", ""), "url": r.get("href", ""), "snippet": r.get("body", "")} for r in results]
         except Exception as inner_e:

@@ -318,15 +318,16 @@ def render_streaming_answer(
     """
     stream_container = st.empty()
     with stream_container.container():
-        st.write_stream(
-            generate_answer_stream(
-                query=query,
-                patient_report=patient_report,
-                chat_history=chat_history,
-                cancer_filter=cancer_filter,
-                query_mode=query_mode,      # ← passed through v5
+        with st.spinner("Retrieving information and generating answer..."):
+            st.write_stream(
+                generate_answer_stream(
+                    query=query,
+                    patient_report=patient_report,
+                    chat_history=chat_history,
+                    cancer_filter=cancer_filter,
+                    query_mode=query_mode,      # ← passed through v5
+                )
             )
-        )
 
     full_answer = st.session_state.get("stream_buffer",   "")
     sources     = st.session_state.get("stream_sources",  [])

@@ -518,7 +518,13 @@ with st.sidebar:
     )
     cancer_filter = "" if cancer_filter_raw == "All" else cancer_filter_raw
     if cancer_filter:
-        st.info(f"Active filter: **{cancer_filter}** cancer")
+        st.markdown(
+            f"<div role='status' aria-live='polite' style='padding:6px 10px; border-radius:6px; "
+            f"background:#f0f4f8; border-left: 4px solid #0d6efd; font-size:13px; margin-top:6px;'>"
+            f"🎯 <strong>Active Filter:</strong> {cancer_filter} cancer"
+            f"</div>",
+            unsafe_allow_html=True
+        )
 
     st.divider()
 

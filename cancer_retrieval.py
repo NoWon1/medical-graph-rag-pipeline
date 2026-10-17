@@ -28,6 +28,7 @@ import re
 import json
 import math
 import heapq
+import threading
 import numpy as np
 from pathlib import Path
 from typing import Any, List, Optional, Union
@@ -92,17 +93,21 @@ _KNOWN_EATING_EFFECTS_RE = re.compile("|".join(re.escape(kw) for kw in sorted(KN
 # =============================================================================
 
 _embed_model: Optional[HuggingFaceEmbeddings] = None
+_embed_model_lock = threading.Lock()
 _VECTOR_STORE_CACHE = {} 
+_vector_store_lock = threading.Lock()
 
 def get_embeddings() -> HuggingFaceEmbeddings:
     global _embed_model
     if _embed_model is None:
-        print("   🔢 Loading embedding model (once)...")
-        _embed_model = HuggingFaceEmbeddings(
-            model_name=EMBEDDING_MODEL,
-            model_kwargs={"device": "cpu"},
-            encode_kwargs={"normalize_embeddings": True},
-        )
+        with _embed_model_lock:
+            if _embed_model is None:
+                print("   🔢 Loading embedding model (once)...")
+                _embed_model = HuggingFaceEmbeddings(
+                    model_name=EMBEDDING_MODEL,
+                    model_kwargs={"device": "cpu"},
+                    encode_kwargs={"normalize_embeddings": True},
+                )
     return _embed_model
 
 def get_dense_retriever(cancer_filter: str = "") -> BaseRetriever:
@@ -112,61 +117,67 @@ def get_dense_retriever(cancer_filter: str = "") -> BaseRetriever:
         kwargs["filter"] = {"cancer_type": cancer_filter}
         
     if "neo4j_store" not in _VECTOR_STORE_CACHE:
-        _VECTOR_STORE_CACHE["neo4j_store"] = Neo4jVector.from_existing_index(
-            embedding=get_embeddings(),
-            url=NEO4J_URI,
-            username=NEO4J_USERNAME,
-            password=NEO4J_PASSWORD,
-            database=NEO4J_DATABASE,
-            index_name=NEO4J_CHUNK_INDEX,
-            node_label=NEO4J_CHUNK_LABEL,
-            text_node_property=NEO4J_CHUNK_TEXT_PROP,
-            embedding_node_property=NEO4J_CHUNK_EMBEDDING_PROP,
-        )
+        with _vector_store_lock:
+            if "neo4j_store" not in _VECTOR_STORE_CACHE:
+                _VECTOR_STORE_CACHE["neo4j_store"] = Neo4jVector.from_existing_index(
+                    embedding=get_embeddings(),
+                    url=NEO4J_URI,
+                    username=NEO4J_USERNAME,
+                    password=NEO4J_PASSWORD,
+                    database=NEO4J_DATABASE,
+                    index_name=NEO4J_CHUNK_INDEX,
+                    node_label=NEO4J_CHUNK_LABEL,
+                    text_node_property=NEO4J_CHUNK_TEXT_PROP,
+                    embedding_node_property=NEO4J_CHUNK_EMBEDDING_PROP,
+                )
     return _VECTOR_STORE_CACHE["neo4j_store"].as_retriever(search_kwargs=kwargs)
 
 
 _bm25_retriever:       Optional[BM25Retriever] = None
+_bm25_retriever_lock = threading.Lock()
 _image_bm25_retriever: Optional[BM25Retriever] = None
+_image_bm25_retriever_lock = threading.Lock()
 
 def get_bm25_retriever() -> BM25Retriever:
     global _bm25_retriever
-    if _bm25_retriever is not None:
-        return _bm25_retriever
-    print("   📖 Building BM25 index from chunk files...")
-    documents = []
-    for json_path in sorted(CHUNK_DIR.glob("*_chunks.json")):
-        with open(json_path, "r", encoding="utf-8") as f:
-            for chunk in json.load(f):
-                documents.append(Document(page_content=chunk.get("content", ""), metadata=chunk))
-    if not documents:
-        raise FileNotFoundError(f"No chunk files in {CHUNK_DIR}. Run cancer_ingestion.py first.")
-    _bm25_retriever   = BM25Retriever.from_documents(documents)
-    _bm25_retriever.k = K_SPARSE
-    print(f"   ✅ BM25 ready: {len(documents)} chunks indexed")
+    if _bm25_retriever is None:
+        with _bm25_retriever_lock:
+            if _bm25_retriever is None:
+                print("   📖 Building BM25 index from chunk files...")
+                documents = []
+                for json_path in sorted(CHUNK_DIR.glob("*_chunks.json")):
+                    with open(json_path, "r", encoding="utf-8") as f:
+                        for chunk in json.load(f):
+                            documents.append(Document(page_content=chunk.get("content", ""), metadata=chunk))
+                if not documents:
+                    raise FileNotFoundError(f"No chunk files in {CHUNK_DIR}. Run cancer_ingestion.py first.")
+                _bm25_retriever   = BM25Retriever.from_documents(documents)
+                _bm25_retriever.k = K_SPARSE
+                print(f"   ✅ BM25 ready: {len(documents)} chunks indexed")
     return _bm25_retriever
 
 
 def get_image_bm25_retriever() -> Optional[BM25Retriever]:
     global _image_bm25_retriever
-    if _image_bm25_retriever is not None:
-        return _image_bm25_retriever
-    image_docs = []
-    for json_path in sorted(CHUNK_DIR.glob("*_chunks.json")):
-        with open(json_path, "r", encoding="utf-8") as f:
-            for chunk in json.load(f):
-                content = chunk.get("content", "")
-                has_tag = chunk.get("has_image_tags", False) or "[IMAGE:" in content.upper()
-                if has_tag:
-                    image_docs.append(Document(page_content=content, metadata=chunk))
-    if not image_docs:
-        print("   ℹ️  No image-tagged chunks found — image retrieval disabled")
-        return None
-    _image_bm25_retriever   = BM25Retriever.from_documents(image_docs)
-    print(f"   🖼️  Image BM25 ready: {len(image_docs)} image-tagged chunks")
+    if _image_bm25_retriever is None:
+        with _image_bm25_retriever_lock:
+            if _image_bm25_retriever is None:
+                image_docs = []
+                for json_path in sorted(CHUNK_DIR.glob("*_chunks.json")):
+                    with open(json_path, "r", encoding="utf-8") as f:
+                        for chunk in json.load(f):
+                            content = chunk.get("content", "")
+                            has_tag = chunk.get("has_image_tags", False) or "[IMAGE:" in content.upper()
+                            if has_tag:
+                                image_docs.append(Document(page_content=content, metadata=chunk))
+                if not image_docs:
+                    print("   ℹ️  No image-tagged chunks found — image retrieval disabled")
+                    _image_bm25_retriever = None
+                else:
+                    _image_bm25_retriever   = BM25Retriever.from_documents(image_docs)
+                    print(f"   🖼️  Image BM25 ready: {len(image_docs)} image-tagged chunks")
     return _image_bm25_retriever
 
-import threading
 _groq_client: Optional[Groq] = None
 _groq_client_lock = threading.Lock()
 

@@ -37,3 +37,6 @@
 ## 2024-11-21 - Alt Text for Dynamically Loaded Images
 **Learning:** Streamlit's `st.image` does not enforce or default to providing `alt` text. Relying solely on `caption` for dynamically loaded images leaves screen readers without a proper description of the visual content.
 **Action:** Always explicitly provide an `alt` parameter (e.g., `alt="Clinical reference visual: filename"`) when using `st.image` to render dynamically generated or retrieved images.
+## 2024-11-22 - Visual Feedback for Async Operations
+**Learning:** Async or computationally heavy operations in Streamlit (like LLM answer generation via `st.write_stream`) should be wrapped in `st.spinner()` to provide immediate visual feedback and prevent users from perceiving the app as unresponsive.
+**Action:** Always use `st.spinner()` around long-running synchronous or asynchronous tasks, especially when yielding streams, to assure users that work is in progress.

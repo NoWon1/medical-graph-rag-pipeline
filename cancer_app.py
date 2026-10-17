@@ -519,7 +519,13 @@ with st.sidebar:
     )
     cancer_filter = "" if cancer_filter_raw == "All" else cancer_filter_raw
     if cancer_filter:
-        st.info(f"Active filter: **{cancer_filter}** cancer")
+        st.markdown(
+            f"<div role='status' aria-live='polite' style='padding:6px 10px; border-radius:6px; "
+            f"background:#f0f4f8; border-left: 4px solid #6c757d; font-size:13px; margin-top:6px;'>"
+            f"🎯 <strong>Active filter:</strong> {cancer_filter} cancer"
+            f"</div>",
+            unsafe_allow_html=True,
+        )
 
     st.divider()
 
@@ -646,7 +652,7 @@ with tab_chat:
         st.markdown(
             f"<div role='status' aria-live='polite' style='display:flex; align-items:center; gap: 15px; font-size: 13px; font-weight: 500; margin-bottom: 10px;'>"
             f"<span style='padding:2px 8px; border-radius:4px; background:#f0f4f8; border-left: 3px solid {c_colour}; color: #1f2a44;'>{c_icon} <strong>Mode:</strong> {c_mode}</span>"
-            f"<span style='color: #6c757d;'>🎯 Filter: {c_filter}</span>"
+            f"<span style='padding:2px 8px; border-radius:4px; background:#f0f4f8; border-left: 3px solid #6c757d; color: #1f2a44;'>🎯 <strong>Filter:</strong> {c_filter}</span>"
             f"</div>",
             unsafe_allow_html=True
         )

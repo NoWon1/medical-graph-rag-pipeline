@@ -40,3 +40,6 @@
 ## 2024-11-22 - Visual Feedback for Async Operations
 **Learning:** Async or computationally heavy operations in Streamlit (like LLM answer generation via `st.write_stream`) should be wrapped in `st.spinner()` to provide immediate visual feedback and prevent users from perceiving the app as unresponsive.
 **Action:** Always use `st.spinner()` around long-running synchronous or asynchronous tasks, especially when yielding streams, to assure users that work is in progress.
+## 2024-03-24 - Visual Consistency for System Status
+**Learning:** Using generic text elements for system status instead of established visual tokens (e.g., badges or icons) breaks visual consistency.
+**Action:** Always reuse established visual design tokens when surfacing active state configurations to maintain consistent 'Visibility of System Status'.

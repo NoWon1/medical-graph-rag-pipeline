@@ -623,11 +623,9 @@ with tab_upload:
     if patient_context:
         current_hash = _report_hash(patient_context)
         if st.session_state.get("notified_report") != current_hash:
-            st.toast(f"Report loaded ({upload_source})", icon="✅")
-            st.toast("💡 **Report loaded!** Switch to the **Chat** tab to see your personalized clinical and nutritional analysis.", icon="✨")
             st.session_state["notified_report"] = current_hash
 
-        st.info("💡 **Report loaded!** Switch to the **Chat** tab to see your personalized clinical and nutritional analysis.")
+        st.success("💡 **Report loaded!** Switch to the **Chat** tab to see your personalized clinical and nutritional analysis.")
 
         with st.expander(f"Preview loaded report ({len(patient_context):,} characters)"):
             preview = patient_context[:800]

@@ -43,3 +43,6 @@
 ## 2024-03-24 - Visual Consistency for System Status
 **Learning:** Using generic text elements for system status instead of established visual tokens (e.g., badges or icons) breaks visual consistency.
 **Action:** Always reuse established visual design tokens when surfacing active state configurations to maintain consistent 'Visibility of System Status'.
+## 2024-11-23 - Persistent vs Transient Cross-Tab CTAs
+**Learning:** Using transient toasts for cross-tab CTAs (like directing a user from an upload tab to a chat tab) is an anti-pattern as users easily miss them.
+**Action:** Always use persistent visual cues like `st.success` or `st.info` in the main view for cross-tab directional CTAs to ensure users reliably find their next step.

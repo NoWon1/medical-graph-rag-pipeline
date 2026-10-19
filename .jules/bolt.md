@@ -64,3 +64,6 @@
 ## 2024-11-20 - Connection Pooling for all Clients
 **Learning:** Instantiating new instances of API/Database clients like `DDGS()` or `GraphRetriever` inside frequently called methods (like `_duckduckgo_search` or `get_graph_retriever()`) destroys the connection pool (TCP/TLS) causing massive latency. Using singletons without locking is thread-unsafe and can cause connection leaks.
 **Action:** Use a thread-safe singleton pattern with double-checked locking using `threading.Lock()` for all stateful network clients (HTTP, Neo4j, etc) to ensure the connection pool is reused across requests without thread-safety issues.
+## 2024-11-20 - Thread-safe singletons for large models and indices
+**Learning:** Initializing large local models or indices (e.g., HuggingFace embeddings, BM25 retrievers) in thread-unsafe global singletons causes severe CPU and memory overhead during concurrent access in multi-threaded environments like Streamlit.
+**Action:** Always use a thread-safe singleton pattern with double-checked locking (`threading.Lock()`) for large model and index initializations to prevent resource contention and redundant instantiations during concurrent access.

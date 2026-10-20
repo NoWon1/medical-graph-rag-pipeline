@@ -67,3 +67,6 @@
 ## 2024-11-20 - Thread-safe singletons for large models and indices
 **Learning:** Initializing large local models or indices (e.g., HuggingFace embeddings, BM25 retrievers) in thread-unsafe global singletons causes severe CPU and memory overhead during concurrent access in multi-threaded environments like Streamlit.
 **Action:** Always use a thread-safe singleton pattern with double-checked locking (`threading.Lock()`) for large model and index initializations to prevent resource contention and redundant instantiations during concurrent access.
+## 2024-11-20 - Pre-compiling regex in hot paths
+**Learning:** Calling `re.sub(r'pattern', ...)` inside a loop forces Python to parse and compile the regex on every iteration, causing significant overhead in hot loops.
+**Action:** Always pre-compile the regex pattern as a module-level constant (e.g., `_PATTERN_RE = re.compile(r'pattern')`) and use `_PATTERN_RE.sub(...)` inside the loop.

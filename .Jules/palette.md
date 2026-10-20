@@ -46,3 +46,6 @@
 ## 2024-11-23 - Persistent vs Transient Cross-Tab CTAs
 **Learning:** Using transient toasts for cross-tab CTAs (like directing a user from an upload tab to a chat tab) is an anti-pattern as users easily miss them.
 **Action:** Always use persistent visual cues like `st.success` or `st.info` in the main view for cross-tab directional CTAs to ensure users reliably find their next step.
+## 2024-03-25 - Graceful Degradation for Missing Images
+**Learning:** When images are dynamically referenced but missing, failing to provide a fallback leaves gaps in context and breaks conversation coherence.
+**Action:** Always provide an explicit warning or fallback message (e.g., `st.warning`) when expected images cannot be loaded to maintain context.

@@ -288,6 +288,8 @@ def render_message_with_images(text: str):
             if img_path.exists():
                 st.markdown(f"**Reference Visual:** `{filename}`")
                 st.image(str(img_path), caption=filename, use_container_width=True, alt=f"Clinical reference visual: {filename}")
+            else:
+                st.warning(f"⚠️ **Reference Visual:** `{filename}` is currently unavailable.", icon="⚠️")
 
 
 def render_followup_buttons(followups: list[str], turn_key: str):
@@ -565,7 +567,7 @@ st.caption(
 # TABS
 # =============================================================================
 
-tab_chat, tab_upload = st.tabs(["Chat", "Upload Report"])
+tab_chat, tab_upload = st.tabs(["💬 Chat", "📄 Upload Report"])
 
 # =============================================================================
 # UPLOAD TAB — unchanged from v4
@@ -625,7 +627,7 @@ with tab_upload:
         if st.session_state.get("notified_report") != current_hash:
             st.session_state["notified_report"] = current_hash
 
-        st.success("💡 **Report loaded!** Switch to the **Chat** tab to see your personalized clinical and nutritional analysis.")
+        st.success("💡 **Report loaded!** Switch to the **💬 Chat** tab to see your personalized clinical and nutritional analysis.")
 
         with st.expander(f"Preview loaded report ({len(patient_context):,} characters)"):
             preview = patient_context[:800]

@@ -41,6 +41,7 @@ import re
 import hashlib
 import logging
 import html
+import urllib.parse
 from pathlib import Path
 
 import streamlit as st
@@ -163,6 +164,13 @@ _MODE_BADGE = {
 # =============================================================================
 # HELPER FUNCTIONS — unchanged from v4 except render_streaming_answer
 # =============================================================================
+
+def sanitize_url(url: str) -> str:
+    parsed = urllib.parse.urlparse(url)
+    if parsed.scheme in ('http', 'https'):
+        return url
+    return '#'
+
 
 def extract_text_from_pdf(file_bytes: bytes) -> str:
     text_parts = []
@@ -335,7 +343,7 @@ def _run_auto_analysis(
                     with st.expander("Sources used in analysis"):
                         for s in sources:
                             if s.get("url"):
-                                st.markdown(f"[{s['label']}]({s['url']})")
+                                st.markdown(f"[{s['label']}]({sanitize_url(s['url'])})")
                             else:
                                 st.markdown(f"`{s['label']}`")
 
@@ -595,7 +603,7 @@ with tab_chat:
                         with st.expander("Sources"):
                             for s in sources:
                                 if s.get("url"):
-                                    st.markdown(f"[{s['label']}]({s['url']})")
+                                    st.markdown(f"[{s['label']}]({sanitize_url(s['url'])})")
                                 else:
                                     st.markdown(f"`{s['label']}`")
 

@@ -288,6 +288,8 @@ def render_message_with_images(text: str):
             if img_path.exists():
                 st.markdown(f"**Reference Visual:** `{filename}`")
                 st.image(str(img_path), caption=filename, use_container_width=True, alt=f"Clinical reference visual: {filename}")
+            else:
+                st.warning(f"⚠️ **Visual Unavailable:** The reference image `{filename}` could not be loaded.")
 
 
 def render_followup_buttons(followups: list[str], turn_key: str):

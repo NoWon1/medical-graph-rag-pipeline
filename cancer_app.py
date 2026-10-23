@@ -595,7 +595,8 @@ with tab_upload:
         placeholder="Paste the contents of your clinical report here...",
         help=paste_help,
         disabled=paste_disabled,
-        key="pasted_report_input"
+        key="pasted_report_input",
+        max_chars=10000
     )
 
     char_count = len(pasted_report) if pasted_report else 0

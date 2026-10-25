@@ -28,6 +28,7 @@ import re
 import json
 import math
 import heapq
+import functools
 import numpy as np
 from pathlib import Path
 import threading
@@ -108,6 +109,9 @@ def get_embeddings() -> HuggingFaceEmbeddings:
                     model_kwargs={"device": "cpu"},
                     encode_kwargs={"normalize_embeddings": True},
                 )
+                # ⚡ Bolt: Memoize query embeddings to eliminate redundant CPU inference
+                # across retrievers (BM25 reranking, Graph RRF, Image reranking) in a single request
+                _embed_model.embed_query = functools.lru_cache(maxsize=128)(_embed_model.embed_query)
     return _embed_model
 
 def get_dense_retriever(cancer_filter: str = "") -> BaseRetriever:

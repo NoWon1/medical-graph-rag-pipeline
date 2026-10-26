@@ -364,7 +364,14 @@ CYPHER_QUERIES: dict[str, str] = {
 
 class GraphRetriever:
     def __init__(self) -> None:
-        self.driver = GraphDatabase.driver(NEO4J_URI, auth=(NEO4J_USERNAME, NEO4J_PASSWORD))
+        self.driver = GraphDatabase.driver(
+            NEO4J_URI,
+            auth=(NEO4J_USERNAME, NEO4J_PASSWORD),
+            connection_timeout=5.0,
+            connection_acquisition_timeout=5.0,
+            max_connection_lifetime=3600,
+            max_transaction_retry_time=10.0,
+        )
 
     def retrieve(self, query: str, patient_report: str = "", cancer_filter: str = "") -> tuple[str, str]:
         intent_info = detect_query_intent(query, patient_report)

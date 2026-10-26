@@ -225,8 +225,8 @@ def mmr_rerank(query: str, candidates: List[Document], embed_model: HuggingFaceE
     # Avoids O(N^2) full similarity matrix by only computing similarities against already selected documents.
     # Further optimized to O(K * N) by incrementally tracking max_sims instead of recalculating (O(K^2 * N)).
     # Embeddings from HuggingFaceEmbeddings(normalize_embeddings=True) are already L2 normalized.
-    query_vec = np.array(embed_model.embed_query(query))
-    doc_mat = np.array(embed_model.embed_documents([d.page_content for d in candidates]))
+    query_vec = np.ascontiguousarray(embed_model.embed_query(query), dtype=np.float32)
+    doc_mat = np.ascontiguousarray(embed_model.embed_documents([d.page_content for d in candidates]), dtype=np.float32)
 
     if doc_mat.size == 0: return []
 
@@ -308,8 +308,8 @@ def _retrieve_image_chunks(query: str) -> List[Document]:
 
         # Bolt: Fully vectorized NumPy matrix multiplication to compute all cosine similarities at once.
         # Embeddings from HuggingFaceEmbeddings(normalize_embeddings=True) are already L2 normalized.
-        query_vec = np.array(embed_model.embed_query(query))
-        doc_mat = np.array(embed_model.embed_documents([d.page_content for d in unique_candidates]))
+        query_vec = np.ascontiguousarray(embed_model.embed_query(query), dtype=np.float32)
+        doc_mat = np.ascontiguousarray(embed_model.embed_documents([d.page_content for d in unique_candidates]), dtype=np.float32)
         
         if doc_mat.size == 0:
             best_docs = []

@@ -75,3 +75,7 @@
 **Vulnerability:** Memory-inefficient chunked reading of Streamlit `UploadedFile` objects was used for DoS prevention.
 **Learning:** For Streamlit `UploadedFile` objects, the file is already loaded into server memory (as a BytesIO stream). Chunked reading is redundant and inefficient for these specific objects.
 **Prevention:** Rely on `server.maxUploadSize` in the Streamlit configuration or check the `.size` property directly on the `UploadedFile` object to prevent DoS via large file uploads.
+## 2024-05-18 - Markdown Link Injection in Streamlit
+**Vulnerability:** XSS via `javascript:` or `data:` URIs in Streamlit `st.markdown()` when rendering untrusted user input or LLM responses.
+**Learning:** `html.escape()` fails to prevent this because it doesn't escape Markdown syntax, allowing Streamlit to parse and render dangerous links.
+**Prevention:** Render untrusted input using `st.text()` or use a regex to neutralize disallowed URL schemes (e.g., `javascript:`) before calling `st.markdown()`.

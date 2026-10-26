@@ -227,6 +227,9 @@ def _report_hash(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8", errors="replace")).hexdigest()
 
 
+# Disallow pseudo-protocols like javascript:, data:, and vbscript:
+SAFE_MD_LINK_RE = re.compile(r"\[([^\]]+)\]\((?!(?:https?|mailto):)[^)]*\)", re.IGNORECASE)
+
 def render_message_with_images(text: str):
     """
     Render assistant message text. Replaces [IMAGE: filename.png] tags
@@ -242,7 +245,9 @@ def render_message_with_images(text: str):
     for i, part in enumerate(parts):
         if i % 2 == 0:
             if part.strip():
-                st.markdown(part)
+                # 🛡️ Sentinel: Neutralize dangerous Markdown links (e.g. javascript:)
+                safe_part = SAFE_MD_LINK_RE.sub(r"[\1](#)", part)
+                st.markdown(safe_part)
         else:
             # 🛡️ Sentinel: Prevent Path Traversal/LFI by sanitizing filename and verifying path
             filename = part.strip().strip('`"\'')
@@ -579,7 +584,7 @@ with tab_chat:
         if user_query:
 
             with st.chat_message("user"):
-                st.markdown(user_query)
+                st.text(user_query)
             st.session_state.messages.append({
                 "role": "user", "content": user_query
             })

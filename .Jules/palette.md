@@ -53,3 +53,6 @@
 ## 2026-10-25 - Native Character Counter
 **Learning:** Utilizing the `max_chars` parameter on Streamlit text inputs (`st.text_area`, `st.chat_input`) automatically renders a built-in visual character counter in the UI, fulfilling the UX requirement for limited input feedback without requiring custom HTML/CSS components.
 **Action:** Always prefer the native `max_chars` parameter on text inputs instead of manually rendering character count labels or injecting custom DOM elements, to ensure consistency with the framework's design system.
+## 2024-11-20 - Ensure Dynamic State Retrieval Occurs Post-Action
+**Learning:** Hardcoding state retrieval (e.g. `last_turn_idx` or `followups`) *before* executing complex operations like automated report analysis causes the UI to render stale state, potentially leaving users in "dead end" scenarios where contextual follow-up buttons fail to appear despite being generated.
+**Action:** Always ensure state-dependent UI elements re-fetch or evaluate their needed context immediately *after* any heavy operations or conditional logic blocks that may modify that state.

@@ -75,3 +75,8 @@
 **Vulnerability:** Memory-inefficient chunked reading of Streamlit `UploadedFile` objects was used for DoS prevention.
 **Learning:** For Streamlit `UploadedFile` objects, the file is already loaded into server memory (as a BytesIO stream). Chunked reading is redundant and inefficient for these specific objects.
 **Prevention:** Rely on `server.maxUploadSize` in the Streamlit configuration or check the `.size` property directly on the `UploadedFile` object to prevent DoS via large file uploads.
+
+## 2024-10-28 - [Cross-Site Scripting (XSS) in Chat Input and Upload File]
+**Vulnerability:** User queries and uploaded file names were rendered using `st.markdown()` directly, allowing `javascript:` URIs in markdown links to execute client-side scripts.
+**Learning:** Streamlit's `st.markdown()` parses markdown syntax including links `[text](javascript:...)`, bypassing standard HTML escaping (e.g. `html.escape()`). User chat inputs and potentially malicious file names must be sanitized.
+**Prevention:** Always use `st.text()` for rendering plain user input in Streamlit instead of `st.markdown()`, or strictly sanitize brackets `[` and `]` to prevent markdown link parsing for variables injected into markdown strings.

@@ -517,7 +517,8 @@ with tab_upload:
         upload_source   = "pasted text"
 
     if patient_context:
-        st.success(f"Report loaded ({upload_source})")
+        safe_source = html.escape(upload_source).replace('[', '&#91;').replace(']', '&#93;')
+        st.success(f"Report loaded ({safe_source})")
         with st.expander("Preview loaded report"):
             preview = patient_context[:800]
             if len(patient_context) > 800:
@@ -546,7 +547,10 @@ with tab_chat:
         # ── Render conversation history ───────────────────────────────────
         for idx, message in enumerate(st.session_state.messages):
             with st.chat_message(message["role"]):
-                render_message_with_images(message["content"])
+                if message["role"] == "user":
+                    st.text(message["content"])
+                else:
+                    render_message_with_images(message["content"])
 
                 # Reasoning path expander — shows mode + path for each turn
                 if message["role"] == "assistant":
@@ -579,7 +583,7 @@ with tab_chat:
         if user_query:
 
             with st.chat_message("user"):
-                st.markdown(user_query)
+                st.text(user_query)
             st.session_state.messages.append({
                 "role": "user", "content": user_query
             })

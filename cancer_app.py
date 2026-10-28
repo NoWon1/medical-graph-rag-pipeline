@@ -394,7 +394,13 @@ def _run_auto_analysis(
                     "role": "assistant", "content": answer,
                 })
                 turn_idx = len(st.session_state.messages) - 1
-                st.session_state["followups"][turn_idx]     = []
+
+                # UX: Provide contextual follow-up questions instead of dead end
+                st.session_state["followups"][turn_idx]     = [
+                    "What foods should I avoid with this treatment?",
+                    "Can you explain the side effects?",
+                    "What does the staging mean for my prognosis?"
+                ]
                 st.session_state["turn_modes"][turn_idx]    = QUERY_MODE_AUTO
                 st.session_state["last_reasoning"][turn_idx] = (
                     st.session_state.get("stream_reasoning", "auto mode")
@@ -687,14 +693,15 @@ with tab_chat:
                         ):
                             st.caption(reasoning)
 
-        last_turn_idx  = len(st.session_state.messages) - 1
-        last_followups = st.session_state["followups"].get(last_turn_idx, [])
-
         # ── Auto-analyse uploaded report ──────────────────────────────────
         if patient_context:
             current_hash = _report_hash(patient_context)
             if current_hash != st.session_state.get("analysed_report", ""):
                 _run_auto_analysis(patient_context, cancer_filter)
+
+        # ── Re-fetch last turn state AFTER potential analysis block ───────
+        last_turn_idx  = len(st.session_state.messages) - 1
+        last_followups = st.session_state["followups"].get(last_turn_idx, [])
 
         # ── Show follow-ups when idle ─────────────────────────────────────
         if not user_query:

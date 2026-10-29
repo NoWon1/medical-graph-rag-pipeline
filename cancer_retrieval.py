@@ -111,7 +111,7 @@ def get_embeddings() -> HuggingFaceEmbeddings:
                 )
                 # ⚡ Bolt: Memoize query embeddings to eliminate redundant CPU inference
                 # across retrievers (BM25 reranking, Graph RRF, Image reranking) in a single request
-                _embed_model.embed_query = functools.lru_cache(maxsize=128)(_embed_model.embed_query)
+                object.__setattr__(_embed_model, 'embed_query', functools.lru_cache(maxsize=128)(_embed_model.embed_query))
     return _embed_model
 
 def get_dense_retriever(cancer_filter: str = "") -> BaseRetriever:

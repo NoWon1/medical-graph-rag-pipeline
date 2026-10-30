@@ -165,6 +165,22 @@ _MODE_BADGE = {
 # HELPER FUNCTIONS — unchanged from v4 except render_streaming_answer
 # =============================================================================
 
+def safe_markdown_link(label: str, url: str) -> str:
+    """Sanitizes label and restricts URL schemes to prevent Markdown/XSS injection."""
+    # Neutralize markdown link syntax in the label
+    safe_label = (
+        html.escape(label).replace("[", "&#91;").replace("]", "&#93;").strip()
+    )
+
+    # Validate URL scheme to prevent javascript: or data: injection
+    parsed = urllib.parse.urlparse(url.strip())
+    if parsed.scheme.lower() not in ("http", "https"):
+        return safe_label
+
+    safe_url = urllib.parse.quote(url.strip(), safe=":/?#[]@!$&'()*+,;=-")
+    return f"[{safe_label}]({safe_url})"
+
+
 def sanitize_url(url: str) -> str:
     parsed = urllib.parse.urlparse(url)
     if parsed.scheme in ('http', 'https'):
@@ -343,9 +359,10 @@ def _run_auto_analysis(
                     with st.expander("Sources used in analysis"):
                         for s in sources:
                             if s.get("url"):
-                                st.markdown(f"[{s['label']}]({sanitize_url(s['url'])})")
+                                st.markdown(safe_markdown_link(s.get("label", ""), s.get("url", "")))
                             else:
-                                st.markdown(f"`{s['label']}`")
+                                safe_label = html.escape(s.get("label", "")).replace("`", "&#96;")
+                                st.markdown(f"`{safe_label}`")
 
                 st.session_state.messages.append({
                     "role": "assistant", "content": answer,
@@ -607,9 +624,10 @@ with tab_chat:
                         with st.expander("Sources"):
                             for s in sources:
                                 if s.get("url"):
-                                    st.markdown(f"[{s['label']}]({sanitize_url(s['url'])})")
+                                    st.markdown(safe_markdown_link(s.get("label", ""), s.get("url", "")))
                                 else:
-                                    st.markdown(f"`{s['label']}`")
+                                    safe_label = html.escape(s.get("label", "")).replace("`", "&#96;")
+                                    st.markdown(f"`{safe_label}`")
 
                     # ── Store in session state ────────────────────────────
                     st.session_state.messages.append({

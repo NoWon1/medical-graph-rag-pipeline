@@ -172,6 +172,14 @@ def sanitize_url(url: str) -> str:
     return '#'
 
 
+def sanitize_markdown_label(label: str) -> str:
+    """
+    🛡️ Sentinel: Prevent Markdown Injection (CWE-79) by sanitizing structural brackets
+    to prevent breaking out of the anchor text.
+    """
+    return label.replace("[", "&#91;").replace("]", "&#93;")
+
+
 def extract_text_from_pdf(file_bytes: bytes) -> str:
     text_parts = []
     try:
@@ -343,9 +351,10 @@ def _run_auto_analysis(
                     with st.expander("Sources used in analysis"):
                         for s in sources:
                             if s.get("url"):
-                                st.markdown(f"[{s['label']}]({sanitize_url(s['url'])})")
+                                safe_label = sanitize_markdown_label(s['label'])
+                                st.markdown(f"[{safe_label}]({sanitize_url(s['url'])})")
                             else:
-                                st.markdown(f"`{s['label']}`")
+                                st.markdown(f"`{s['label'].replace('`', '')}`")
 
                 st.session_state.messages.append({
                     "role": "assistant", "content": answer,
@@ -607,9 +616,10 @@ with tab_chat:
                         with st.expander("Sources"):
                             for s in sources:
                                 if s.get("url"):
-                                    st.markdown(f"[{s['label']}]({sanitize_url(s['url'])})")
+                                    safe_label = sanitize_markdown_label(s['label'])
+                                    st.markdown(f"[{safe_label}]({sanitize_url(s['url'])})")
                                 else:
-                                    st.markdown(f"`{s['label']}`")
+                                    st.markdown(f"`{s['label'].replace('`', '')}`")
 
                     # ── Store in session state ────────────────────────────
                     st.session_state.messages.append({

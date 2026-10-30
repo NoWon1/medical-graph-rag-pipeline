@@ -89,6 +89,8 @@ _KNOWN_NON_CHEMO_DRUGS_RE = re.compile("|".join(re.escape(kw) for kw in sorted(K
 _KNOWN_PROTOCOLS_RE = re.compile("|".join(re.escape(kw) for kw in sorted(KNOWN_PROTOCOLS, key=len, reverse=True)))
 _KNOWN_EATING_EFFECTS_RE = re.compile("|".join(re.escape(kw) for kw in sorted(KNOWN_EATING_EFFECTS, key=len, reverse=True)))
 
+_CHUNK_ID_CLEANUP_RE = re.compile(r'_cap_\d+$|_\d{4}$')
+
 # =============================================================================
 # EMBEDDINGS & CONNECTION CACHING
 # =============================================================================
@@ -527,13 +529,13 @@ def build_context(vector_docs: List[Document], graph_context: str = "", image_do
     if graph_context: parts.append(graph_context)
 
     for i, doc in enumerate(vector_docs, 1):
-        sf = doc.metadata.get("source_file") or re.sub(r'_cap_\d+$|_\d{4}$', '', doc.metadata.get("chunk_id", "")) or "unknown"
+        sf = doc.metadata.get("source_file") or _CHUNK_ID_CLEANUP_RE.sub('', doc.metadata.get("chunk_id", "")) or "unknown"
         parts.append(f"[{i}] Source: {sf} | Cancer: {doc.metadata.get('cancer_type', 'general')}\n{doc.page_content}")
 
     if image_docs:
         visual_parts = ["## Visual References", "The following visual assets are available. Reference them in your answer using [IMAGE: filename.png] tags.\n"]
         for j, doc in enumerate(image_docs, 1):
-            sf = doc.metadata.get("source_file") or re.sub(r'_cap_\d+$|_\d{4}$', '', doc.metadata.get("chunk_id", "")) or "unknown"
+            sf = doc.metadata.get("source_file") or _CHUNK_ID_CLEANUP_RE.sub('', doc.metadata.get("chunk_id", "")) or "unknown"
             visual_parts.append(f"[IMG{j}] Source: {sf}\n{doc.page_content}")
         parts.append("\n".join(visual_parts))
 
@@ -731,7 +733,7 @@ def _build_sources(
     for doc in vector_docs + (image_docs or []):
         sf = doc.metadata.get("source_file", "").strip()
         if not sf:
-            sf = re.sub(r'_cap_\d+$|_\d{4}$', '', doc.metadata.get("chunk_id", ""))
+            sf = _CHUNK_ID_CLEANUP_RE.sub('', doc.metadata.get("chunk_id", ""))
         
         # 🟢 Extract granular traceability metadata
         chunk_id = doc.metadata.get("chunk_id", "unknown_chunk")

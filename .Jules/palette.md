@@ -56,3 +56,6 @@
 ## 2024-11-20 - Ensure Dynamic State Retrieval Occurs Post-Action
 **Learning:** Hardcoding state retrieval (e.g. `last_turn_idx` or `followups`) *before* executing complex operations like automated report analysis causes the UI to render stale state, potentially leaving users in "dead end" scenarios where contextual follow-up buttons fail to appear despite being generated.
 **Action:** Always ensure state-dependent UI elements re-fetch or evaluate their needed context immediately *after* any heavy operations or conditional logic blocks that may modify that state.
+## 2024-11-25 - Semantic Labels for Screen Readers
+**Learning:** In Streamlit, native widgets like `st.button` do not support direct `aria-label` injection and screen readers will literally announce emojis (e.g., 'Wastebasket'). Rely on semantic text labels instead of emojis for critical actions, and use the `help` parameter to inject native accessible tooltips.
+**Action:** Remove decorative emojis from core action buttons (like "Clear Chat") to ensure screen readers announce a clean, semantic action name rather than the emoji description.

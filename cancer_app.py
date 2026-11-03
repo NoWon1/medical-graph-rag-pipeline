@@ -526,14 +526,14 @@ with st.sidebar:
         help="Narrow retrieval to one cancer type. 'All' searches across all types.",
     )
     cancer_filter = "" if cancer_filter_raw == "All" else cancer_filter_raw
-    if cancer_filter:
-        st.markdown(
-            f"<div role='status' aria-live='polite' style='padding:6px 10px; border-radius:6px; "
-            f"background:#f0f4f8; border-left: 4px solid #6c757d; font-size:13px; margin-top:6px;'>"
-            f"🎯 <strong>Active Filter:</strong> {cancer_filter} cancer"
-            f"</div>",
-            unsafe_allow_html=True,
-        )
+    display_filter = f"{cancer_filter_raw} cancer" if cancer_filter else "All cancers"
+    st.markdown(
+        f"<div role='status' aria-live='polite' style='padding:6px 10px; border-radius:6px; "
+        f"background:#f0f4f8; border-left: 4px solid #6c757d; font-size:13px; margin-top:6px;'>"
+        f"🎯 <strong>Active Filter:</strong> {display_filter}"
+        f"</div>",
+        unsafe_allow_html=True,
+    )
 
     st.divider()
 

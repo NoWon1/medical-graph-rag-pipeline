@@ -60,3 +60,6 @@
 ## 2024-11-25 - Screen Reader Incompatibility with Emojis
 **Learning:** In Streamlit, native widgets like st.button do not support direct aria-label injection and screen readers will literally announce emojis (e.g., 'Wastebasket').
 **Action:** Rely on semantic text labels instead of emojis for critical actions, and use the help parameter to inject native accessible tooltips.
+## 2024-11-03 - Active Filter State Visibility
+**Learning:** Hiding system status visual tokens when defaults (like "All") are selected creates user uncertainty about whether the filter is inactive or if the UI component disappeared.
+**Action:** Always render visual state tokens (like badges) for active filters, explicitly displaying the default state (e.g., "All cancers") to maintain consistent 'Visibility of System Status'.

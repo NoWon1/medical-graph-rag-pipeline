@@ -80,3 +80,7 @@
 **Vulnerability:** User queries and uploaded file names were rendered using `st.markdown()` directly, allowing `javascript:` URIs in markdown links to execute client-side scripts.
 **Learning:** Streamlit's `st.markdown()` parses markdown syntax including links `[text](javascript:...)`, bypassing standard HTML escaping (e.g. `html.escape()`). User chat inputs and potentially malicious file names must be sanitized.
 **Prevention:** Always use `st.text()` for rendering plain user input in Streamlit instead of `st.markdown()`, or strictly sanitize brackets `[` and `]` to prevent markdown link parsing for variables injected into markdown strings.
+## 2025-10-15 - PDF Iteration Denial of Service
+**Vulnerability:** Iterating through all pages of a PDF without an upper bound permits CPU starvation and memory pressure (CWE-400).
+**Learning:** An attacker can upload a document with thousands of empty pages ('zip-bomb' equivalent), causing excessive CPU usage and memory leaks.
+**Prevention:** Always enforce a maximum page iteration limit and utilize a context manager (`with fitz.open(...) as doc:`) to prevent file descriptor leaks.

@@ -211,6 +211,7 @@ def load_report_from_upload(uploaded_file) -> str:
         return raw_bytes.decode("latin-1", errors="replace")
 
 
+@st.cache_data(show_spinner=False)
 def _report_hash(text: str) -> str:
     return hashlib.md5(text.encode('utf-8')).hexdigest()[:8] if text else ""
 

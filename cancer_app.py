@@ -180,15 +180,21 @@ def sanitize_markdown_label(label: str) -> str:
     return label.replace("[", "&#91;").replace("]", "&#93;")
 
 
+MAX_PDF_PAGES = 100
+
 def extract_text_from_pdf(file_bytes: bytes) -> str:
     text_parts = []
     try:
-        doc = fitz.open(stream=file_bytes, filetype="pdf")
-        for page_num in range(len(doc)):
-            page_text = doc[page_num].get_text().strip()
-            if page_text:
-                text_parts.append(f"[Page {page_num + 1}]\n{page_text}")
-        doc.close()
+        with fitz.open(stream=file_bytes, filetype="pdf") as doc:
+            # 🛡️ Sentinel: Enforce max page limit to prevent DoS via massive page counts (CWE-400)
+            page_count = min(len(doc), MAX_PDF_PAGES)
+            for page_num in range(page_count):
+                page_text = doc[page_num].get_text().strip()
+                if page_text:
+                    text_parts.append(f"[Page {page_num + 1}]\n{page_text}")
+
+            if len(doc) > MAX_PDF_PAGES:
+                st.warning(f"PDF exceeded maximum page limit. Only the first {MAX_PDF_PAGES} pages were processed.", icon="⚠️")
     except Exception as e:
         # 🛡️ Sentinel: Fail securely without exposing raw stack traces to the LLM or UI
         logging.error("PDF extraction error", exc_info=True)

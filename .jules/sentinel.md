@@ -80,3 +80,8 @@
 **Vulnerability:** User queries and uploaded file names were rendered using `st.markdown()` directly, allowing `javascript:` URIs in markdown links to execute client-side scripts.
 **Learning:** Streamlit's `st.markdown()` parses markdown syntax including links `[text](javascript:...)`, bypassing standard HTML escaping (e.g. `html.escape()`). User chat inputs and potentially malicious file names must be sanitized.
 **Prevention:** Always use `st.text()` for rendering plain user input in Streamlit instead of `st.markdown()`, or strictly sanitize brackets `[` and `]` to prevent markdown link parsing for variables injected into markdown strings.
+
+## 2026-09-11 - PDF Page Iteration DoS (CWE-400)
+**Vulnerability:** Iterating through all pages of a PDF without an upper bound permits CPU starvation and memory pressure in the web server process during synchronous rendering loops.
+**Learning:** Checking file size or limiting character output after reading the entire file contents is insufficient to prevent resource exhaustion attacks via "zip-bomb" equivalents in document structures (such as sparse or deeply nested object trees containing thousands of empty or near-empty pages).
+**Prevention:** Always enforce a maximum page limit (e.g., `MAX_PDF_PAGES = 100`) when extracting text from a PDF and optionally issue a user-facing warning if the limit is reached.

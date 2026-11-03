@@ -166,18 +166,18 @@ _MODE_BADGE = {
 # =============================================================================
 
 def sanitize_url(url: str) -> str:
-    parsed = urllib.parse.urlparse(url)
-    if parsed.scheme in ('http', 'https'):
-        return url
-    return '#'
+    if not url or not url.strip().startswith(("http://", "https://")):
+        return "#"
+    return url.strip()
 
 
 def sanitize_markdown_label(label: str) -> str:
     """
-    🛡️ Sentinel: Prevent Markdown Injection (CWE-79) by sanitizing structural brackets
-    to prevent breaking out of the anchor text.
+    🛡️ Sentinel: Prevent Markdown Injection and XSS (CWE-79) by escaping raw HTML
+    and sanitizing structural brackets to prevent breakout from anchor text.
     """
-    return label.replace("[", "&#91;").replace("]", "&#93;")
+    escaped = html.escape(str(label))
+    return escaped.replace("[", "&#91;").replace("]", "&#93;")
 
 
 def extract_text_from_pdf(file_bytes: bytes) -> str:

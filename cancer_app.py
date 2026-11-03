@@ -245,6 +245,12 @@ def render_message_with_images(text: str):
     for wrap in ["**", "*", "`"]:
         clean = clean.replace(f"{wrap}[", "[").replace(f"]{wrap}", "]")
 
+    # 🛡️ Sentinel: Prevent XSS via javascript: and data: URIs in markdown links/autolinks
+    # This globally disables these protocols to handle both inline and reference-style links.
+    clean = re.sub(r'(?i)(?:href|src)\s*=\s*(["\']?)\s*(?:javascript|data)\s*:', r'\1#blocked:', clean)
+    clean = re.sub(r'(?i)(\]\(\s*|<\s*)(?:javascript|data)\s*:', r'\1#blocked:', clean)
+    clean = re.sub(r'(?im)^(\[[^\]]+\]:\s*)(?:javascript|data)\s*:', r'\1#blocked:', clean)
+
     parts = re.split(r'\[IMAGE:\s*([^\]]+)\]', clean, flags=re.IGNORECASE)
 
     for i, part in enumerate(parts):

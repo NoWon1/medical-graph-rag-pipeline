@@ -183,12 +183,11 @@ def sanitize_markdown_label(label: str) -> str:
 def extract_text_from_pdf(file_bytes: bytes) -> str:
     text_parts = []
     try:
-        doc = fitz.open(stream=file_bytes, filetype="pdf")
-        for page_num in range(len(doc)):
-            page_text = doc[page_num].get_text().strip()
-            if page_text:
-                text_parts.append(f"[Page {page_num + 1}]\n{page_text}")
-        doc.close()
+        with fitz.open(stream=file_bytes, filetype="pdf") as doc:
+            for page_num in range(min(len(doc), 100)):
+                page_text = doc[page_num].get_text().strip()
+                if page_text:
+                    text_parts.append(f"[Page {page_num + 1}]\n{page_text}")
     except Exception as e:
         # 🛡️ Sentinel: Fail securely without exposing raw stack traces to the LLM or UI
         logging.error("PDF extraction error", exc_info=True)

@@ -166,9 +166,13 @@ _MODE_BADGE = {
 # =============================================================================
 
 def sanitize_url(url: str) -> str:
-    parsed = urllib.parse.urlparse(url)
+    # 🛡️ Sentinel: Strip whitespace and non-printable control characters before parsing
+    # to prevent urlparse scheme-recognition bypasses (CWE-79).
+    import re
+    clean_url = re.sub(r"^[\s\x00-\x20]+", "", url)
+    parsed = urllib.parse.urlparse(clean_url)
     if parsed.scheme in ('http', 'https'):
-        return url
+        return clean_url
     return '#'
 
 

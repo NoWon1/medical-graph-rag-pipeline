@@ -84,3 +84,8 @@
 **Vulnerability:** Iterating through all pages of a PDF without an upper bound permits CPU starvation and memory pressure (CWE-400).
 **Learning:** An attacker can upload a document with thousands of empty pages ('zip-bomb' equivalent), causing excessive CPU usage and memory leaks.
 **Prevention:** Always enforce a maximum page iteration limit and utilize a context manager (`with fitz.open(...) as doc:`) to prevent file descriptor leaks.
+
+## 2025-10-25 - XSS Bypass via urlparse Scheme Recognition
+**Vulnerability:** The `sanitize_url` function relied on `urllib.parse.urlparse()` directly on the provided URL, which allowed scheme recognition to be bypassed if the URL contained leading whitespace (e.g., ` javascript:alert(1)`), leading to potential Cross-Site Scripting (XSS).
+**Learning:** `urllib.parse.urlparse()` is vulnerable to scheme-recognition bypasses if the URL contains leading whitespace. When sanitizing URLs against malicious protocols, always strip whitespace before parsing or use robust regular expressions.
+**Prevention:** Always strip whitespace and non-printable control characters (e.g., using `re.sub(r"^[\s\x00-\x20]+", "", url)`) before parsing URLs with `urlparse()` to prevent malicious schemes from evading checks.

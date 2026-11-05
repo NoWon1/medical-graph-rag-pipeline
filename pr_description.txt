@@ -1,0 +1,5 @@
+🚨 Severity: HIGH
+💡 Vulnerability: Cross-Site Scripting (XSS) bypass due to `urlparse` scheme recognition with leading whitespaces.
+🎯 Impact: Malicious users could execute JavaScript by tricking `sanitize_url` via leading whitespace.
+🔧 Fix: Used `re.sub(r"^[\s\x00-\x20]+", "", url)` to remove whitespace and non-printable control characters before `urlparse`.
+✅ Verification: The syntax was checked using `python -m py_compile cancer_app.py` and the modified regex blocks `javascript:` URLs with leading whitespace.

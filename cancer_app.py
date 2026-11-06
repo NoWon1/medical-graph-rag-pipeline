@@ -289,7 +289,7 @@ def render_message_with_images(text: str):
                 st.markdown(f"**Reference Visual:** `{filename}`")
                 st.image(str(img_path), caption=filename, use_container_width=True, alt=f"Clinical reference visual: {filename}")
             else:
-                st.warning(f"⚠️ **Visual Unavailable:** The reference image `{filename}` could not be loaded.")
+                st.warning(f"**Visual Unavailable:** The reference image `{filename}` could not be loaded.", icon="⚠️")
 
 
 def render_followup_buttons(followups: list[str], turn_key: str):
@@ -509,7 +509,7 @@ with st.sidebar:
     st.markdown(
         f"<div role='status' aria-live='polite' style='padding:6px 10px; border-radius:6px; "
         f"background:#f0f4f8; border-left: 4px solid {colour}; font-size:13px; margin-top:6px;'>"
-        f"{icon} <strong>Active:</strong> {QUERY_MODE_LABELS[query_mode]}"
+        f"<span aria-hidden='true'>{icon}</span> <strong>Active:</strong> {QUERY_MODE_LABELS[query_mode]}"
         f"</div>",
         unsafe_allow_html=True,
     )
@@ -530,7 +530,7 @@ with st.sidebar:
     st.markdown(
         f"<div role='status' aria-live='polite' style='padding:6px 10px; border-radius:6px; "
         f"background:#f0f4f8; border-left: 4px solid #6c757d; font-size:13px; margin-top:6px;'>"
-        f"🎯 <strong>Active Filter:</strong> {display_filter}"
+        f"<span aria-hidden='true'>🎯</span> <strong>Active Filter:</strong> {display_filter}"
         f"</div>",
         unsafe_allow_html=True,
     )
@@ -616,7 +616,7 @@ with tab_upload:
         upload_source   = "pasted text"
 
     if patient_context and len(patient_context) > 10000:
-        st.warning("⚠️ **Report truncated:** The provided report exceeds the 10,000 character limit. Some clinical information may have been omitted.")
+        st.warning("**Report truncated:** The provided report exceeds the 10,000 character limit. Some clinical information may have been omitted.", icon="⚠️")
         patient_context = patient_context[:10000]
 
     if patient_context:
@@ -624,7 +624,7 @@ with tab_upload:
         if st.session_state.get("notified_report") != current_hash:
             st.session_state["notified_report"] = current_hash
 
-        st.success("💡 **Report loaded!** Switch to the **Chat** tab to see your personalized clinical and nutritional analysis.")
+        st.success("**Report loaded!** Switch to the **Chat** tab to see your personalized clinical and nutritional analysis.", icon="💡")
 
         with st.expander(f"Preview loaded report ({len(patient_context):,} characters)"):
             preview = patient_context[:800]
@@ -632,7 +632,7 @@ with tab_upload:
                 preview += f"\n\n... ({len(patient_context) - 800} more characters)"
             st.text(preview)
     else:
-        st.info("💡 **No report loaded yet.** Upload a file or paste text above to receive a personalized clinical and nutritional analysis.")
+        st.info("**No report loaded yet.** Upload a file or paste text above to receive a personalized clinical and nutritional analysis.", icon="💡")
 
 # =============================================================================
 # CHAT TAB
@@ -648,8 +648,8 @@ with tab_chat:
         c_icon, c_colour = _MODE_BADGE[query_mode]
         st.markdown(
             f"<div role='status' aria-live='polite' style='display:flex; align-items:center; gap: 15px; font-size: 13px; font-weight: 500; margin-bottom: 10px;'>"
-            f"<span style='padding:2px 8px; border-radius:4px; background:#f0f4f8; border-left: 3px solid {c_colour}; color: #1f2a44;'>{c_icon} <strong>Mode:</strong> {c_mode}</span>"
-            f"<span style='padding:2px 8px; border-radius:4px; background:#f0f4f8; border-left: 3px solid #6c757d; color: #1f2a44;'>🎯 <strong>Filter:</strong> {c_filter}</span>"
+            f"<span style='padding:2px 8px; border-radius:4px; background:#f0f4f8; border-left: 3px solid {c_colour}; color: #1f2a44;'><span aria-hidden='true'>{c_icon}</span> <strong>Mode:</strong> {c_mode}</span>"
+            f"<span style='padding:2px 8px; border-radius:4px; background:#f0f4f8; border-left: 3px solid #6c757d; color: #1f2a44;'><span aria-hidden='true'>🎯</span> <strong>Filter:</strong> {c_filter}</span>"
             f"</div>",
             unsafe_allow_html=True
         )

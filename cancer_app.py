@@ -408,7 +408,7 @@ def _run_auto_analysis(
 
             except Exception as e:
                 logging.error(f"Analysis error: {e}", exc_info=True)
-                st.error("We encountered an issue analyzing the report. Please try again or rephrase your request.")
+                st.error("We encountered an issue analyzing the report. Please try again or rephrase your request.", icon="🚨")
 
 # =============================================================================
 # SESSION STATE INITIALISATION
@@ -768,7 +768,7 @@ with tab_chat:
 
                 except Exception as e:
                     logging.error(f"Pipeline error: {e}", exc_info=True)
-                    st.error("We encountered an issue processing your request. Please try again or rephrase your query.")
+                    st.error("We encountered an issue processing your request. Please try again or rephrase your query.", icon="🚨")
                     followups    = []
                     new_turn_idx = len(st.session_state.messages) - 1
 

@@ -63,3 +63,9 @@
 ## 2024-11-03 - Active Filter State Visibility
 **Learning:** Hiding system status visual tokens when defaults (like "All") are selected creates user uncertainty about whether the filter is inactive or if the UI component disappeared.
 **Action:** Always render visual state tokens (like badges) for active filters, explicitly displaying the default state (e.g., "All cancers") to maintain consistent 'Visibility of System Status'.
+## 2024-11-26 - Native Streamlit Alert Icons
+**Learning:** Hardcoding emojis directly in the text of Streamlit alert boxes (like `st.warning`) limits semantic structure and accessibility.
+**Action:** Always prefer the native `icon=` parameter when configuring Streamlit alert components.
+## 2024-11-27 - Decorative Emojis in Custom HTML
+**Learning:** Screen readers announce emojis literally, which creates noise when emojis are used purely for visual aesthetics in custom HTML badges.
+**Action:** Always wrap decorative emojis in custom HTML elements (like `st.markdown`) with `<span aria-hidden='true'>` to improve screen reader accessibility.

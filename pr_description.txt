@@ -1,0 +1,4 @@
+💡 What: Added native `icon=` and `type="compact"` parameters to `st.expander` components, removing hardcoded emojis from labels.
+🎯 Why: Hardcoded emojis in expander labels are read literally by screen readers, limiting accessibility. The new compact type reduces visual clutter for AI reasoning thoughts.
+📸 Before/After: Visual hierarchy is cleaner and native Streamlit icons are used.
+♿ Accessibility: Screen reader compatibility is improved by relying on native Streamlit icon support and semantic expander titles.

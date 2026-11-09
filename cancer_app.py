@@ -381,7 +381,7 @@ def _run_auto_analysis(
                 render_message_with_images(answer)
 
                 if sources:
-                    with st.expander(f"Sources used in analysis ({len(sources)})"):
+                    with st.expander(f"Sources used in analysis ({len(sources)})", icon="📚"):
                         source_lines = []
                         for s in sources:
                             if s.get("url"):
@@ -626,7 +626,7 @@ with tab_upload:
 
         st.success("**Report loaded!** Switch to the **Chat** tab to see your personalized clinical and nutritional analysis.", icon="💡")
 
-        with st.expander(f"Preview loaded report ({len(patient_context):,} characters)"):
+        with st.expander(f"Preview loaded report ({len(patient_context):,} characters)", icon="📄"):
             preview = patient_context[:800]
             if len(patient_context) > 800:
                 preview += f"\n\n... ({len(patient_context) - 800} more characters)"
@@ -688,8 +688,10 @@ with tab_chat:
                     if reasoning and turn_mode:
                         icon = _MODE_BADGE.get(turn_mode, ("🔍", "#6c757d"))[0]
                         with st.expander(
-                            f"{icon} {mode_label} — reasoning path",
+                            f"{mode_label} — reasoning path",
                             expanded=False,
+                            icon=icon,
+                            type="compact"
                         ):
                             st.caption(reasoning)
 
@@ -740,7 +742,7 @@ with tab_chat:
 
                     # ── Sources expander ──────────────────────────────────
                     if sources:
-                        with st.expander(f"Sources ({len(sources)})"):
+                        with st.expander(f"Sources ({len(sources)})", icon="📚"):
                             source_lines = []
                             for s in sources:
                                 if s.get("url"):

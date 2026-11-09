@@ -69,3 +69,6 @@
 ## 2024-11-27 - Decorative Emojis in Custom HTML
 **Learning:** Screen readers announce emojis literally, which creates noise when emojis are used purely for visual aesthetics in custom HTML badges.
 **Action:** Always wrap decorative emojis in custom HTML elements (like `st.markdown`) with `<span aria-hidden='true'>` to improve screen reader accessibility.
+## 2024-11-28 - Native Expander Icons and Compact Mode
+**Learning:** Hardcoding emojis in the label of Streamlit expanders (`st.expander`) limits accessibility, and using the default type for AI reasoning paths causes visual clutter. Native `icon=` parameters improve semantic structure, and `type="compact"` creates a minimal inline toggle ideal for AI thoughts.
+**Action:** Always prefer the native `icon=` parameter when configuring Streamlit expanders, and use `type="compact"` for reasoning or metadata to maintain a clean visual hierarchy.

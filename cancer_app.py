@@ -609,7 +609,8 @@ with tab_upload:
     upload_source   = ""
 
     if uploaded_file is not None:
-        patient_context = load_report_from_upload(uploaded_file)
+        with st.spinner("Processing uploaded report..."):
+            patient_context = load_report_from_upload(uploaded_file)
         upload_source   = uploaded_file.name
     elif pasted_report.strip():
         patient_context = pasted_report.strip()

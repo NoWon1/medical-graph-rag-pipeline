@@ -33,6 +33,7 @@ import numpy as np
 from pathlib import Path
 import threading
 from typing import Any, List, Optional, Union
+from collections import OrderedDict
 
 from dotenv import load_dotenv
 from langchain_huggingface import HuggingFaceEmbeddings
@@ -115,6 +116,39 @@ def get_embeddings() -> HuggingFaceEmbeddings:
                 # ⚡ Bolt: Memoize query embeddings to eliminate redundant CPU inference
                 # across retrievers (BM25 reranking, Graph RRF, Image reranking) in a single request
                 object.__setattr__(_embed_model, 'embed_query', functools.lru_cache(maxsize=128)(_embed_model.embed_query))
+
+                # ⚡ Bolt: Memoize document embeddings to prevent re-embedding identical static chunks during MMR and image reranking
+                _original_embed_documents = _embed_model.embed_documents
+                _doc_embed_cache = OrderedDict()
+                _doc_embed_lock = threading.Lock()
+                _MAX_CACHE_SIZE = 2048
+
+                def memoized_embed_documents(texts: List[str]) -> List[List[float]]:
+                    results = [None] * len(texts)
+                    uncached_texts = []
+                    uncached_indices = []
+
+                    with _doc_embed_lock:
+                        for i, text in enumerate(texts):
+                            if text in _doc_embed_cache:
+                                _doc_embed_cache.move_to_end(text)
+                                results[i] = _doc_embed_cache[text]
+                            else:
+                                uncached_texts.append(text)
+                                uncached_indices.append(i)
+
+                    if uncached_texts:
+                        new_embs = _original_embed_documents(uncached_texts)
+                        with _doc_embed_lock:
+                            for i, idx in enumerate(uncached_indices):
+                                results[idx] = new_embs[i]
+                                _doc_embed_cache[uncached_texts[i]] = new_embs[i]
+                            while len(_doc_embed_cache) > _MAX_CACHE_SIZE:
+                                _doc_embed_cache.popitem(last=False)
+
+                    return results
+
+                object.__setattr__(_embed_model, 'embed_documents', memoized_embed_documents)
     return _embed_model
 
 def get_dense_retriever(cancer_filter: str = "") -> BaseRetriever:
